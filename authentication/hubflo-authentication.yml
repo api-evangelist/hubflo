@@ -1,0 +1,22 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/hubflo-openapi-original.yml
+docs: https://hubflo.readme.io/reference/token-authentication
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+schemes:
+- name: bearer_auth
+  type: http
+  scheme: bearer
+  header: Authorization
+  format: 'Bearer <token>'
+  sources:
+  - openapi/hubflo-openapi-original.yml
+docs_detail: >-
+  Hubflo uses bearer (token) authentication. Send the authentication token in the
+  Authorization header as 'Authorization: Bearer <token>'. Generate the API key in Hubflo
+  under Settings > Integrations (app.hubflo.com/organizations). The key is shared across all
+  members of the organization. Use POST /api/v2/pings to verify an authenticated request.

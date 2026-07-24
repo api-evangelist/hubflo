@@ -1,0 +1,2883 @@
+openapi: 3.0.1
+info:
+  title: Hubflo chat_room form API
+  version: v2
+  description: "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n"
+servers:
+- url: https://app.hubflo.com
+  description: The production API server
+- url: https://staging.hubflo.com
+  description: The staging API server
+- url: http://localhost:3000
+  description: The local API server
+tags:
+- name: form
+paths:
+  /api/v2/forms/{form_id}/answers:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the answers
+      security:
+      - bearer_auth: []
+      description: Returns the answers
+      tags:
+      - form
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: contact_id
+        in: query
+        required: false
+        description: Filter by contact ID
+        schema:
+          type: string
+      - name: assignment_id
+        in: query
+        required: false
+        description: Filter by assignment ID
+        schema:
+          type: string
+      - name: submission_id
+        in: query
+        required: false
+        description: Filter by submission ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Answers retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 43ce545a-23b8-4611-8181-c9ce4e5466c0
+                    value: short text
+                    values: []
+                    item_id: 9c2834c9-f693-40d2-8687-672dbf35aaa6
+                    title: What is your favorite color?
+                    description: null
+                    choices: []
+                    type: short_text
+                    matching_field: null
+                  - id: 73f97e41-ac84-40aa-960a-66fd1e0c06b1
+                    value: short text
+                    values: []
+                    item_id: aa1b9190-0287-4541-a137-15df3a4641f5
+                    title: What is your favorite color?
+                    description: null
+                    choices: []
+                    type: short_text
+                    matching_field: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/forms/{form_id}/answers/{id}:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Answer ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves an answer
+      security:
+      - bearer_auth: []
+      description: Returns an answer
+      tags:
+      - form
+      responses:
+        '200':
+          description: Answer retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 7e1c9f2e-7378-496a-b5a2-e1f1e8d28887
+                    value: short text
+                    values: []
+                    item_id: 94ffdd4b-8e14-46b1-aa6e-304798039e82
+                    title: What is your favorite color?
+                    description: null
+                    choices: []
+                    type: short_text
+                    matching_field: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/forms/{form_id}/assignments:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the assignments
+      security:
+      - bearer_auth: []
+      description: Returns the assignments
+      tags:
+      - form
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: status
+        in: query
+        required: false
+        description: Filter by status (pending, completed)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Assignments retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 78a893f7-c6c4-458f-84f6-089eac032251
+                    form_id: 6802882b-e064-4141-b167-ed127bec1f1f
+                    creator_id: 4d2b0431-df5d-481c-ac27-9089da2b7aa7
+                    contact_id: 3c454578-cea5-447a-8561-acb82f358277
+                    url: http://client.localhost:3000/forms/6802882b-e064-4141-b167-ed127bec1f1f/assignments/78a893f7-c6c4-458f-84f6-089eac032251?public=false
+                    status: pending
+                    self_service: false
+                    created_at: '2026-07-17T13:09:17Z'
+                  - id: 54f0f55f-1575-4f9b-b5ff-4ae77ba6761b
+                    form_id: 6802882b-e064-4141-b167-ed127bec1f1f
+                    creator_id: 4d2b0431-df5d-481c-ac27-9089da2b7aa7
+                    contact_id: f3325a55-10b6-4561-b60b-349b676af76e
+                    url: http://client.localhost:3000/forms/6802882b-e064-4141-b167-ed127bec1f1f/assignments/54f0f55f-1575-4f9b-b5ff-4ae77ba6761b?public=false
+                    status: pending
+                    self_service: false
+                    created_at: '2026-07-17T13:09:17Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates an assignment
+      security:
+      - bearer_auth: []
+      description: Creates an assignment
+      tags:
+      - form
+      parameters: []
+      responses:
+        '201':
+          description: Assignment created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 32ad1699-0494-4f95-aa1f-52fa288c1c62
+                    form_id: 1f3ced21-0e99-4207-9e2a-a0d604db73e1
+                    creator_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    contact_id: 5bd17e2a-0b8c-4ca9-b093-f5a4ed623179
+                    url: http://client.localhost:3000/forms/1f3ced21-0e99-4207-9e2a-a0d604db73e1/assignments/32ad1699-0494-4f95-aa1f-52fa288c1c62?public=false
+                    status: pending
+                    self_service: false
+                    created_at: '2026-07-17T13:09:18Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact_id:
+                  type: string
+                  example: 12da2ce9-3490-432b-81c0-b9bace2469cc
+              required:
+              - contact_id
+        required: true
+        description: Assignment attributes
+  /api/v2/forms/{form_id}/assignments/{id}:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Assignment ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves an assignment
+      security:
+      - bearer_auth: []
+      description: Returns an assignment
+      tags:
+      - form
+      responses:
+        '200':
+          description: Assignment retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 473beadd-cbf0-4b56-8e43-88a346c6f4b7
+                    form_id: 77d7347d-d995-4f7c-8f61-968f5ee626bc
+                    creator_id: 4d2b0431-df5d-481c-ac27-9089da2b7aa7
+                    contact_id: b3c6d030-356b-4d73-8ee1-5d406cb6b168
+                    url: http://client.localhost:3000/forms/77d7347d-d995-4f7c-8f61-968f5ee626bc/assignments/473beadd-cbf0-4b56-8e43-88a346c6f4b7?public=false
+                    status: pending
+                    self_service: false
+                    created_at: '2026-07-17T13:09:18Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/forms/{form_id}/items/{item_id}/condition_group:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    - name: item_id
+      in: path
+      required: true
+      description: Item ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the condition group
+      security:
+      - bearer_auth: []
+      description: Retrieves the condition group for a specific item in a form
+      tags:
+      - form
+      responses:
+        '200':
+          description: Condition group retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    operator: or
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a condition group
+      security:
+      - bearer_auth: []
+      description: Creates a condition group for a specific item in a form
+      tags:
+      - form
+      parameters: []
+      responses:
+        '201':
+          description: Condition group created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    operator: or
+        '400':
+          description: 'bad request: the request is invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 400
+                    title: Bad Request
+                    message: '''wrong1234'' is not a valid operator'
+              schema:
+                $ref: '#/components/schemas/error_bad_request'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - or
+                  - and
+                  example: or
+              required:
+              - operator
+        required: true
+        description: Condition group attributes
+    patch:
+      summary: Updates a condition group
+      security:
+      - bearer_auth: []
+      description: Updates a condition group for a specific item in a form
+      tags:
+      - form
+      parameters: []
+      responses:
+        '200':
+          description: Condition group updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    operator: or
+        '400':
+          description: 'bad request: the request is invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 400
+                    title: Bad Request
+                    message: '''wrong1234'' is not a valid operator'
+              schema:
+                $ref: '#/components/schemas/error_bad_request'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  example: or and and
+              required:
+              - operator
+        required: true
+        description: Condition group attributes
+  /api/v2/forms/{form_id}/items/{item_id}/conditions:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    - name: item_id
+      in: path
+      required: true
+      description: Item ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the items
+      security:
+      - bearer_auth: []
+      description: Retrieves the conditions for a specific item in a form
+      tags:
+      - form
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Conditions retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 4bced60a-bf5c-466c-b9be-8c7ebcf3b4b7
+                    question_item_id: 9acbc24d-6aac-4e7b-b83c-b1ac3dcbdb17
+                    operator: equal
+                    value: test
+                    created_at: '2026-07-17T13:09:20Z'
+                  - id: 799c0899-dd04-4599-856f-477d74ddde35
+                    question_item_id: 3339dce9-2038-4e0e-acf7-2c6bd58f6c8e
+                    operator: equal
+                    value: test
+                    created_at: '2026-07-17T13:09:20Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a condition
+      security:
+      - bearer_auth: []
+      description: Creates a new condition for a specific item in a form
+      tags:
+      - form
+      parameters: []
+      responses:
+        '201':
+          description: Condition created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 395bff0e-650a-491c-847a-70fce58d108e
+                    question_item_id: 7f2fed79-7814-41fc-bd3e-22cabe258a04
+                    operator: equal
+                    value: rem
+                    created_at: '2026-07-17T13:09:21Z'
+        '400':
+          description: 'bad request: the request is invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 400
+                    title: Bad Request
+                    message: '''wrong1234'' is not a valid operator'
+              schema:
+                $ref: '#/components/schemas/error_bad_request'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: operator unsupported by question'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Operator is not included in the list'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question_item_id:
+                  type: string
+                  description: Item ID of the question that triggers this condition
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                operator:
+                  type: string
+                  example: equal, different, include, exclude, less_than, greater_than, less_than_or_equal_to and greater_than_or_equal_to
+                value:
+                  type: string
+                  example: test value
+              required:
+              - question_item_id
+              - operator
+              - value
+        required: true
+        description: Condition attributes
+  /api/v2/forms/{form_id}/items/{item_id}/conditions/{id}:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    - name: item_id
+      in: path
+      required: true
+      description: Item ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Condition ID
+      schema:
+        type: string
+    patch:
+      summary: Updates a condition
+      security:
+      - bearer_auth: []
+      description: Updates a condition for a specific item in a form
+      tags:
+      - form
+      parameters: []
+      responses:
+        '200':
+          description: Condition update
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 9a04fe5e-c29e-451e-aad3-f037155c6471
+                    question_item_id: 84e9e4c3-bc9f-455a-af0e-038e2033cb0c
+                    operator: equal
+                    value: voluptate
+                    created_at: '2026-07-17T13:09:22Z'
+        '400':
+          description: 'bad request: the request is invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 400
+                    title: Bad Request
+                    message: '''wrong1234'' is not a valid operator'
+              schema:
+                $ref: '#/components/schemas/error_bad_request'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Operator must be filled in, Operator is not included in the list, Operator is not included in the list'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question_item_id:
+                  type: string
+                  description: Item ID of the question that triggers this condition
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                operator:
+                  type: string
+                  example: equal, different, include, exclude, less_than, greater_than, less_than_or_equal_to and greater_than_or_equal_to
+                value:
+                  type: string
+                  example: test value
+              required:
+              - question_item_id
+              - operator
+              - value
+        required: true
+        description: Condition attributes
+    delete:
+      summary: Deletes a condition
+      security:
+      - bearer_auth: []
+      description: Deletes a condition for a specific item in a form
+      tags:
+      - form
+      responses:
+        '204':
+          description: Condition deleted
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/forms:
+    get:
+      summary: Retrieves the forms
+      security:
+      - bearer_auth: []
+      description: Creates a forms
+      tags:
+      - form
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Forms retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 02e81b29-f150-54b9-9a08-ce75944f6889
+                    title: Form active
+                    description: null
+                    creator_id: 4d2b0431-df5d-481c-ac27-9089da2b7aa7
+                    created_at: '2026-07-17T13:08:42Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a form
+      security:
+      - bearer_auth: []
+      description: Returns the created form
+      tags:
+      - form
+      parameters: []
+      responses:
+        '201':
+          description: Form created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 4279b24c-f158-4fb7-8b57-9baeb41e2a56
+                    title: My form
+                    description: My form description
+                    creator_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    created_at: '2026-07-17T13:09:24Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Title must be filled in, Title is too short (at least 2 characters)'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Feedback Form
+                description:
+                  type: string
+                  example: Please provide feedback
+              required:
+              - title
+              - description
+        required: true
+        description: Form attributes
+  /api/v2/forms/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a form
+      security:
+      - bearer_auth: []
+      description: Returns the form
+      tags:
+      - form
+      responses:
+        '200':
+          description: Form retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 2caa665f-8c53-419e-90a0-b19ad5aa9857
+                    title: Eum placeat est quod.
+                    description: null
+                    creator_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    created_at: '2026-07-17T13:09:24Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a form
+      security:
+      - bearer_auth: []
+      description: Updates a form
+      tags:
+      - form
+      parameters: []
+      responses:
+        '200':
+          description: Form updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 47a3c1b6-f5a6-43cf-9a13-0ba428e186d8
+                    title: New title
+                    description: null
+                    creator_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    created_at: '2026-07-17T13:09:25Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Title must be filled in, Title is too short (at least 2 characters)'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Feedback Form
+                description:
+                  type: string
+                  example: Please provide feedback
+        required: true
+        description: Form attributes
+  /api/v2/forms/{form_id}/items:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the items
+      security:
+      - bearer_auth: []
+      description: Returns the items
+      tags:
+      - form
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Items retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 53e406cc-1cf7-4865-b1f1-2bb32cbb7831
+                    form_id: 18a8faf4-39dd-405c-8356-f9a2d750d5dd
+                    section_id: d66e22bf-8ec5-4cd5-b4fc-0348a93257f0
+                    position: 1
+                    title: null
+                    description: null
+                    type: title
+                    choices: []
+                    created_at: '2026-07-17T13:09:25Z'
+                  - id: 9ff5f63c-7008-46ba-9b28-cfdd78001cd5
+                    form_id: 18a8faf4-39dd-405c-8356-f9a2d750d5dd
+                    section_id: d66e22bf-8ec5-4cd5-b4fc-0348a93257f0
+                    position: 2
+                    title: What is your favorite color?
+                    description: null
+                    choices: []
+                    type: short_text
+                    matching_field: null
+                    created_at: '2026-07-17T13:09:25Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/forms/{form_id}/items/{id}:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Item ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves an item
+      security:
+      - bearer_auth: []
+      description: Returns the item
+      tags:
+      - form
+      responses:
+        '200':
+          description: Item retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 86ea6c26-7d64-4758-b5e9-5f823c7280aa
+                    form_id: 37ec9211-fc7f-4eda-83a7-e64047abb472
+                    section_id: 14af6170-137e-4528-8886-163d5a7044cc
+                    position: 1
+                    title: What is your favorite color?
+                    description: null
+                    choices: []
+                    type: short_text
+                    matching_field: null
+                    created_at: '2026-07-17T13:09:26Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/forms/{form_id}/questions:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    post:
+      summary: Creates a question in a form
+      security:
+      - bearer_auth: []
+      description: Creates a new question in the specified form
+      tags:
+      - form
+      parameters: []
+      responses:
+        '201':
+          description: Question created successfully
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 2f599691-6a72-4e6f-a10c-8d06e0a64c3e
+                    form_id: 02e81b29-f150-54b9-9a08-ce75944f6889
+                    section_id: 093bc09f-2a72-560c-ab9d-3ad05cbcecd8
+                    position: 1
+                    title: Question title
+                    description: Question description
+                    choices: []
+                    type: short_text
+                    matching_field: null
+                    created_at: '2026-07-17T13:09:26Z'
+                    required: true
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Itemable title must be filled in, Itemable title is too short (at least 2 characters)'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Question title
+                description:
+                  type: string
+                  example: Question description
+                required:
+                  type: boolean
+                  example: true
+                section_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                question_type:
+                  type: string
+                  example: ShortText
+                  description: Type of question among ShortText, Radio, Checkbox, CompanyField, ContactField, Date, File, LongText, MultipleDropdown, Dropdown, Scale
+                choices:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - Option 1
+                  - Option 2
+                  description: Required for choice-based questions (Radio, Checkbox, MultipleDropdown, Dropdown)
+                matching_field:
+                  type: string
+                  example: first_name
+                  description: 'Required for matchable field questions (ContactField and CompanyField). ContactField accepts: address, city, country, first_name, full_name, job_title, last_name, phone, postal_code, secondary_phone, url_linkedin. CompanyField accepts: address, ape_code, business_description, city, country, email, legal_status, name, phone, postal_code, rcs, siret, staff, state, url_linkedin, vat_number, website. Custom fields are also accepted using the format ''custom_field_<name>'' where name is the custom field name in snake_case.'
+                min_value:
+                  type: integer
+                  example: 1
+                  description: Minimum value for Scale questions
+                max_value:
+                  type: integer
+                  example: 5
+                  description: Maximum value for Scale questions
+                min_label:
+                  type: string
+                  example: Not at all likely
+                  description: Optional label for the minimum end of a Scale question
+                max_label:
+                  type: string
+                  example: Extremely likely
+                  description: Optional label for the maximum end of a Scale question
+              required:
+              - title
+              - question_type
+        required: true
+        description: Question attributes
+  /api/v2/forms/{form_id}/sections:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the sections
+      security:
+      - bearer_auth: []
+      description: Returns the sections
+      tags:
+      - form
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Sections retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 093bc09f-2a72-560c-ab9d-3ad05cbcecd8
+                    title: Section title
+                    description: null
+                    created_at: '2026-07-17T13:08:42Z'
+                  - id: 943e6c54-b076-4bb6-9b66-0be10a8cdd7f
+                    title: Section 38
+                    description: null
+                    created_at: '2026-07-17T13:09:27Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a section
+      security:
+      - bearer_auth: []
+      description: Creates a section
+      tags:
+      - form
+      parameters: []
+      responses:
+        '201':
+          description: Section created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 6dfaac60-443a-428b-9671-b9d32c874ff2
+                    title: Section X
+                    description: Description X
+                    created_at: '2026-07-17T13:09:27Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Section 1
+                description:
+                  type: string
+              required:
+              - title
+        required: true
+        description: Section attributes
+  /api/v2/forms/{form_id}/sections/{id}:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Section ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a section
+      security:
+      - bearer_auth: []
+      description: Returns a section
+      tags:
+      - form
+      responses:
+        '200':
+          description: Section retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 1ade3107-2910-492a-bfe6-14acd0057f2a
+                    title: Section 56
+                    description: null
+                    created_at: '2026-07-17T13:09:28Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a section
+      security:
+      - bearer_auth: []
+      description: Updates a section
+      tags:
+      - form
+      parameters: []
+      responses:
+        '200':
+          description: Section updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 69d27851-ecd3-4b08-bd29-0e1674491b3e
+                    title: New title
+                    description: null
+                    created_at: '2026-07-17T13:09:28Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Title must be filled in, Title is too short (at least 2 characters)'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+        description: Form attributes
+  /api/v2/forms/{form_id}/submissions:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the submissions
+      security:
+      - bearer_auth: []
+      description: Returns the submissions
+      tags:
+      - form
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: contact_id
+        in: query
+        required: false
+        description: Filter by contact ID
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        description: Filter by status (pending, completed)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Submissions retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: ea2246b7-5150-4c4c-9525-920c8e7a53bd
+                    assignment_id: b4a27645-2d96-4874-8bf2-5afae7056c2e
+                    status: pending
+                    contact_id: ecf87156-8f09-46c2-b22a-432b958d579c
+                    form_id: aa4b16bc-6524-4f08-bd19-22f784273f32
+                    created_at: '2026-07-17T13:09:29Z'
+                    completed_at: null
+                  - id: 65b97bf0-c729-4b9f-be0a-773636eb64f3
+                    assignment_id: bebd59e4-c3d2-465b-8e03-2d87de2ae70f
+                    status: pending
+                    contact_id: ea2cc046-11ca-4e38-8e35-a47d453d1d41
+                    form_id: aa4b16bc-6524-4f08-bd19-22f784273f32
+                    created_at: '2026-07-17T13:09:29Z'
+                    completed_at: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/forms/{form_id}/submissions/{id}:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Submission ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a submission
+      security:
+      - bearer_auth: []
+      description: Returns a submission
+      tags:
+      - form
+      responses:
+        '200':
+          description: Submission retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 753ba973-c727-4d8d-9d60-39939bf64deb
+                    assignment_id: 7841da0d-12ec-49f1-87d1-832ab5759ea2
+                    status: pending
+                    contact_id: cef27c71-85b9-4687-b891-ac400a92ab4b
+                    form_id: 9c1ec0dc-a8ca-48ef-916c-9402419769bf
+                    created_at: '2026-07-17T13:09:30Z'
+                    completed_at: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/forms/{form_id}/titles:
+    parameters:
+    - name: form_id
+      in: path
+      required: true
+      description: Form ID
+      schema:
+        type: string
+    post:
+      summary: Creates a title in a form
+      security:
+      - bearer_auth: []
+      description: Creates a new title in the specified form
+      tags:
+      - form
+      parameters: []
+      responses:
+        '201':
+          description: Title created successfully
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: edfb2281-87a1-4e06-8fd2-24f1793cc651
+                    form_id: 02e81b29-f150-54b9-9a08-ce75944f6889
+                    section_id: 093bc09f-2a72-560c-ab9d-3ad05cbcecd8
+                    position: 1
+                    title: This is the header
+                    description: This is the body
+                    type: title
+                    choices: []
+                    created_at: '2026-07-17T13:09:30Z'
+                    header: This is the header
+                    body: This is the body
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                header:
+                  type: string
+                  example: This is the header
+                body:
+                  type: string
+                  example: This is the body
+                section_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+        required: true
+        description: Title attributes
+components:
+  schemas:
+    error_not_found:
+      description: A response describing a not found error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        title:
+          type: string
+          example: Not Found
+        message:
+          type: string
+          example: Resource not found
+      required:
+      - status
+      - title
+      - message
+    error_bad_request:
+      description: A response describing a bad request error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 400
+        title:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Invalid parameters
+      required:
+      - status
+      - title
+      - message
+    error_too_many_requests:
+      description: A response describing a rate limit error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 429
+        title:
+          type: string
+          example: Too Many Requests
+        message:
+          type: string
+          example: Rate limit reached. Please wait for a couple of minutes.
+      required:
+      - status
+      - title
+      - message
+    error_unauthorized:
+      description: A response describing an authentication error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+        title:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: API token not found
+      required:
+      - status
+      - title
+      - message
+    error_unprocessable_content:
+      description: A response describing a validation error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 422
+        title:
+          type: string
+          example: Unprocessable Content
+        message:
+          type: string
+          example: 'Validation failed: Title can''t be blank'
+      required:
+      - status
+      - title
+      - message
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

@@ -1,0 +1,1511 @@
+openapi: 3.0.1
+info:
+  title: Hubflo chat_room task API
+  version: v2
+  description: "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n"
+servers:
+- url: https://app.hubflo.com
+  description: The production API server
+- url: https://staging.hubflo.com
+  description: The staging API server
+- url: http://localhost:3000
+  description: The local API server
+tags:
+- name: task
+paths:
+  /api/v2/tasks/{task_id}/contacts:
+    get:
+      summary: Retrieves the assigned contacts
+      security:
+      - bearer_auth: []
+      description: Returns the assigned contacts of a task. Only the first 100 tags of each contact are returned.
+      tags:
+      - task
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: task_id
+        in: path
+        required: true
+        description: Task ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Contacts retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 6a4494dd-83f1-49bd-99cd-476ff3737224
+                    first_name: Gwyneth
+                    last_name: Nitzsche
+                    full_name: Gwyneth Nitzsche
+                    email: hello-357@hubflo.com
+                    contact_type: prospect
+                    priority: high
+                    phone: '       356'
+                    secondary_phone: null
+                    address: 357 RUE DE PONTHIEU
+                    postal_code: '75008'
+                    city: Paris
+                    state: Paris
+                    country: null
+                    job_title: null
+                    url_linkedin: https://www.linkedin.com/in/gwyneth-nitzsche
+                    hubspot_id: null
+                    created_at: '2026-07-17T13:10:01Z'
+                    company_name: null
+                    company_id: null
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    tags: []
+                  - id: 70b60ef8-5da8-4aab-b86e-38aaf76acfa4
+                    first_name: Ivory
+                    last_name: Balistreri
+                    full_name: Ivory Balistreri
+                    email: hello-358@hubflo.com
+                    contact_type: prospect
+                    priority: medium
+                    phone: '       357'
+                    secondary_phone: null
+                    address: 358 RUE DE PONTHIEU
+                    postal_code: '75008'
+                    city: Paris
+                    state: Paris
+                    country: null
+                    job_title: null
+                    url_linkedin: https://www.linkedin.com/in/ivory-balistreri
+                    hubspot_id: null
+                    created_at: '2026-07-17T13:10:01Z'
+                    company_name: null
+                    company_id: null
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/tasks/{task_id}/files:
+    parameters:
+    - name: task_id
+      in: path
+      required: true
+      description: Task ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the files for a task
+      security:
+      - bearer_auth: []
+      description: Returns the files for a task
+      tags:
+      - task
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: files retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 6914aa3b-5114-43ae-83c0-d14a9464d96f
+                    title: Content Item 88
+                    library: false
+                    created_at: '2026-07-17T13:10:02Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: null
+                    parent_id: null
+                    task_id: f348a787-5118-490d-806c-12dd9cc6fd22
+                    file_name: image1.png
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ1eHcwdzhia2RxeDVmaXg2M2djbWRqNWNyN3YzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1hZ2UxLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltYWdlMS5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJ0ZXN0In0sImV4cCI6IjIwMjYtMDctMTdUMTM6MTU6MDIuNzM2WiIsInB1ciI6ImJsb2Jfa2V5In19--9933751efccb905cce5827b272da63ff3183b377/image1.png
+                    file_type: image/png
+                    file_size: 56958
+                  - id: b5da3f0b-f57c-413b-8540-b1adfbe82e40
+                    title: Content Item 87
+                    library: false
+                    created_at: '2026-07-17T13:10:02Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: null
+                    parent_id: null
+                    task_id: f348a787-5118-490d-806c-12dd9cc6fd22
+                    file_name: image1.png
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJsMjIxMmw3ZTZ0bmNycWJmN3ViZmF4NHR4bnYzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1hZ2UxLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltYWdlMS5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJ0ZXN0In0sImV4cCI6IjIwMjYtMDctMTdUMTM6MTU6MDIuNzQwWiIsInB1ciI6ImJsb2Jfa2V5In19--dd6554d87c13a8cef4fde3d8af38ccfdb93a1017/image1.png
+                    file_type: image/png
+                    file_size: 56958
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a file for a task
+      security:
+      - bearer_auth: []
+      description: "Creates a file for a task. It can be created giving the uploaded file, or imported from the library,\n        using the file_id attribute."
+      tags:
+      - task
+      parameters:
+      - name: file_id
+        in: query
+        required: false
+        description: File ID
+        schema:
+          type: string
+      - name: library
+        in: query
+        required: false
+        description: Add to library
+        schema:
+          type: boolean
+      - name: title
+        in: query
+        required: false
+        description: Title (ignored when file_id is provided)
+        schema:
+          type: string
+      responses:
+        '201':
+          description: file created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 9ad240ac-0bbc-4958-9e0c-b82f346ed163
+                    title: chicken.pdf
+                    library: false
+                    created_at: '2026-07-17T13:10:03Z'
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    workspace_id: null
+                    parent_id: null
+                    task_id: 7a74f979-381a-4fcc-b0b9-808938aad842
+                    file_name: chicken.pdf
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ1MHA0dW5lbGs1ZGIxcGdxa3VkOWt2dWlyeGI0IiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiY2hpY2tlbi5wZGZcIjsgZmlsZW5hbWUqPVVURi04JydjaGlja2VuLnBkZiIsImNvbnRlbnRfdHlwZSI6ImFwcGxpY2F0aW9uL3BkZiIsInNlcnZpY2VfbmFtZSI6InRlc3QifSwiZXhwIjoiMjAyNi0wNy0xN1QxMzoxNTowMy41NTVaIiwicHVyIjoiYmxvYl9rZXkifX0=--2a53ec6c92316f8e090bd2a3bf305eda761bab37/chicken.pdf
+                    file_type: application/pdf
+                    file_size: 51500
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: string
+              format: binary
+        description: File to upload
+  /api/v2/tasks/{task_id}/files/{id}:
+    parameters:
+    - name: task_id
+      in: path
+      required: true
+      description: Task ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: File ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a file for a task
+      security:
+      - bearer_auth: []
+      description: Returns a file for a task
+      tags:
+      - task
+      responses:
+        '200':
+          description: file retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 31c68a58-946d-44a4-a4ea-62138b40240a
+                    title: Content Item 105
+                    library: false
+                    created_at: '2026-07-17T13:10:04Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: null
+                    parent_id: null
+                    task_id: f24dbec5-833e-4745-9df6-b31c526d2a85
+                    file_name: image1.png
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI1OGtpYzB0ZzU2ZW0xeGVjbWVzb21ueXo5OWpsIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1hZ2UxLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltYWdlMS5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJ0ZXN0In0sImV4cCI6IjIwMjYtMDctMTdUMTM6MTU6MDQuMDU4WiIsInB1ciI6ImJsb2Jfa2V5In19--cbd69879dbcb731aab8d4426f2666728d3c20d1e/image1.png
+                    file_type: image/png
+                    file_size: 56958
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a file for a task
+      security:
+      - bearer_auth: []
+      description: Updates a file for a task. You can only change the title of the file.
+      tags:
+      - task
+      parameters: []
+      responses:
+        '200':
+          description: file updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 1c9bf93f-eb03-4458-8104-fe2cde8dcf5d
+                    title: new name.png
+                    library: false
+                    created_at: '2026-07-17T13:10:04Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: null
+                    parent_id: null
+                    task_id: 9bf0be33-87b8-42f2-b60a-72fcf73bd77b
+                    file_name: image1.png
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4Y3dqdTlwYWdtaDc2bm00dTg2bXlncWdsczNpIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1hZ2UxLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltYWdlMS5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJ0ZXN0In0sImV4cCI6IjIwMjYtMDctMTdUMTM6MTU6MDQuNDQxWiIsInB1ciI6ImJsb2Jfa2V5In19--adeb35021dc8ec0dcacfd679c1ccd10588ab0ed6/image1.png
+                    file_type: image/png
+                    file_size: 56958
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: new name.png
+        required: true
+  /api/v2/tasks/{task_id}/users:
+    get:
+      summary: Retrieves the assigned users of a task
+      security:
+      - bearer_auth: []
+      description: Returns the assigned users of a task
+      tags:
+      - task
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: task_id
+        in: path
+        required: true
+        description: Task ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Users retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: afcd9a4a-72c6-4674-ac67-4f4f176f9882
+                    first_name: Mamie
+                    last_name: Ward
+                    email: hello-142@hubflo.com
+                    phone: null
+                    created_at: '2026-07-17T13:10:04Z'
+                  - id: a2944239-931a-494f-b044-c8606e25271e
+                    first_name: Santiago
+                    last_name: Jenkins
+                    email: hello-144@hubflo.com
+                    phone: null
+                    created_at: '2026-07-17T13:10:04Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/tasks:
+    get:
+      summary: Retrieves the tasks
+      security:
+      - bearer_auth: []
+      description: Returns the tasks. Only the first 100 tags of the task are returned
+      tags:
+      - task
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: overdue
+        in: query
+        required: false
+        description: Filter by overdue tasks
+        schema:
+          type: boolean
+      - name: project_id
+        in: query
+        required: false
+        description: Filter by project ID
+        schema:
+          type: string
+      - name: contact_id
+        in: query
+        required: false
+        description: Filter by contact ID
+        schema:
+          type: string
+      - name: assignee_id
+        in: query
+        required: false
+        description: Filter by assignee ID
+        schema:
+          type: string
+      - name: creator_type
+        in: query
+        required: false
+        description: Filter by creator type (user or contact)
+        schema:
+          type: string
+      - name: completed
+        in: query
+        required: false
+        description: Filter by completion status
+        schema:
+          type: boolean
+      - name: parent_id
+        in: query
+        required: false
+        description: 'Filter by parent task ID. If not provided, the endpoint will return
+
+          first level tasks (no subtasks).
+
+          '
+        schema:
+          type: string
+      - name: clickup_id
+        in: query
+        required: false
+        description: Filter by clickup_id
+        schema:
+          type: string
+      - name: monday_id
+        in: query
+        required: false
+        description: Filter by monday_id
+        schema:
+          type: string
+      - name: tag
+        in: query
+        required: false
+        description: Filter by tag
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tasks retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 811cbf25-4510-40f9-ac4e-ffa5bd0222db
+                    name: Task 87
+                    description: Description 87
+                    completed: false
+                    clickup_id: null
+                    monday_id: null
+                    kind: to_do
+                    visible_by_contact: false
+                    slug: 811cbf25-4510-40f9-ac4e-ffa5bd0222db
+                    created_at: '2026-07-17T13:10:05Z'
+                    creator_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    creator_type: User
+                    start_time: '2026-07-18T13:10:05Z'
+                    end_time: '2026-07-18T16:52:05Z'
+                    contact_id: null
+                    project_section_id: c2e10591-446b-4f87-99ca-03f56bd8dc40
+                    project_id: 53469958-87db-4e4f-a5bc-04c7df357a98
+                    parent_task_id: null
+                    workspace_id: null
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+                  - id: 3ad6b0d6-0de4-49c4-9009-59789721027f
+                    name: Task 86
+                    description: Description 86
+                    completed: false
+                    clickup_id: null
+                    monday_id: null
+                    kind: to_do
+                    visible_by_contact: false
+                    slug: 3ad6b0d6-0de4-49c4-9009-59789721027f
+                    created_at: '2026-07-17T13:10:05Z'
+                    creator_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    creator_type: User
+                    start_time: '2026-07-18T13:10:05Z'
+                    end_time: '2026-07-18T16:52:05Z'
+                    contact_id: null
+                    project_section_id: c2e10591-446b-4f87-99ca-03f56bd8dc40
+                    project_id: 53469958-87db-4e4f-a5bc-04c7df357a98
+                    parent_task_id: null
+                    workspace_id: null
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a task
+      security:
+      - bearer_auth: []
+      description: "Creates a task.\n        To fill in a custom field, add the custom field 'serialization_name' to the request\n        params, with the desired value. Only 100 tags maximum can be specified.\n        When you specify a `parent_task_id` you will create a subtask. Some attributes are not available for subtasks:\n        `clickup_id`, `monday_id`, `project_id` and `contact_id`.\n        To attach a recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) along\n        with the matching `recurrence_*` fields. `start_time` is required when a recurrence is set.\n        For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`)\n        with the corresponding `recurrence_week_days` or `recurrence_day_into_month`."
+      tags:
+      - task
+      parameters: []
+      responses:
+        '201':
+          description: Task created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: f0225788-1a48-475f-ac76-6acdb8a429f0
+                    name: Task name
+                    description: Task description
+                    completed: false
+                    clickup_id: '123'
+                    monday_id: '123'
+                    kind: to_do
+                    visible_by_contact: true
+                    slug: f0225788-1a48-475f-ac76-6acdb8a429f0
+                    created_at: '2026-07-17T13:10:07Z'
+                    creator_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    creator_type: User
+                    start_time: '2021-01-01T00:00:00Z'
+                    end_time: '2021-01-01T00:15:00Z'
+                    contact_id: null
+                    project_section_id: null
+                    project_id: null
+                    parent_task_id: null
+                    workspace_id: null
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Task name
+                description:
+                  type: string
+                  example: Task description
+                start_time:
+                  type: string
+                  format: date-time
+                  example: '2021-01-01T00:00:00Z'
+                completed:
+                  type: boolean
+                  example: false
+                clickup_id:
+                  type: string
+                  example: '123'
+                monday_id:
+                  type: string
+                  example: '123'
+                kind:
+                  type: string
+                  enum:
+                  - to_do
+                  - call
+                  - meeting
+                  - email
+                  - milestone
+                  example: to_do
+                visible_by_contact:
+                  type: boolean
+                  example: false
+                template_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                  description: ID of a task template to instantiate the task from. When provided, the task is created from the template (its name, description, assignments, tags, custom fields, files and subtasks are copied) and the template attributes take precedence over the other attributes.
+                parent_task_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                project_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                project_section_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                  description: 'Only project sections that are not templates can be used. Deprecated: attaching a task to a non-template project section is deprecated.'
+                contact_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                workspace_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                  description: 'Deprecated: attaching a task to a non-template workspace is deprecated.'
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-13fa3ea55dd8
+                contact_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-13fa3ea55dd8
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - tag1
+                  - tag2
+                recurrence_type:
+                  type: string
+                  nullable: true
+                  enum:
+                  - Weekly
+                  - Monthly
+                  - Yearly
+                  - Periodically
+                  - Custom
+                  - null
+                  description: 'Recurrence kind. Send `null` to remove an existing rule. Other
+
+                    `recurrence_*` attributes depend on this type.
+
+                    '
+                recurrence_frequency:
+                  type: integer
+                  nullable: true
+                  example: 2
+                recurrence_customable_type:
+                  type: string
+                  nullable: true
+                  enum:
+                  - Weekly
+                  - Monthly
+                  - null
+                recurrence_week_days:
+                  type: array
+                  nullable: true
+                  items:
+                    type: string
+                  example:
+                  - monday
+                  - friday
+                recurrence_day_into_month:
+                  type: integer
+                  nullable: true
+                  example: 15
+                recurrence_days_after_completion:
+                  type: integer
+                  nullable: true
+                  example: 7
+              required:
+              - name
+        required: true
+        description: Task attributes
+  /api/v2/tasks/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Task ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a task
+      security:
+      - bearer_auth: []
+      description: Returns the task. Only the first 100 tags of the task are returned
+      tags:
+      - task
+      responses:
+        '200':
+          description: Task retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 382e3796-fc34-4a39-92b8-7f22779a447f
+                    name: Task 158
+                    description: Description 158
+                    completed: false
+                    clickup_id: null
+                    monday_id: null
+                    kind: to_do
+                    visible_by_contact: false
+                    slug: 382e3796-fc34-4a39-92b8-7f22779a447f
+                    created_at: '2026-07-17T13:10:08Z'
+                    creator_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    creator_type: User
+                    start_time: '2021-12-31T23:00:00Z'
+                    end_time: '2021-12-31T23:00:00Z'
+                    contact_id: null
+                    project_section_id: null
+                    project_id: null
+                    parent_task_id: null
+                    workspace_id: null
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a task
+      security:
+      - bearer_auth: []
+      description: 'Updates a task. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field ''serialization_name'' to the request params, with the desired value. If the task has a `parent_task_id` the following attributes are not available: `clickup_id`, `monday_id`, and `contact_id`. To change the recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) with the matching `recurrence_*` fields. Send `recurrence_type: null` to remove an existing rule; omit the key to leave it unchanged. For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`).'
+      tags:
+      - task
+      parameters: []
+      responses:
+        '200':
+          description: Task updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: d082bb3d-65ee-41ea-a39d-c3f24db3d093
+                    name: Task name
+                    description: Task description
+                    completed: false
+                    clickup_id: '123'
+                    monday_id: '123'
+                    kind: to_do
+                    visible_by_contact: true
+                    slug: d082bb3d-65ee-41ea-a39d-c3f24db3d093
+                    created_at: '2026-07-17T13:10:08Z'
+                    creator_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    creator_type: User
+                    start_time: '2021-01-01T00:00:00Z'
+                    end_time: '2021-01-01T03:42:00Z'
+                    contact_id: null
+                    project_section_id: null
+                    project_id: null
+                    parent_task_id: null
+                    workspace_id: null
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Title must be filled in'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Task name
+                description:
+                  type: string
+                  example: Task description
+                start_time:
+                  type: string
+                  format: date-time
+                  example: '2021-01-01T00:00:00Z'
+                completed:
+                  type: boolean
+                  example: false
+                clickup_id:
+                  type: string
+                  example: '123'
+                monday_id:
+                  type: string
+                  example: '123'
+                kind:
+                  type: string
+                  enum:
+                  - to_do
+                  - call
+                  - meeting
+                  - email
+                  - milestone
+                  example: to_do
+                visible_by_contact:
+                  type: boolean
+                  example: false
+                project_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                project_section_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                  description: 'Only project sections that are not templates can be used. Deprecated: attaching a task to a non-template project section is deprecated.'
+                contact_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                workspace_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                  description: 'Deprecated: attaching a task to a non-template workspace is deprecated.'
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                contact_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - tag1
+                  - tag2
+                recurrence_type:
+                  type: string
+                  nullable: true
+                  enum:
+                  - Weekly
+                  - Monthly
+                  - Yearly
+                  - Periodically
+                  - Custom
+                  - null
+                  description: 'Recurrence kind. Omit to leave the existing rule unchanged.
+
+                    Send `null` to remove an existing rule. Other `recurrence_*`
+
+                    attributes depend on this type.
+
+                    '
+                recurrence_frequency:
+                  type: integer
+                  nullable: true
+                  example: 2
+                recurrence_customable_type:
+                  type: string
+                  nullable: true
+                  enum:
+                  - Weekly
+                  - Monthly
+                  - null
+                recurrence_week_days:
+                  type: array
+                  nullable: true
+                  items:
+                    type: string
+                  example:
+                  - monday
+                  - friday
+                recurrence_day_into_month:
+                  type: integer
+                  nullable: true
+                  example: 15
+                recurrence_days_after_completion:
+                  type: integer
+                  nullable: true
+                  example: 7
+              required:
+              - name
+        required: true
+        description: Task attributes
+components:
+  schemas:
+    error_not_found:
+      description: A response describing a not found error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        title:
+          type: string
+          example: Not Found
+        message:
+          type: string
+          example: Resource not found
+      required:
+      - status
+      - title
+      - message
+    error_unauthorized:
+      description: A response describing an authentication error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+        title:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: API token not found
+      required:
+      - status
+      - title
+      - message
+    error_too_many_requests:
+      description: A response describing a rate limit error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 429
+        title:
+          type: string
+          example: Too Many Requests
+        message:
+          type: string
+          example: Rate limit reached. Please wait for a couple of minutes.
+      required:
+      - status
+      - title
+      - message
+    error_unprocessable_content:
+      description: A response describing a validation error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 422
+        title:
+          type: string
+          example: Unprocessable Content
+        message:
+          type: string
+          example: 'Validation failed: Title can''t be blank'
+      required:
+      - status
+      - title
+      - message
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

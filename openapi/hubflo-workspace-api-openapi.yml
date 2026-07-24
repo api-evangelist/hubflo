@@ -1,0 +1,4729 @@
+openapi: 3.0.1
+info:
+  title: Hubflo chat_room workspace API
+  version: v2
+  description: "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n"
+servers:
+- url: https://app.hubflo.com
+  description: The production API server
+- url: https://staging.hubflo.com
+  description: The staging API server
+- url: http://localhost:3000
+  description: The local API server
+tags:
+- name: workspace
+paths:
+  /api/v2/workspaces/{workspace_id}/archive:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    post:
+      summary: Archives a workspace
+      security:
+      - bearer_auth: []
+      description: Archives a workspace and its associated chat room
+      tags:
+      - workspace
+      responses:
+        '201':
+          description: Workspace archived
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: bb868097-8b75-4d88-bd1b-76ddc042b442
+                    title: Title 53
+                    subtitle: MyString
+                    welcome_message: null
+                    archived: true
+                    template: false
+                    created_at: '2026-07-17T13:10:12Z'
+                    project_id: null
+                    chat_room_id: b88f3a46-7353-4a94-ab45-c3d460812b4c
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    delete:
+      summary: Unarchives a workspace
+      security:
+      - bearer_auth: []
+      description: Unarchives a workspace and its associated chat room
+      tags:
+      - workspace
+      responses:
+        '200':
+          description: Workspace unarchived
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: d9c6b866-39d5-4648-a971-bdccc32a16d0
+                    title: Title 59
+                    subtitle: MyString
+                    welcome_message: null
+                    archived: false
+                    template: false
+                    created_at: '2026-07-17T13:10:12Z'
+                    project_id: null
+                    chat_room_id: 20db214c-3734-4556-b3db-9073032ea885
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/contacts:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the contacts for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns the contacts for a workspace. Only the first 100 tags of each contact are returned.
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Contacts retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 5649f5cd-9ac6-4241-bcd1-838b6a81f5f5
+                    first_name: Dustin
+                    last_name: Kris
+                    full_name: Dustin Kris
+                    email: hello-387@hubflo.com
+                    contact_type: prospect
+                    priority: high
+                    phone: '       386'
+                    secondary_phone: null
+                    address: 387 RUE DE PONTHIEU
+                    postal_code: '75008'
+                    city: Paris
+                    state: Paris
+                    country: null
+                    job_title: null
+                    url_linkedin: https://www.linkedin.com/in/dustin-kris
+                    hubspot_id: null
+                    created_at: '2026-07-17T13:10:13Z'
+                    company_name: null
+                    company_id: null
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    tags: []
+                  - id: a278a145-84e1-4d72-b02c-0f8e127eb3d0
+                    first_name: Cortez
+                    last_name: Reichel
+                    full_name: Cortez Reichel
+                    email: hello-386@hubflo.com
+                    contact_type: prospect
+                    priority: medium
+                    phone: '       385'
+                    secondary_phone: null
+                    address: 386 RUE DE PONTHIEU
+                    postal_code: '75008'
+                    city: Paris
+                    state: Paris
+                    country: null
+                    job_title: null
+                    url_linkedin: https://www.linkedin.com/in/cortez-reichel
+                    hubspot_id: null
+                    created_at: '2026-07-17T13:10:13Z'
+                    company_name: null
+                    company_id: null
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/contacts/{id}:
+    get:
+      summary: Retrieves a contact for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns a contact for a workspace. Only the first 100 tags of each contact are returned.
+      tags:
+      - workspace
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Contact ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Contact retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: a0bbc2ab-2272-4eb9-a68c-57477b4d65d0
+                    first_name: Heath
+                    last_name: Cormier
+                    full_name: Heath Cormier
+                    email: hello-403@hubflo.com
+                    contact_type: prospect
+                    priority: low
+                    phone: '       402'
+                    secondary_phone: null
+                    address: 403 RUE DE PONTHIEU
+                    postal_code: '75008'
+                    city: Paris
+                    state: Paris
+                    country: null
+                    job_title: null
+                    url_linkedin: https://www.linkedin.com/in/heath-cormier
+                    hubspot_id: null
+                    created_at: '2026-07-17T13:10:14Z'
+                    company_name: null
+                    company_id: null
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    delete:
+      summary: Removes a contact from a workspace
+      security:
+      - bearer_auth: []
+      description: Removes a contact from a workspace.
+      tags:
+      - workspace
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Contact ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Contact removed
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/default:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    post:
+      summary: Sets a workspace template as the default
+      security:
+      - bearer_auth: []
+      description: Marks the workspace template as the organization default
+      tags:
+      - workspace
+      responses:
+        '201':
+          description: Workspace template marked as default
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 7a368b89-d031-4177-9330-e2b0fbaf7fd0
+                    title: Title 85
+                    subtitle: MyString
+                    welcome_message: null
+                    archived: false
+                    template: true
+                    created_at: '2026-07-17T13:10:15Z'
+                    project_id: null
+                    chat_room_id: null
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/embeds:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the embeds for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns the embeds for a workspace
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Embeds retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 37dc714e-f59e-4c8f-be0d-7e2e41f9e74b
+                    title: Content Item 120
+                    library: false
+                    created_at: '2026-07-17T13:10:16Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 21a44c96-4f48-43bc-9a18-b7e8694153de
+                    parent_id: null
+                    task_id: null
+                    url: http://hubflo-3.com
+                    icon: null
+                    display_mode: inline
+                  - id: a46fdd8f-e87a-4603-8db3-362eb224b0da
+                    title: Content Item 119
+                    library: false
+                    created_at: '2026-07-17T13:10:16Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 21a44c96-4f48-43bc-9a18-b7e8694153de
+                    parent_id: null
+                    task_id: null
+                    url: http://hubflo-2.com
+                    icon: null
+                    display_mode: inline
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates an embed for a workspace
+      security:
+      - bearer_auth: []
+      description: "Creates an embed for a workspace. It can be created giving the embed attributes, or imported from the library,\n        using the embed_id attribute. When the embed has a parent folder, the parent_id attribute must be provided and\n        the parent folder has to be in the same workspace."
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '201':
+          description: Embed created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 9207bfd3-1090-49d3-bc94-dacccfe16ba1
+                    title: Embed title
+                    library: false
+                    created_at: '2026-07-17T13:10:17Z'
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    workspace_id: 4ac740f2-927d-4a0a-8d8b-1c564171ee09
+                    parent_id: null
+                    task_id: null
+                    url: https://example.com
+                    icon: 💡
+                    display_mode: inline
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Itemable url is not a valid URL'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Embed title
+                url:
+                  type: string
+                  format: uri
+                  example: https://example.com
+                icon:
+                  type: string
+                  example: 💡
+                display_mode:
+                  type: string
+                  enum:
+                  - inline
+                  - full_page
+                  example: inline
+                library:
+                  type: boolean
+                  example: false
+                parent_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                embed_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+              required:
+              - title
+              - url
+        required: true
+        description: Embed attributes
+  /api/v2/workspaces/{workspace_id}/embeds/{id}:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Embed ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves an embed for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns a embed for a workspace
+      tags:
+      - workspace
+      responses:
+        '200':
+          description: Embed retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 1bc3da65-f95a-47bf-93f6-8d3942964365
+                    title: Content Item 139
+                    library: false
+                    created_at: '2026-07-17T13:10:17Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: eb7c689e-152a-44ab-97d4-21a4e6fecb4a
+                    parent_id: null
+                    task_id: null
+                    url: http://hubflo-20.com
+                    icon: null
+                    display_mode: inline
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates an embed for a workspace
+      security:
+      - bearer_auth: []
+      description: Updates an embed
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '200':
+          description: Embed updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: dba2bea0-62fb-4371-90fa-6c1f00d022db
+                    title: new title
+                    library: false
+                    created_at: '2026-07-17T13:10:18Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 8677944c-0b33-4ffd-a3cd-a288e8e77ea8
+                    parent_id: null
+                    task_id: null
+                    url: https://example.com
+                    icon: 💡
+                    display_mode: inline
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Embed title
+                url:
+                  type: string
+                  format: uri
+                  example: https://example.com
+                icon:
+                  type: string
+                  example: 💡
+                display_mode:
+                  type: string
+                  enum:
+                  - inline
+                  - full_page
+                  example: inline
+                library:
+                  type: boolean
+                  example: false
+              required:
+              - title
+              - url
+        required: true
+        description: Embed attributes
+  /api/v2/workspaces/{workspace_id}/files:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the files for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns the files for a workspace
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: folder_id
+        in: query
+        required: false
+        description: Filter by folder ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: files retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 6016873d-a447-4408-8678-38eced9d0d81
+                    title: Content Item 157
+                    library: false
+                    created_at: '2026-07-17T13:10:18Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: a625f856-71dd-4261-baf1-402a6cce886e
+                    parent_id: null
+                    task_id: null
+                    file_name: image1.png
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJiNjRoc2RpZ29xYWduc3djczRjMjRjdjhjdzllIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1hZ2UxLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltYWdlMS5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJ0ZXN0In0sImV4cCI6IjIwMjYtMDctMTdUMTM6MTU6MTguODAwWiIsInB1ciI6ImJsb2Jfa2V5In19--c15c579a5f2b44f3316d4cbdca8716e489d0daa4/image1.png
+                    file_type: image/png
+                    file_size: 56958
+                  - id: 73fa9ab6-2e95-43f2-bf6b-febce30e204f
+                    title: Content Item 156
+                    library: false
+                    created_at: '2026-07-17T13:10:18Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: a625f856-71dd-4261-baf1-402a6cce886e
+                    parent_id: null
+                    task_id: null
+                    file_name: image1.png
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxYng0dGUxeGk4aDI0b2V1MHVuNDliODkxb2xnIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1hZ2UxLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltYWdlMS5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJ0ZXN0In0sImV4cCI6IjIwMjYtMDctMTdUMTM6MTU6MTguODAzWiIsInB1ciI6ImJsb2Jfa2V5In19--2c219b064e3f215f73241b1a94c1ab0809314bd6/image1.png
+                    file_type: image/png
+                    file_size: 56958
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a file for a workspace
+      security:
+      - bearer_auth: []
+      description: "Creates a file for a workspace. It can be created giving the uploaded file, or imported from the library,\n        using the file_id attribute. When the file has a parent folder, the parent_id attribute must be provided and\n        the parent folder has to be in the same workspace."
+      tags:
+      - workspace
+      parameters:
+      - name: parent_id
+        in: query
+        required: false
+        description: Parent folder ID
+        schema:
+          type: string
+      - name: file_id
+        in: query
+        required: false
+        description: File ID
+        schema:
+          type: string
+      - name: library
+        in: query
+        required: false
+        description: Add to library
+        schema:
+          type: boolean
+      - name: title
+        in: query
+        required: false
+        description: Title (ignored when file_id is provided)
+        schema:
+          type: string
+      responses:
+        '201':
+          description: file created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 405bff0d-769f-401e-916f-df36763e0938
+                    title: chicken.pdf
+                    library: false
+                    created_at: '2026-07-17T13:10:19Z'
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    workspace_id: 286b0598-817f-46f5-b31a-5b6c9738e207
+                    parent_id: null
+                    task_id: null
+                    file_name: chicken.pdf
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ5M2c0eTFobnVwMzJkaW5rcm5kMDhzNjB0MTYxIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiY2hpY2tlbi5wZGZcIjsgZmlsZW5hbWUqPVVURi04JydjaGlja2VuLnBkZiIsImNvbnRlbnRfdHlwZSI6ImFwcGxpY2F0aW9uL3BkZiIsInNlcnZpY2VfbmFtZSI6InRlc3QifSwiZXhwIjoiMjAyNi0wNy0xN1QxMzoxNToxOS43OTJaIiwicHVyIjoiYmxvYl9rZXkifX0=--c1a28b1e0f464295f1f790678a4cb319d63c5a51/chicken.pdf
+                    file_type: application/pdf
+                    file_size: 51500
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+        description: File to upload
+  /api/v2/workspaces/{workspace_id}/files/{id}:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: file ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a file for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns a file for a workspace
+      tags:
+      - workspace
+      responses:
+        '200':
+          description: file retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 7e6d8764-999c-4e52-8fa8-8ece840724ba
+                    title: Content Item 181
+                    library: false
+                    created_at: '2026-07-17T13:10:20Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: e0551ec7-7151-48ad-917e-a5442c3ae831
+                    parent_id: null
+                    task_id: null
+                    file_name: image1.png
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI3MWgzcnpwM2s3azNvMGp6anFzemk1Z290OTNqIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1hZ2UxLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltYWdlMS5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJ0ZXN0In0sImV4cCI6IjIwMjYtMDctMTdUMTM6MTU6MjAuNjcxWiIsInB1ciI6ImJsb2Jfa2V5In19--9833d64d7d3d4a98a1eb564f0c05da053e7f668f/image1.png
+                    file_type: image/png
+                    file_size: 56958
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a file for a workspace
+      security:
+      - bearer_auth: []
+      description: Updates a file for a workspace. You can only change the title of the file and the parent.
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '200':
+          description: file updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 76fa85a6-c28a-4990-966a-00bfae3f0164
+                    title: new name.png
+                    library: false
+                    created_at: '2026-07-17T13:10:21Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 5f95b650-a47d-43ee-a82f-f77b9b66c8d4
+                    parent_id: 4ee257f9-cefa-4977-aa94-75299740aae0
+                    task_id: null
+                    file_name: image1.png
+                    file_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJhNHI1NzJzaDE0c2V6ZGpqcDFhYTgybWdyYzExIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1hZ2UxLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltYWdlMS5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJ0ZXN0In0sImV4cCI6IjIwMjYtMDctMTdUMTM6MTU6MjEuMjc1WiIsInB1ciI6ImJsb2Jfa2V5In19--1c9b93ccba716bb3066508bae1790599f8f32ea6/image1.png
+                    file_type: image/png
+                    file_size: 56958
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: new name.png
+                parent_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                  description: Parent folder ID. Can be nil to remove the parent.
+        required: true
+  /api/v2/workspaces/{workspace_id}/folders:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the folders for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns the folders for a workspace
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: title
+        in: query
+        required: false
+        description: Filter by title
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Folders retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 61d3ad61-7888-4fb0-9791-5e744acffc56
+                    title: Content Item 228
+                    library: false
+                    created_at: '2026-07-17T13:10:24Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: e3683bb7-3c05-4538-a940-a7ad6b6d1b62
+                    parent_id: null
+                    task_id: null
+                    description: null
+                    locked: false
+                    icon: null
+                  - id: cc9ae05d-863c-4636-b30b-23b7e10b69a2
+                    title: Content Item 227
+                    library: false
+                    created_at: '2026-07-17T13:10:24Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: e3683bb7-3c05-4538-a940-a7ad6b6d1b62
+                    parent_id: null
+                    task_id: null
+                    description: null
+                    locked: false
+                    icon: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a folder for a workspace
+      security:
+      - bearer_auth: []
+      description: "Creates a folder for a workspace. When the folder has a parent folder, the parent_id attribute must be\n        provided and the parent folder has to be in the same workspace."
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '201':
+          description: Folder created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 98f91f97-9750-4321-9943-230b0305b392
+                    title: Folder title
+                    library: false
+                    created_at: '2026-07-17T13:10:25Z'
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    workspace_id: 5fc5ebd5-07e9-406f-a8f0-a3a18a711180
+                    parent_id: null
+                    task_id: null
+                    description: Folder description
+                    locked: true
+                    icon: 💡
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Title must be filled in'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Folder title
+                parent_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                locked:
+                  type: boolean
+                  example: false
+                description:
+                  type: string
+                  example: Folder description
+                icon:
+                  type: string
+                  example: 💡
+              required:
+              - title
+        required: true
+        description: Folder attributes
+  /api/v2/workspaces/{workspace_id}/folders/{id}:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Folder ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a folder for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns a folder for a workspace
+      tags:
+      - workspace
+      responses:
+        '200':
+          description: Folder retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: b4332984-e067-48ca-a914-97646bb1eed2
+                    title: Content Item 248
+                    library: false
+                    created_at: '2026-07-17T13:10:25Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 9ef1f592-3b2b-4bac-859f-cfdd80ec9d32
+                    parent_id: null
+                    task_id: null
+                    description: null
+                    locked: false
+                    icon: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a folder for a workspace
+      security:
+      - bearer_auth: []
+      description: "Updates a folder for a workspace. If the parent_id attribute is provided, the parent folder has to be in the\n        same workspace."
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '200':
+          description: Folder updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 074728d0-c25c-4888-9722-a85e6fe5618a
+                    title: Content Item 255
+                    library: false
+                    created_at: '2026-07-17T13:10:26Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: c70a7d5c-04b6-4672-956f-276ac1c76358
+                    parent_id: 8cc4ce65-fb14-42ea-b274-22a62b3b8a21
+                    task_id: null
+                    description: Folder description
+                    locked: true
+                    icon: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                locked:
+                  type: boolean
+                  example: false
+                description:
+                  type: string
+                  example: Folder description
+                parent_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+        required: true
+        description: Folder attributes
+  /api/v2/workspaces/{workspace_id}/invites:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the invites for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns the invites for a workspace. If the invited contact already has access to the portal, the contact will be automatically added to the workspace without generating a new invitation UUID or URL
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Invites retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: ce9416f1-a386-41b4-993f-5a504dbc43a5
+                    workspace_id: 15c999d1-2004-435c-96cc-706f712fe914
+                    contact_id: 7f036364-66f7-48b5-bca1-4e0f31318ce8
+                    email: hello-429@hubflo.com
+                    invitation_url: http://client.com/contact_authentications/sign_up?invitation_sgid=eyJfcmFpbHMiOnsiZGF0YSI6MTIsInB1ciI6ImNvbnRhY3RfaW52aXRhdGlvbiJ9fQ--a2784d62d25b43f4c79bc2c15b93d6c6e5ab7c514b06c81ad975453929bee742
+                  - id: 4e1457a6-2a78-4cfd-bad0-c01dbf305c09
+                    workspace_id: 15c999d1-2004-435c-96cc-706f712fe914
+                    contact_id: 86a0d78a-56c4-4279-a7f4-439055588388
+                    email: hello-428@hubflo.com
+                    invitation_url: http://client.com/contact_authentications/sign_up?invitation_sgid=eyJfcmFpbHMiOnsiZGF0YSI6MTEsInB1ciI6ImNvbnRhY3RfaW52aXRhdGlvbiJ9fQ--5be2da13770e171494d2fd6f780cddbd1ae1d48fd2742949960d87c6ad666709
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates an invite for a workspace
+      security:
+      - bearer_auth: []
+      description: Creates an invite for a workspace
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '201':
+          description: Invite created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 052c7a42-1760-46dd-a518-829b5d7af06e
+                    workspace_id: 88895965-7fc8-4382-835d-3e3f4e0b069f
+                    contact_id: e08bfd80-9e6c-4c64-a87b-35a4ed7acb33
+                    email: hello-442@hubflo.com
+                    invitation_url: http://client.com/contact_authentications/sign_up?invitation_sgid=eyJfcmFpbHMiOnsiZGF0YSI6MjUsInB1ciI6ImNvbnRhY3RfaW52aXRhdGlvbiJ9fQ--0e3f6d250bbf7d0bb115a751a06afe1fc3d226de945f73f633848b5f463de48e
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact_id:
+                  type: string
+                  example: Contact ID
+                folder_items:
+                  type: array
+                  items:
+                    type: string
+                    example: Folder Item ID
+              required:
+              - contact_id
+        required: true
+        description: Invite attributes
+  /api/v2/workspaces/{workspace_id}/invites/{id}:
+    delete:
+      summary: Deletes an invite for a workspace
+      security:
+      - bearer_auth: []
+      description: Deletes an invite for a workspace
+      tags:
+      - workspace
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Invite ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Invite deleted
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/links:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the links for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns the links for a workspace
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Links retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 401bbc9a-b30d-4342-8ec7-0f59eb464b8d
+                    title: Content Item 269
+                    library: false
+                    created_at: '2026-07-17T13:10:28Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 731e439e-29d3-474a-8159-b1707dbf822b
+                    parent_id: null
+                    task_id: null
+                    url: http://hubflo-3.com
+                    icon: null
+                  - id: 31bcb3d3-14dc-426f-9fe5-a664d1085c82
+                    title: Content Item 268
+                    library: false
+                    created_at: '2026-07-17T13:10:28Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 731e439e-29d3-474a-8159-b1707dbf822b
+                    parent_id: null
+                    task_id: null
+                    url: http://hubflo-2.com
+                    icon: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a link for a workspace
+      security:
+      - bearer_auth: []
+      description: "Creates a link for a workspace. It can be created giving the link attributes, or imported from the library,\n        using the link_id attribute. When the link has a parent folder, the parent_id attribute must be provided and\n        the parent folder has to be in the same workspace."
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '201':
+          description: Link created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: d2aaeb5c-33a5-4879-a62b-c4ce1ef14261
+                    title: Link title
+                    library: false
+                    created_at: '2026-07-17T13:10:28Z'
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    workspace_id: e8ae0bba-3ac6-458e-b230-b1e7c4a68508
+                    parent_id: null
+                    task_id: null
+                    url: https://example.com
+                    icon: 💡
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Itemable url is not a valid URL, Title must be filled in'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Link title
+                url:
+                  type: string
+                  format: uri
+                  example: https://example.com
+                icon:
+                  type: string
+                  example: 💡
+                library:
+                  type: boolean
+                  example: false
+                parent_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                link_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+              required:
+              - title
+              - url
+        required: true
+        description: Link attributes
+  /api/v2/workspaces/{workspace_id}/links/{id}:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Link ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a link for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns a link for a workspace
+      tags:
+      - workspace
+      responses:
+        '200':
+          description: Link retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 16e0eb77-d1ab-4f38-ab7d-a1194ae0ee20
+                    title: Content Item 288
+                    library: false
+                    created_at: '2026-07-17T13:10:29Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: e2be79b8-2cb9-4c03-a5c7-e72e726497d9
+                    parent_id: null
+                    task_id: null
+                    url: http://hubflo-20.com
+                    icon: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/notes:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the notes for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns the notes for a workspace
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Notes retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 7e82a334-ca32-47c2-ba08-1fd789318acd
+                    title: Content Item 297
+                    library: false
+                    created_at: '2026-07-17T13:10:29Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 4c5d3b46-bad7-4756-a234-560008ff7faf
+                    parent_id: null
+                    task_id: null
+                    content: Content note 48
+                  - id: 5cf515be-beae-4d0d-9ca5-765d9758eb9e
+                    title: Content Item 296
+                    library: false
+                    created_at: '2026-07-17T13:10:29Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 4c5d3b46-bad7-4756-a234-560008ff7faf
+                    parent_id: null
+                    task_id: null
+                    content: Content note 47
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a note for a workspace
+      security:
+      - bearer_auth: []
+      description: "Creates a note for a workspace. It can be created giving the note attributes, or imported from the library,\n        using the note_id attribute. When the note has a parent folder, the parent_id attribute must be provided and\n        the parent folder has to be in the same workspace."
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '201':
+          description: Note created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: b78d7825-c4e7-4238-808e-a07343ab38de
+                    title: Note content
+                    library: false
+                    created_at: '2026-07-17T13:10:30Z'
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    workspace_id: a914a591-1a3f-4d25-a8c3-5e394ddcd835
+                    parent_id: null
+                    task_id: null
+                    content: <p>Note content</p>
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Itemable html content text must be filled in, Title must be filled in'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Note title
+                content:
+                  type: string
+                  example: <p>Note content</p>
+                parent_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                note_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                library:
+                  type: boolean
+                  example: true
+              required:
+              - title
+              - content
+        required: true
+        description: Note attributes
+  /api/v2/workspaces/{workspace_id}/notes/{id}:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Note ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a note for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns a note for a workspace
+      tags:
+      - workspace
+      responses:
+        '200':
+          description: Note retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 5368b285-ab2c-4371-a5bb-e49205999aae
+                    title: Content Item 316
+                    library: false
+                    created_at: '2026-07-17T13:10:31Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: dd5f6282-e00c-414d-8477-30ae497ff350
+                    parent_id: null
+                    task_id: null
+                    content: Content note 65
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/projects:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the projects for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns the projects for a workspace. Only the first 100 tags of each project are returned
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Projects retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: dc0fc7fe-bd62-4d5c-b26a-0def8299d41e
+                    name: Project 174
+                    start_date: '2022-01-01'
+                    end_date: '2022-12-19'
+                    created_at: '2026-07-17T13:10:31Z'
+                    estimated_revenue_amount: 10000
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    stage_id: b80ef21c-4031-4213-acb9-7072e49f7543
+                    stage_name: Project Stage 209
+                    workspace_id: 80851f1f-400c-4929-970f-93a9be01d122
+                    primary_contact_id: null
+                    primary_contact_full_name: null
+                    address: 175 RUE DE PONTHIEU
+                    latitude: 48.8763
+                    longitude: 2.3183
+                    state: Paris
+                    city: Paris
+                    postal_code: '75008'
+                    country: null
+                    tags: []
+                  - id: 4182a759-2ad6-4bd2-91e1-45c589e965a6
+                    name: Project 173
+                    start_date: '2022-01-01'
+                    end_date: '2022-12-19'
+                    created_at: '2026-07-17T13:10:31Z'
+                    estimated_revenue_amount: 10000
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    stage_id: d8b3866d-9b4f-4b1c-93b5-221b5470ac30
+                    stage_name: Project Stage 208
+                    workspace_id: 80851f1f-400c-4929-970f-93a9be01d122
+                    primary_contact_id: null
+                    primary_contact_full_name: null
+                    address: 174 RUE DE PONTHIEU
+                    latitude: 48.8763
+                    longitude: 2.3183
+                    state: Paris
+                    city: Paris
+                    postal_code: '75008'
+                    country: null
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/tasks/{task_id}/items/{item_id}/shortcut:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    - name: task_id
+      in: path
+      required: true
+      description: Task ID
+      schema:
+        type: string
+    - name: item_id
+      in: path
+      required: true
+      description: Item ID
+      schema:
+        type: string
+    post:
+      summary: Creates an item shortcut for a task of a workspace
+      security:
+      - bearer_auth: []
+      description: Creates a shortcut to the given item for the given task in the given workspace
+      tags:
+      - workspace
+      responses:
+        '201':
+          description: Shortcut created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 371248c4-99cd-4a20-b679-11f2d860f655
+                    title: Content Item 323
+                    library: false
+                    created_at: '2026-07-17T13:10:32Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: 227fa631-6be9-428e-be79-e6bb694fc69a
+                    parent_id: null
+                    task_id: 50a41431-4576-4ec4-ae2b-25844bbfa126
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    delete:
+      summary: Deletes an item shortcut for a task of a workspace
+      security:
+      - bearer_auth: []
+      description: Deletes a shortcut to the given item for the given task in the given workspace
+      tags:
+      - workspace
+      responses:
+        '204':
+          description: Shortcut deleted
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/tasks/{task_id}/items:
+    get:
+      summary: Retrieves the items attached to the given task in the given workspace
+      security:
+      - bearer_auth: []
+      description: Returns the items
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: workspace_id
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        required: true
+        description: Task ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Items retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 809a840a-98ae-4315-b53f-7e3d2cc32237
+                    title: Content Item 341
+                    library: false
+                    created_at: '2026-07-17T13:10:34Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: cc8fb231-9830-4ba1-8c70-795444c31e55
+                    parent_id: null
+                    task_id: 4dbe3895-2b37-40b7-b617-f4bcaefe5389
+                  - id: 8458c74e-1de7-49fa-b9d6-62dda5d2bb7a
+                    title: Content Item 340
+                    library: false
+                    created_at: '2026-07-17T13:10:34Z'
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    workspace_id: cc8fb231-9830-4ba1-8c70-795444c31e55
+                    parent_id: null
+                    task_id: 4dbe3895-2b37-40b7-b617-f4bcaefe5389
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces/{workspace_id}/tasks:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    - name: completed
+      in: query
+      required: false
+      description: Filter by completion status
+      schema:
+        type: boolean
+    - name: parent_id
+      in: query
+      required: false
+      description: 'Filter by parent task ID. If not provided, the endpoint will return
+
+        first level tasks (no subtasks).
+
+        '
+      schema:
+        type: string
+    - name: tag
+      in: query
+      required: false
+      description: Filter by tag
+      schema:
+        type: string
+    get:
+      summary: Retrieves the tasks for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns the tasks for a workspace. Only the first 100 tags of the task are returned
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Tasks retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: ec976771-64a7-4187-abc9-a95443486d82
+                    name: Task 222
+                    description: Description 222
+                    completed: false
+                    clickup_id: null
+                    monday_id: null
+                    kind: to_do
+                    visible_by_contact: false
+                    slug: ec976771-64a7-4187-abc9-a95443486d82
+                    created_at: '2026-07-17T13:10:34Z'
+                    creator_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    creator_type: User
+                    start_time: '2021-12-31T23:00:00Z'
+                    end_time: '2021-12-31T23:00:00Z'
+                    contact_id: null
+                    project_section_id: null
+                    project_id: null
+                    parent_task_id: null
+                    workspace_id: 7c0f4372-c455-466d-b385-ed7863f50164
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+                  - id: 09936b4c-1ef0-4f01-a52b-c3aa3c11ebd9
+                    name: Task 223
+                    description: Description 223
+                    completed: false
+                    clickup_id: null
+                    monday_id: null
+                    kind: to_do
+                    visible_by_contact: false
+                    slug: 09936b4c-1ef0-4f01-a52b-c3aa3c11ebd9
+                    created_at: '2026-07-17T13:10:34Z'
+                    creator_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    creator_type: User
+                    start_time: '2021-12-31T23:00:00Z'
+                    end_time: '2021-12-31T23:00:00Z'
+                    contact_id: null
+                    project_section_id: null
+                    project_id: null
+                    parent_task_id: null
+                    workspace_id: 7c0f4372-c455-466d-b385-ed7863f50164
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a task in a workspace
+      security:
+      - bearer_auth: []
+      description: "Creates a task. Only 100 tags maximum can be specified.\n        To fill in a custom field, add the custom field 'serialization_name' to the request\n        params, with the desired value.\n        To attach a recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) along\n        with the matching `recurrence_*` fields. `start_time` is required when a recurrence is set.\n        For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`)\n        with the corresponding `recurrence_week_days` or `recurrence_day_into_month`."
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '201':
+          description: Task created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 2e9ac4e3-b9b1-4ee2-9431-8f496a7ea664
+                    name: Task name
+                    description: Task description
+                    completed: false
+                    clickup_id: '123'
+                    monday_id: '123'
+                    kind: to_do
+                    visible_by_contact: false
+                    slug: 2e9ac4e3-b9b1-4ee2-9431-8f496a7ea664
+                    created_at: '2026-07-17T13:10:36Z'
+                    creator_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    creator_type: User
+                    start_time: '2021-01-01T00:00:00Z'
+                    end_time: '2021-01-01T00:15:00Z'
+                    contact_id: null
+                    project_section_id: null
+                    project_id: null
+                    parent_task_id: null
+                    workspace_id: ff569d61-814c-403a-a6a1-7845f2c8fd2e
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Task name
+                description:
+                  type: string
+                  example: Task description
+                start_time:
+                  type: string
+                  format: date-time
+                  example: '2021-01-01T00:00:00Z'
+                completed:
+                  type: boolean
+                  example: false
+                clickup_id:
+                  type: string
+                  example: '123'
+                monday_id:
+                  type: string
+                  example: '123'
+                kind:
+                  type: string
+                  enum:
+                  - to_do
+                  - call
+                  - meeting
+                  - email
+                  - milestone
+                  example: to_do
+                template_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                  description: ID of a task template to instantiate the task from. When provided, the task is created from the template (its name, description, assignments, tags, custom fields, files and subtasks are copied) and the template attributes take precedence over the other attributes.
+                contact_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                contact_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - tag1
+                  - tag2
+                recurrence_type:
+                  type: string
+                  nullable: true
+                  enum:
+                  - Weekly
+                  - Monthly
+                  - Yearly
+                  - Periodically
+                  - Custom
+                  - null
+                  description: 'Recurrence kind. Send `null` to remove an existing rule. Other
+
+                    `recurrence_*` attributes depend on this type.
+
+                    '
+                recurrence_frequency:
+                  type: integer
+                  nullable: true
+                  example: 2
+                recurrence_customable_type:
+                  type: string
+                  nullable: true
+                  enum:
+                  - Weekly
+                  - Monthly
+                  - null
+                recurrence_week_days:
+                  type: array
+                  nullable: true
+                  items:
+                    type: string
+                  example:
+                  - monday
+                  - friday
+                recurrence_day_into_month:
+                  type: integer
+                  nullable: true
+                  example: 15
+                recurrence_days_after_completion:
+                  type: integer
+                  nullable: true
+                  example: 7
+              required:
+              - name
+        required: true
+        description: Task attributes
+  /api/v2/workspaces/{workspace_id}/tasks/{id}:
+    parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Task ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a task for a workspace
+      security:
+      - bearer_auth: []
+      description: Returns a task for a workspace. Only the first 100 tags of the task are returned
+      tags:
+      - workspace
+      responses:
+        '200':
+          description: Task retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 4d319e41-08f3-49e0-9c54-05c6e98f1d69
+                    name: Task 264
+                    description: Description 264
+                    completed: false
+                    clickup_id: null
+                    monday_id: null
+                    kind: to_do
+                    visible_by_contact: false
+                    slug: 4d319e41-08f3-49e0-9c54-05c6e98f1d69
+                    created_at: '2026-07-17T13:10:37Z'
+                    creator_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    creator_type: User
+                    start_time: '2021-12-31T23:00:00Z'
+                    end_time: '2021-12-31T23:00:00Z'
+                    contact_id: null
+                    project_section_id: null
+                    project_id: null
+                    parent_task_id: null
+                    workspace_id: c239d448-d92f-4754-a877-0ab804da402b
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a task of a workspace
+      security:
+      - bearer_auth: []
+      description: 'Updates a task. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field ''serialization_name'' to the request params, with the desired value. To change the recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) with the matching `recurrence_*` fields. Send `recurrence_type: null` to remove an existing rule; omit the key to leave it unchanged. For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`).'
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '200':
+          description: Task updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 7c6b13d9-6f83-4059-b9a2-6aab7621965e
+                    name: Task name
+                    description: Task description
+                    completed: false
+                    clickup_id: '123'
+                    monday_id: '123'
+                    kind: to_do
+                    visible_by_contact: false
+                    slug: 7c6b13d9-6f83-4059-b9a2-6aab7621965e
+                    created_at: '2026-07-17T13:10:37Z'
+                    creator_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    creator_type: User
+                    start_time: '2021-01-01T00:00:00Z'
+                    end_time: '2021-01-01T03:42:00Z'
+                    contact_id: null
+                    project_section_id: null
+                    project_id: null
+                    parent_task_id: null
+                    workspace_id: 86d71d48-c5d2-4c93-aa01-f41483fbe2f6
+                    tags: []
+                    recurrence_type: null
+                    recurrence_frequency: null
+                    recurrence_customable_type: null
+                    recurrence_week_days: null
+                    recurrence_day_into_month: null
+                    recurrence_days_after_completion: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Title must be filled in'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Task name
+                description:
+                  type: string
+                  example: Task description
+                start_time:
+                  type: string
+                  format: date-time
+                  example: '2021-01-01T00:00:00Z'
+                completed:
+                  type: boolean
+                  example: false
+                clickup_id:
+                  type: string
+                  example: '123'
+                monday_id:
+                  type: string
+                  example: '123'
+                kind:
+                  type: string
+                  enum:
+                  - to_do
+                  - call
+                  - meeting
+                  - email
+                  - milestone
+                  example: to_do
+                contact_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                contact_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - tag1
+                  - tag2
+                recurrence_type:
+                  type: string
+                  nullable: true
+                  enum:
+                  - Weekly
+                  - Monthly
+                  - Yearly
+                  - Periodically
+                  - Custom
+                  - null
+                  description: 'Recurrence kind. Omit to leave the existing rule unchanged.
+
+                    Send `null` to remove an existing rule. Other `recurrence_*`
+
+                    attributes depend on this type.
+
+                    '
+                recurrence_frequency:
+                  type: integer
+                  nullable: true
+                  example: 2
+                recurrence_customable_type:
+                  type: string
+                  nullable: true
+                  enum:
+                  - Weekly
+                  - Monthly
+                  - null
+                recurrence_week_days:
+                  type: array
+                  nullable: true
+                  items:
+                    type: string
+                  example:
+                  - monday
+                  - friday
+                recurrence_day_into_month:
+                  type: integer
+                  nullable: true
+                  example: 15
+                recurrence_days_after_completion:
+                  type: integer
+                  nullable: true
+                  example: 7
+              required:
+              - name
+        required: true
+        description: Task attributes
+  /api/v2/workspaces/templates:
+    get:
+      summary: Retrieves the workspace templates
+      security:
+      - bearer_auth: []
+      description: Returns the workspace templates
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: title
+        in: query
+        required: false
+        description: Filter by title
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Workspace templates retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 5f859cae-a2c0-44f5-b848-fa5c2d8cbb01
+                    title: Title 348
+                    subtitle: MyString
+                    welcome_message: null
+                    archived: false
+                    template: true
+                    created_at: '2026-07-17T13:10:39Z'
+                    project_id: null
+                    chat_room_id: null
+                    tags: []
+                  - id: 24776ee0-3240-4d02-91ae-8693437d66d2
+                    title: Title 347
+                    subtitle: MyString
+                    welcome_message: null
+                    archived: false
+                    template: true
+                    created_at: '2026-07-17T13:10:39Z'
+                    project_id: null
+                    chat_room_id: null
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/workspaces:
+    get:
+      summary: Retrieves the workspaces
+      security:
+      - bearer_auth: []
+      description: Returns the workspaces. Only the first 100 tags of each workspace are returned
+      tags:
+      - workspace
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: project_id
+        in: query
+        required: false
+        description: Filter by project ID
+        schema:
+          type: string
+      - name: workspace_id
+        in: query
+        required: false
+        description: Filter by workspace ID
+        schema:
+          type: string
+      - name: title
+        in: query
+        required: false
+        description: Filter by title
+        schema:
+          type: string
+      responses:
+        '200':
+          description: when filtering by title
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 49431ea8-0eff-4458-8bec-70277e43f0a6
+                    title: Workspace
+                    subtitle: MyString
+                    welcome_message: null
+                    archived: false
+                    template: false
+                    created_at: '2026-07-17T13:10:41Z'
+                    project_id: null
+                    chat_room_id: null
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a workspace
+      security:
+      - bearer_auth: []
+      description: "Creates a workspace, from an existing one or not. Only 100 tags maximum can be specified.\n        When a chat room is created, chat_room_id is ignored.\n        In this case, you have to pass at least one ID of a user, who will be part of the chat room."
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '201':
+          description: Workspace created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 8c8ceaec-20b9-4f83-96f6-a821067e78d1
+                    title: Workspace
+                    subtitle: Workspace subtitle
+                    welcome_message: Welcome to the workspace
+                    archived: false
+                    template: false
+                    created_at: '2026-07-17T13:10:41Z'
+                    project_id: null
+                    chat_room_id: null
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Title must be filled in'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Workspace
+                subtitle:
+                  type: string
+                  example: Workspace subtitle
+                welcome_message:
+                  type: string
+                  example: Welcome to the workspace
+                chat_room_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                new_chat_room:
+                  type: boolean
+                  example: true
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                project_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                template_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                template:
+                  type: boolean
+                  example: false
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - tag1
+                  - tag2
+              required:
+              - title
+        required: true
+        description: Workspace attributes
+  /api/v2/workspaces/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Workspace ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a workspace
+      security:
+      - bearer_auth: []
+      description: Returns a workspace. Only the first 100 tags of the workspace are returned
+      tags:
+      - workspace
+      responses:
+        '200':
+          description: Workspace retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 8e01b1a5-8634-4a65-ac2d-e78b2744bf01
+                    title: Title 392
+                    subtitle: MyString
+                    welcome_message: null
+                    archived: false
+                    template: false
+                    created_at: '2026-07-17T13:10:42Z'
+                    project_id: null
+                    chat_room_id: null
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a workspace
+      security:
+      - bearer_auth: []
+      description: Updates a workspace. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags.
+      tags:
+      - workspace
+      parameters: []
+      responses:
+        '200':
+          description: Workspace updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: e10f6af9-613d-4e92-950d-bd8bf1d452a0
+                    title: Workspace
+                    subtitle: Workspace subtitle
+                    welcome_message: Welcome to the workspace
+                    archived: false
+                    template: false
+                    created_at: '2026-07-17T13:10:43Z'
+                    project_id: null
+                    chat_room_id: null
+                    tags: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Workspace
+                subtitle:
+                  type: string
+                  example: Workspace subtitle
+                welcome_message:
+                  type: string
+                  example: Welcome to the workspace
+                chat_room_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                project_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - tag1
+                  - tag2
+              required:
+              - title
+        required: true
+        description: Workspace attributes
+    delete:
+      summary: Deletes a workspace
+      security:
+      - bearer_auth: []
+      description: Deletes a workspace
+      tags:
+      - workspace
+      responses:
+        '204':
+          description: Workspace deleted
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+components:
+  schemas:
+    error_not_found:
+      description: A response describing a not found error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        title:
+          type: string
+          example: Not Found
+        message:
+          type: string
+          example: Resource not found
+      required:
+      - status
+      - title
+      - message
+    error_unauthorized:
+      description: A response describing an authentication error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+        title:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: API token not found
+      required:
+      - status
+      - title
+      - message
+    error_too_many_requests:
+      description: A response describing a rate limit error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 429
+        title:
+          type: string
+          example: Too Many Requests
+        message:
+          type: string
+          example: Rate limit reached. Please wait for a couple of minutes.
+      required:
+      - status
+      - title
+      - message
+    error_unprocessable_content:
+      description: A response describing a validation error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 422
+        title:
+          type: string
+          example: Unprocessable Content
+        message:
+          type: string
+          example: 'Validation failed: Title can''t be blank'
+      required:
+      - status
+      - title
+      - message
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

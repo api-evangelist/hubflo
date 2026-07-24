@@ -1,0 +1,1192 @@
+openapi: 3.0.1
+info:
+  title: Hubflo chat_room task_template API
+  version: v2
+  description: "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n"
+servers:
+- url: https://app.hubflo.com
+  description: The production API server
+- url: https://staging.hubflo.com
+  description: The staging API server
+- url: http://localhost:3000
+  description: The local API server
+tags:
+- name: task_template
+paths:
+  /api/v2/task_templates/{task_template_id}/subtask_templates:
+    parameters:
+    - name: task_template_id
+      in: path
+      required: true
+      description: Task template ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves the subtask templates
+      security:
+      - bearer_auth: []
+      description: Returns the subtask templates of the task template
+      tags:
+      - task_template
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Subtask templates retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: ee24a93a-d1d2-49f2-8248-12152d7e0b58
+                    name: Subtask template
+                    description: null
+                    kind: to_do
+                    task_template_id: acc937ce-5ddb-4176-ba02-6ce54722d39f
+                    created_at: '2026-07-17T13:09:57Z'
+                  - id: 93c4751f-9ae6-49ee-98eb-a399509ae40c
+                    name: Subtask template
+                    description: null
+                    kind: to_do
+                    task_template_id: acc937ce-5ddb-4176-ba02-6ce54722d39f
+                    created_at: '2026-07-17T13:09:57Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a subtask template
+      security:
+      - bearer_auth: []
+      description: Returns the created subtask template
+      tags:
+      - task_template
+      parameters: []
+      responses:
+        '201':
+          description: Subtask template created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 09f1fa20-5b5f-4ce0-9065-26abacbc280b
+                    name: Send welcome email
+                    description: Use the onboarding template
+                    kind: to_do
+                    task_template_id: fc00e197-5e2f-4fa7-88a0-31db2a26cdd6
+                    created_at: '2026-07-17T13:09:58Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Send welcome email
+                description:
+                  type: string
+                  example: Use the onboarding template
+                kind:
+                  type: string
+                  enum:
+                  - to_do
+                  - call
+                  - meeting
+                  - email
+                  - milestone
+                  example: to_do
+              required:
+              - name
+        required: true
+        description: Subtask template attributes
+  /api/v2/task_templates/{task_template_id}/subtask_templates/{id}:
+    parameters:
+    - name: task_template_id
+      in: path
+      required: true
+      description: Task template ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Subtask template ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a subtask template
+      security:
+      - bearer_auth: []
+      description: Returns the subtask template
+      tags:
+      - task_template
+      responses:
+        '200':
+          description: Subtask template retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: cbc2dcb8-3cb7-413a-8f30-b436072e2b12
+                    name: Subtask template
+                    description: null
+                    kind: to_do
+                    task_template_id: 6922d66c-6a99-4c38-b995-97b53681b057
+                    created_at: '2026-07-17T13:09:58Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a subtask template
+      security:
+      - bearer_auth: []
+      description: Returns the updated subtask template
+      tags:
+      - task_template
+      parameters: []
+      responses:
+        '200':
+          description: Subtask template updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: c1284a7e-fae4-4218-b85b-4cba946fd3fa
+                    name: Updated subtask
+                    description: null
+                    kind: call
+                    task_template_id: 7905075b-9691-46b1-8f98-950e61f20d96
+                    created_at: '2026-07-17T13:09:58Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Send welcome email
+                description:
+                  type: string
+                  example: Use the onboarding template
+                kind:
+                  type: string
+                  enum:
+                  - to_do
+                  - call
+                  - meeting
+                  - email
+                  - milestone
+                  example: to_do
+        required: true
+        description: Subtask template attributes
+    delete:
+      summary: Deletes a subtask template
+      security:
+      - bearer_auth: []
+      description: Deletes the subtask template
+      tags:
+      - task_template
+      responses:
+        '204':
+          description: Subtask template deleted
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/task_templates/{task_template_id}/users:
+    get:
+      summary: Retrieves the assigned users of a task template
+      security:
+      - bearer_auth: []
+      description: Returns the assigned users of a task template
+      tags:
+      - task_template
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: task_template_id
+        in: path
+        required: true
+        description: Task template ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Users retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: d2ae34bd-d968-406d-a4e9-9a58948a88d3
+                    first_name: Jina
+                    last_name: Raynor
+                    email: hello-116@hubflo.com
+                    phone: null
+                    created_at: '2026-07-17T13:09:58Z'
+                  - id: 3d2a9634-b919-49fd-90ce-603bc087030d
+                    first_name: Robby
+                    last_name: Emard
+                    email: hello-114@hubflo.com
+                    phone: null
+                    created_at: '2026-07-17T13:09:58Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/task_templates:
+    get:
+      summary: Retrieves the task templates
+      security:
+      - bearer_auth: []
+      description: 'Returns the task templates of the organization. Filter with `parent_id` to scope by ProjectSection: omit it to get all templates, set it to a blank value to get only top-level ones, or set it to a ProjectSection uuid to get its attached templates.'
+      tags:
+      - task_template
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: parent_id
+        in: query
+        required: false
+        description: Filter by ProjectSection uuid (blank = top-level only, omitted = all)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Task templates retrieved (no filter, returns all)
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 5173282a-736b-4f1b-9e7e-15b93d9fbe66
+                    name: Task template
+                    description: null
+                    kind: to_do
+                    due_in_days: null
+                    parent_id: 3fe5dda7-3b35-44a1-8110-cef5de7c031a
+                    parent_type: ProjectSection
+                    created_at: '2026-07-17T13:09:59Z'
+                  - id: 87259ad4-7e56-4b07-af55-4a0686df498b
+                    name: Task template
+                    description: null
+                    kind: to_do
+                    due_in_days: null
+                    parent_id: null
+                    parent_type: null
+                    created_at: '2026-07-17T13:09:59Z'
+                  - id: d142bd9b-791e-4710-8591-a6bef52ff768
+                    name: Task template
+                    description: null
+                    kind: to_do
+                    due_in_days: null
+                    parent_id: null
+                    parent_type: null
+                    created_at: '2026-07-17T13:09:59Z'
+                  - id: d4b7d09a-e4ec-4648-8f70-12473a22f097
+                    name: Task template
+                    description: null
+                    kind: to_do
+                    due_in_days: null
+                    parent_id: null
+                    parent_type: null
+                    created_at: '2026-07-17T13:09:59Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a task template
+      security:
+      - bearer_auth: []
+      description: Returns the created task template
+      tags:
+      - task_template
+      parameters: []
+      responses:
+        '201':
+          description: Task template created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 832ff70f-1b5e-4e28-a412-48523b304716
+                    name: Onboarding checklist
+                    description: Steps to onboard a new client
+                    kind: to_do
+                    due_in_days: 7
+                    parent_id: null
+                    parent_type: null
+                    created_at: '2026-07-17T13:09:59Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Onboarding checklist
+                description:
+                  type: string
+                  example: Steps to onboard a new client
+                kind:
+                  type: string
+                  enum:
+                  - to_do
+                  - call
+                  - meeting
+                  - email
+                  - milestone
+                  example: to_do
+                due_in_days:
+                  type: integer
+                  minimum: 0
+                  maximum: 31
+                  example: 7
+                parent_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                  description: UUID of the parent (ProjectSection or Workspace) this task template belongs to
+                parent_type:
+                  type: string
+                  enum:
+                  - ProjectSection
+                  - Workspace
+                  default: ProjectSection
+                  example: ProjectSection
+                  description: Type of the parent referenced by parent_id (defaults to ProjectSection). Only template ProjectSections and template Workspaces are accepted.
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-13fa3ea55dd8
+                  description: UUIDs of the users to assign to the task template
+              required:
+              - name
+        required: true
+        description: Task template attributes
+  /api/v2/task_templates/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Task template ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a task template
+      security:
+      - bearer_auth: []
+      description: Returns the task template
+      tags:
+      - task_template
+      responses:
+        '200':
+          description: Task template retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 23bd290a-4e07-47f6-940e-d004d6631746
+                    name: Task template
+                    description: null
+                    kind: to_do
+                    due_in_days: 7
+                    parent_id: null
+                    parent_type: null
+                    created_at: '2026-07-17T13:09:59Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a task template
+      security:
+      - bearer_auth: []
+      description: Returns the updated task template
+      tags:
+      - task_template
+      parameters: []
+      responses:
+        '200':
+          description: Task template updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 6bf121ab-d27c-4037-a877-f8f29fc786f1
+                    name: Updated checklist
+                    description: null
+                    kind: call
+                    due_in_days: 14
+                    parent_id: aed98e9e-3f9a-4378-b4f9-1b769da9c4bc
+                    parent_type: ProjectSection
+                    created_at: '2026-07-17T13:09:59Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Onboarding checklist
+                description:
+                  type: string
+                  example: Steps to onboard a new client
+                kind:
+                  type: string
+                  enum:
+                  - to_do
+                  - call
+                  - meeting
+                  - email
+                  - milestone
+                  example: to_do
+                due_in_days:
+                  type: integer
+                  minimum: 0
+                  maximum: 31
+                  example: 7
+                parent_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                  description: UUID of the parent (ProjectSection or Workspace) this task template belongs to
+                parent_type:
+                  type: string
+                  enum:
+                  - ProjectSection
+                  - Workspace
+                  default: ProjectSection
+                  example: ProjectSection
+                  description: Type of the parent referenced by parent_id (defaults to ProjectSection). Only template ProjectSections and template Workspaces are accepted.
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-13fa3ea55dd8
+                  description: UUIDs of the users to assign to the task template
+        required: true
+        description: Task template attributes
+    delete:
+      summary: Deletes a task template
+      security:
+      - bearer_auth: []
+      description: Deletes the task template
+      tags:
+      - task_template
+      responses:
+        '204':
+          description: Task template deleted
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+components:
+  schemas:
+    error_not_found:
+      description: A response describing a not found error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        title:
+          type: string
+          example: Not Found
+        message:
+          type: string
+          example: Resource not found
+      required:
+      - status
+      - title
+      - message
+    error_unauthorized:
+      description: A response describing an authentication error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+        title:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: API token not found
+      required:
+      - status
+      - title
+      - message
+    error_too_many_requests:
+      description: A response describing a rate limit error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 429
+        title:
+          type: string
+          example: Too Many Requests
+        message:
+          type: string
+          example: Rate limit reached. Please wait for a couple of minutes.
+      required:
+      - status
+      - title
+      - message
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

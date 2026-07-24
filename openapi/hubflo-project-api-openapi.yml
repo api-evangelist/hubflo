@@ -1,0 +1,1156 @@
+openapi: 3.0.1
+info:
+  title: Hubflo chat_room project API
+  version: v2
+  description: "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n"
+servers:
+- url: https://app.hubflo.com
+  description: The production API server
+- url: https://staging.hubflo.com
+  description: The staging API server
+- url: http://localhost:3000
+  description: The local API server
+tags:
+- name: project
+paths:
+  /api/v2/projects/{project_id}/contacts:
+    get:
+      summary: Retrieves the contacts of a project
+      security:
+      - bearer_auth: []
+      description: Returns the contacts of a project. Only the first 100 tags of each contact are returned
+      tags:
+      - project
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: project_id
+        in: path
+        required: true
+        description: Project ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Contacts retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: d86f87ce-5189-4d98-9597-4224fcf47b88
+                    first_name: Vince
+                    last_name: Thompson
+                    full_name: Vince Thompson
+                    email: hello-263@hubflo.com
+                    contact_type: prospect
+                    priority: high
+                    phone: '       263'
+                    secondary_phone: null
+                    address: 263 RUE DE PONTHIEU
+                    postal_code: '75008'
+                    city: Paris
+                    state: Paris
+                    country: null
+                    job_title: null
+                    url_linkedin: https://www.linkedin.com/in/vince-thompson
+                    hubspot_id: null
+                    created_at: '2026-07-17T13:09:46Z'
+                    company_name: null
+                    company_id: null
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    tags: []
+                  - id: 6b04b3a4-4018-4743-8033-d995d35acd67
+                    first_name: Clifton
+                    last_name: Kautzer
+                    full_name: Clifton Kautzer
+                    email: hello-262@hubflo.com
+                    contact_type: prospect
+                    priority: medium
+                    phone: '       262'
+                    secondary_phone: null
+                    address: 262 RUE DE PONTHIEU
+                    postal_code: '75008'
+                    city: Paris
+                    state: Paris
+                    country: null
+                    job_title: null
+                    url_linkedin: https://www.linkedin.com/in/clifton-kautzer
+                    hubspot_id: null
+                    created_at: '2026-07-17T13:09:46Z'
+                    company_name: null
+                    company_id: null
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/projects/{project_id}/sections:
+    get:
+      summary: Retrieves the sections of a project
+      security:
+      - bearer_auth: []
+      description: Returns the sections of a project
+      tags:
+      - project
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: project_id
+        in: path
+        required: true
+        description: Project ID
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: false
+        description: Filter by section name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sections retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 17d10cb1-d90d-4522-acf3-f0ceb9bbd4ea
+                    name: No section
+                    start_date: null
+                    end_date: null
+                    estimated_minutes: null
+                    created_at: '2026-07-17T13:09:46Z'
+                    estimated_revenue_amount: 0
+                    original_project_section_id: null
+                    project_id: 12a54ee0-441c-483c-9528-3f25485fc993
+                  - id: 218c8eb2-c667-47cc-ba4a-1e2a77c21814
+                    name: Project Section 38
+                    start_date: '2026-07-16'
+                    end_date: '2026-07-18'
+                    estimated_minutes: 222
+                    created_at: '2026-07-17T13:09:46Z'
+                    estimated_revenue_amount: 100000
+                    original_project_section_id: null
+                    project_id: 12a54ee0-441c-483c-9528-3f25485fc993
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a section
+      security:
+      - bearer_auth: []
+      description: Creates a section from a template
+      tags:
+      - project
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        description: Project ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: when project is assigned to workspace
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: cad92ff0-0332-43f0-b2a8-3726cd05b419
+                    name: Project Section 60
+                    start_date: '2026-07-16'
+                    end_date: '2026-07-18'
+                    estimated_minutes: 222
+                    created_at: '2026-07-17T13:09:47Z'
+                    estimated_revenue_amount: 100000
+                    original_project_section_id: da06aad6-7a6f-4c20-9458-ee2fea4f1195
+                    project_id: 14826476-5c60-484b-bbe7-a921abcdf4af
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                original_project_section_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                link_to_project_workspace:
+                  type: boolean
+                  example: true
+              required:
+              - original_project_section_id
+        required: true
+        description: Section attributes
+  /api/v2/projects/{project_id}/users:
+    get:
+      summary: Retrieves the users of a project
+      security:
+      - bearer_auth: []
+      description: Returns the users of a project.
+      tags:
+      - project
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: project_id
+        in: path
+        required: true
+        description: Project ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Users retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 57f32ea0-060d-4202-a48a-71011ada479c
+                    first_name: Jamison
+                    last_name: Schowalter
+                    email: hello-94@hubflo.com
+                    phone: null
+                    created_at: '2026-07-17T13:09:47Z'
+                  - id: 53d7ca41-1319-4695-917d-76c216dc99ec
+                    first_name: Melvin
+                    last_name: DAmore
+                    email: hello-95@hubflo.com
+                    phone: null
+                    created_at: '2026-07-17T13:09:47Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/projects:
+    get:
+      summary: Retrieves the projects
+      security:
+      - bearer_auth: []
+      description: Retrieves the projects. Only the first 100 tags of each project are returned
+      tags:
+      - project
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: owner_id
+        in: query
+        required: false
+        description: Filter by owner ID
+        schema:
+          type: string
+      - name: owner_email
+        in: query
+        required: false
+        description: Filter by owner email
+        schema:
+          type: string
+      - name: contact_id
+        in: query
+        required: false
+        description: Filter by contact ID
+        schema:
+          type: string
+      - name: contact_email
+        in: query
+        required: false
+        description: Filter by contact email
+        schema:
+          type: string
+      - name: contact_phone
+        in: query
+        required: false
+        description: Filter by contact phone
+        schema:
+          type: string
+      - name: workspace_id
+        in: query
+        required: false
+        description: Filter by workspace ID
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: false
+        description: Filter by name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Projects retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 5b34d93f-89a0-415b-8e15-90613275c2a7
+                    name: Project 88
+                    start_date: '2022-01-01'
+                    end_date: '2022-12-19'
+                    created_at: '2026-07-17T13:09:48Z'
+                    estimated_revenue_amount: 10000
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    stage_id: b4d9a0d6-68ee-4f33-86c7-eb8a40d27322
+                    stage_name: Project Stage 106
+                    workspace_id: null
+                    primary_contact_id: null
+                    primary_contact_full_name: null
+                    address: 88 RUE DE PONTHIEU
+                    latitude: 48.8763
+                    longitude: 2.3183
+                    state: Paris
+                    city: Paris
+                    postal_code: '75008'
+                    country: null
+                    tags: []
+                  - id: ad06e1e5-ea11-41b5-87ce-ad6c6368911f
+                    name: Project 87
+                    start_date: '2022-01-01'
+                    end_date: '2022-12-19'
+                    created_at: '2026-07-17T13:09:48Z'
+                    estimated_revenue_amount: 10000
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    stage_id: 5f6ba549-26d8-44c3-9674-ca5f562b3ed1
+                    stage_name: Project Stage 105
+                    workspace_id: null
+                    primary_contact_id: null
+                    primary_contact_full_name: null
+                    address: 87 RUE DE PONTHIEU
+                    latitude: 48.8763
+                    longitude: 2.3183
+                    state: Paris
+                    city: Paris
+                    postal_code: '75008'
+                    country: null
+                    tags: []
+    post:
+      summary: Creates a project
+      security:
+      - bearer_auth: []
+      description: "Creates a project. Only 100 tags maximum can be specified. To fill in a custom field, add the custom field 'serialization_name' to the request\n        params, with the desired value."
+      tags:
+      - project
+      parameters: []
+      responses:
+        '201':
+          description: Project created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 84548975-bfea-423d-973b-fa0656c06aff
+                    name: Project name
+                    start_date: '2025-01-01'
+                    end_date: '2025-01-31'
+                    created_at: '2026-07-17T13:09:49Z'
+                    estimated_revenue_amount: 1000
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    stage_id: 6986e380-b97a-43d4-ab8e-cce50a69580b
+                    stage_name: 📥 New
+                    workspace_id: null
+                    primary_contact_id: null
+                    primary_contact_full_name: null
+                    address: null
+                    latitude: null
+                    longitude: null
+                    state: null
+                    city: null
+                    postal_code: null
+                    country: null
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Project name
+                estimated_revenue_amount:
+                  type: number
+                  example: 1000
+                start_date:
+                  type: string
+                  example: '2025-01-01'
+                end_date:
+                  type: string
+                  example: '2025-01-31'
+                owner_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                owner_email:
+                  type: string
+                  example: john.doe@example.com
+                stage_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                primary_contact_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                address:
+                  type: string
+                  example: 55 rue Faubourg Saint-Honoré, 75008 Paris
+                workspace_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - tag1
+                  - tag2
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-43fa3ea55dd8
+              required:
+              - name
+        required: true
+        description: Project attributes
+  /api/v2/projects/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a project
+      security:
+      - bearer_auth: []
+      description: Returns the project. . Only the first 100 tags of the project are returned
+      tags:
+      - project
+      responses:
+        '200':
+          description: Project retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: a7bc02a3-25dc-46ac-9687-c4fd9aaa2e00
+                    name: Project 111
+                    start_date: '2022-01-01'
+                    end_date: '2022-12-19'
+                    created_at: '2026-07-17T13:09:49Z'
+                    estimated_revenue_amount: 10000
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    stage_id: 0ab87ec0-fc99-4c90-b86d-77141ba68488
+                    stage_name: Project Stage 145
+                    workspace_id: null
+                    primary_contact_id: null
+                    primary_contact_full_name: null
+                    address: 112 RUE DE PONTHIEU
+                    latitude: 48.8763
+                    longitude: 2.3183
+                    state: Paris
+                    city: Paris
+                    postal_code: '75008'
+                    country: null
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a project
+      security:
+      - bearer_auth: []
+      description: Updates a project. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field 'serialization_name' to the request params, with the desired value.
+      tags:
+      - project
+      parameters: []
+      responses:
+        '200':
+          description: Project updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 00e498e4-b68b-4ab6-b9b0-6b0183287d9b
+                    name: Project name
+                    start_date: '2025-01-01'
+                    end_date: '2025-01-31'
+                    created_at: '2026-07-17T13:09:50Z'
+                    estimated_revenue_amount: 1000
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    stage_id: 1daabf58-f01e-4de5-a41b-905fdd0c2b89
+                    stage_name: Project Stage 150
+                    workspace_id: null
+                    primary_contact_id: null
+                    primary_contact_full_name: null
+                    address: 117 RUE DE PONTHIEU
+                    latitude: 48.8763
+                    longitude: 2.3183
+                    state: Paris
+                    city: Paris
+                    postal_code: '75008'
+                    country: null
+                    tags: []
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Title must be filled in'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Project name
+                estimated_revenue_amount:
+                  type: number
+                  example: 1000
+                start_date:
+                  type: string
+                  example: '2025-01-01'
+                end_date:
+                  type: string
+                  example: '2025-01-31'
+                owner_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                owner_email:
+                  type: string
+                  example: john.doe@example.com
+                stage_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                primary_contact_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                address:
+                  type: string
+                  example: 55 rue Faubourg Saint-Honoré, 75008 Paris
+                workspace_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - tag1
+                  - tag2
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - a0a0e818-749a-41d6-b898-43fa3ea55dd8
+              required:
+              - name
+        required: true
+        description: Project attributes
+components:
+  schemas:
+    error_not_found:
+      description: A response describing a not found error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        title:
+          type: string
+          example: Not Found
+        message:
+          type: string
+          example: Resource not found
+      required:
+      - status
+      - title
+      - message
+    error_unauthorized:
+      description: A response describing an authentication error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+        title:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: API token not found
+      required:
+      - status
+      - title
+      - message
+    error_too_many_requests:
+      description: A response describing a rate limit error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 429
+        title:
+          type: string
+          example: Too Many Requests
+        message:
+          type: string
+          example: Rate limit reached. Please wait for a couple of minutes.
+      required:
+      - status
+      - title
+      - message
+    error_unprocessable_content:
+      description: A response describing a validation error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 422
+        title:
+          type: string
+          example: Unprocessable Content
+        message:
+          type: string
+          example: 'Validation failed: Title can''t be blank'
+      required:
+      - status
+      - title
+      - message
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

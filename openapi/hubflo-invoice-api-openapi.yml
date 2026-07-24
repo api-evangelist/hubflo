@@ -1,0 +1,1847 @@
+openapi: 3.0.1
+info:
+  title: Hubflo chat_room invoice API
+  version: v2
+  description: "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n"
+servers:
+- url: https://app.hubflo.com
+  description: The production API server
+- url: https://staging.hubflo.com
+  description: The staging API server
+- url: http://localhost:3000
+  description: The local API server
+tags:
+- name: invoice
+paths:
+  /api/v2/invoices/{invoice_id}/deliveries:
+    post:
+      summary: Sends an invoice to its recipient
+      security:
+      - bearer_auth: []
+      description: Sends an issued invoice to its recipient by email
+      tags:
+      - invoice
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        description: Invoice ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Invoice sent
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 97f51ab6-dac1-4266-9f0b-77e201feb82c
+                    title: Invoice 1
+                    description: null
+                    comment: null
+                    language: fr
+                    purchase_order_reference: null
+                    payment_terms: 'Please remit payment to: XXX.
+
+                      Late payments may be subject to an additional charge of [X]% per month on the outstanding balance.'
+                    payment_deadline_days: 30
+                    payment_methods:
+                    - bank_transfer
+                    payment_method_used: null
+                    use_stripe_as_payment_method: false
+                    stripe_auto_charge: false
+                    payment_url: null
+                    currency: EUR
+                    accounting_id: null
+                    status: issued
+                    created_at: '2026-07-17T13:09:31Z'
+                    issued_at: '2026-07-10T13:09:31Z'
+                    custom_issued_at: null
+                    paid_at: null
+                    sent_at: '2026-07-17T13:09:31Z'
+                    net_total: 0
+                    tax_total: 0
+                    paid_amount: 0
+                    public_url: http://localhost:3000/invoices/97f51ab6-dac1-4266-9f0b-77e201feb82c/access/f9f0df0c-a751-491e-9789-e1b3fb604242
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    project_id: null
+                    recipient_id: f564eb98-3aa3-4fc7-845c-e5251047b0bb
+                    parent_invoice_id: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/invoices/{invoice_id}/issuances:
+    post:
+      summary: Issues an invoice
+      security:
+      - bearer_auth: []
+      description: Changes a draft invoice status to issued
+      tags:
+      - invoice
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        description: Invoice ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Invoice issued
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 12009bcd-db1d-49d7-8c2d-3f91bdf3e75f
+                    title: Invoice 7
+                    description: null
+                    comment: null
+                    language: fr
+                    purchase_order_reference: null
+                    payment_terms: 'Please remit payment to: XXX.
+
+                      Late payments may be subject to an additional charge of [X]% per month on the outstanding balance.'
+                    payment_deadline_days: 30
+                    payment_methods:
+                    - bank_transfer
+                    payment_method_used: null
+                    use_stripe_as_payment_method: false
+                    stripe_auto_charge: false
+                    payment_url: null
+                    currency: EUR
+                    accounting_id: null
+                    status: issued
+                    created_at: '2026-07-17T13:09:31Z'
+                    issued_at: '2026-07-17T13:09:32Z'
+                    custom_issued_at: null
+                    paid_at: null
+                    sent_at: null
+                    net_total: 2200
+                    tax_total: 200
+                    paid_amount: 0
+                    public_url: http://localhost:3000/invoices/12009bcd-db1d-49d7-8c2d-3f91bdf3e75f/access/071a196a-77ca-4a3b-bbcf-d93fd1c3f782
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    project_id: null
+                    recipient_id: d68db019-eb07-423b-8c17-da81fe2f0554
+                    parent_invoice_id: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/invoices/{invoice_id}/payment-notice:
+    post:
+      summary: Creates a payment notice
+      security:
+      - bearer_auth: []
+      description: Create a payment notice for a given invoice, and mark it as paid. In case of partial payment, it will add up.
+      tags:
+      - invoice
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        description: Invoice ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Payment notice created (invoice marked as paid)
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 3fc352f9-4128-4a4d-9094-4cacd67f7d11
+                    title: Invoice 14
+                    description: null
+                    comment: null
+                    language: fr
+                    purchase_order_reference: null
+                    payment_terms: 'Please remit payment to: XXX.
+
+                      Late payments may be subject to an additional charge of [X]% per month on the outstanding balance.'
+                    payment_deadline_days: 30
+                    payment_methods:
+                    - bank_transfer
+                    payment_method_used: cash
+                    use_stripe_as_payment_method: false
+                    stripe_auto_charge: false
+                    payment_url: null
+                    currency: EUR
+                    accounting_id: null
+                    status: paid
+                    created_at: '2026-07-17T13:09:32Z'
+                    issued_at: '2026-07-10T13:09:32Z'
+                    custom_issued_at: null
+                    paid_at: '2024-01-01T00:00:00Z'
+                    sent_at: null
+                    net_total: 2200
+                    tax_total: 200
+                    paid_amount: 200
+                    public_url: http://localhost:3000/invoices/3fc352f9-4128-4a4d-9094-4cacd67f7d11/access/beadbf63-7cfe-4e78-8060-9756fd76d1d1
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    project_id: null
+                    recipient_id: cdffacd6-f2b6-4bea-93a1-ca3a4d172296
+                    parent_invoice_id: null
+        '400':
+          description: 'bad request: the request is invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 400
+                    title: Bad Request
+                    message: Paid at must be filled in, Payment method used must be filled in
+              schema:
+                $ref: '#/components/schemas/error_bad_request'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paid_at:
+                  type: string
+                  format: date-time
+                  example: '2024-01-01T00:00:00Z'
+                payment_method_used:
+                  type: string
+                  enum:
+                  - bank_transfer
+                  - bank_card
+                  - direct_debit
+                  - check
+                  - cash
+                  - ach
+                  - paypal
+                  - other
+                  example: bank_transfer
+                paid_amount:
+                  type: number
+                  example: 200
+              required:
+              - paid_at
+              - payment_method_used
+              - paid_amount
+        required: true
+        description: Payment notice attributes
+  /api/v2/invoices/{invoice_id}/payment-url:
+    post:
+      summary: Creates a payment URL
+      security:
+      - bearer_auth: []
+      description: Create the payment url for a given invoice, or update it when it already exists
+      tags:
+      - invoice
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        description: Invoice ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Payment URL created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: fa1f56cd-5b39-47fd-be07-147dc993b071
+                    title: Invoice 22
+                    description: null
+                    comment: null
+                    language: fr
+                    purchase_order_reference: null
+                    payment_terms: 'Please remit payment to: XXX.
+
+                      Late payments may be subject to an additional charge of [X]% per month on the outstanding balance.'
+                    payment_deadline_days: 30
+                    payment_methods:
+                    - bank_transfer
+                    payment_method_used: null
+                    use_stripe_as_payment_method: false
+                    stripe_auto_charge: false
+                    payment_url: https://example.com
+                    currency: EUR
+                    accounting_id: null
+                    status: issued
+                    created_at: '2026-07-17T13:09:33Z'
+                    issued_at: '2026-07-10T13:09:33Z'
+                    custom_issued_at: null
+                    paid_at: null
+                    sent_at: null
+                    net_total: 2200
+                    tax_total: 200
+                    paid_amount: 0
+                    public_url: http://localhost:3000/invoices/fa1f56cd-5b39-47fd-be07-147dc993b071/access/c30d516f-7a44-4e67-a1ba-5b5e3c2328e7
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    project_id: null
+                    recipient_id: 56ffa890-9487-4f8e-a7df-cf2cd78e58bd
+                    parent_invoice_id: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+                  format: uri
+                  example: https://example.com
+        required: true
+        description: Payment URL attributes
+  /api/v2/invoices/{invoice_id}/line-items:
+    get:
+      summary: Retrieves the line_items
+      security:
+      - bearer_auth: []
+      description: Returns the line_items
+      tags:
+      - invoice
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: invoice_id
+        in: path
+        required: true
+        description: Invoice ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Line items retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 89a1c329-4a36-4f44-a575-d635e4da7ccc
+                    title: Quote item 20
+                    description: null
+                    currency: EUR
+                    kind: none
+                    quantity: 1
+                    discount_percentage: 0
+                    unit_price_excluding_tax: 2000
+                    unit_cost_excluding_tax: 0
+                    total_excluding_tax: 2000
+                    total_including_tax: 2200
+                    vat: 10
+                    created_at: '2026-07-17T13:09:34Z'
+                  - id: 425e9d2c-375b-469a-8edc-983b68b2408f
+                    title: Quote item 21
+                    description: null
+                    currency: EUR
+                    kind: none
+                    quantity: 1
+                    discount_percentage: 0
+                    unit_price_excluding_tax: 2000
+                    unit_cost_excluding_tax: 0
+                    total_excluding_tax: 2000
+                    total_including_tax: 2200
+                    vat: 10
+                    created_at: '2026-07-17T13:09:34Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates a line item for an invoice
+      security:
+      - bearer_auth: []
+      description: Adds a new line item to an existing draft invoice
+      tags:
+      - invoice
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        description: Invoice ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Line item created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 8f0560e4-3cdb-4350-a755-016e03db0ba4
+                    title: Web Development
+                    description: Creation of a responsive website
+                    currency: EUR
+                    kind: service
+                    quantity: 1
+                    discount_percentage: 0
+                    unit_price_excluding_tax: 1000
+                    unit_cost_excluding_tax: 500
+                    total_excluding_tax: 1000
+                    total_including_tax: 1200
+                    vat: 20
+                    created_at: '2026-07-17T13:09:35Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Quantity must be greater than or equal to 0.1, VAT is not a number'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Web Development
+                description:
+                  type: string
+                  example: Creation of a responsive website
+                quantity:
+                  type: integer
+                  example: 2
+                  minimum: 1
+                discount_percentage:
+                  type: integer
+                  example: 0
+                  minimum: 0
+                  maximum: 100
+                unit_price_excluding_tax:
+                  type: integer
+                  example: 1000
+                  minimum: 0
+                unit_cost_excluding_tax:
+                  type: integer
+                  example: 500
+                  minimum: 0
+                vat:
+                  type: integer
+                  example: 20
+                  minimum: 0
+                  maximum: 100
+                kind:
+                  type: string
+                  example: service
+                  enum:
+                  - none
+                  - article
+                  - service
+                  - unit
+                  - pack
+                  - package
+                  - subscription
+                  - discount
+                  - subtotal
+                  - deposit
+                  - hour
+                  - day
+                  - month
+                  - cm
+                  - cm2
+                  - cm3
+                  - m
+                  - m2
+                  - m3
+                  - ml
+                  - l
+                  - mg
+                  - g
+                  - kg
+                  - t
+                  - mm
+                  - km
+                  - km2
+                  - hectare
+              required:
+              - title
+              - quantity
+              - vat
+        required: true
+        description: Line item attributes
+  /api/v2/invoices/{invoice_id}/line-items/{id}:
+    parameters:
+    - name: invoice_id
+      in: path
+      required: true
+      description: Invoice ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Line item ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves a line item
+      security:
+      - bearer_auth: []
+      description: Returns the line item
+      tags:
+      - invoice
+      responses:
+        '200':
+          description: Line item retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: e07ba017-6f96-44ee-9fa7-c3ee1ce6abf5
+                    title: Quote item 38
+                    description: null
+                    currency: EUR
+                    kind: none
+                    quantity: 1
+                    discount_percentage: 0
+                    unit_price_excluding_tax: 2000
+                    unit_cost_excluding_tax: 0
+                    total_excluding_tax: 2000
+                    total_including_tax: 2200
+                    vat: 10
+                    created_at: '2026-07-17T13:09:35Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates a line item
+      security:
+      - bearer_auth: []
+      description: Updates a line item of a draft invoice
+      tags:
+      - invoice
+      parameters: []
+      responses:
+        '200':
+          description: Line item updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 832c8d45-7bfe-47ab-928c-a11aab15166d
+                    title: Updated development
+                    description: null
+                    currency: EUR
+                    kind: none
+                    quantity: 3
+                    discount_percentage: 0
+                    unit_price_excluding_tax: 200
+                    unit_cost_excluding_tax: 0
+                    total_excluding_tax: 600
+                    total_including_tax: 660
+                    vat: 10
+                    created_at: '2026-07-17T13:09:36Z'
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: 'Validation failed: Quantity must be greater than or equal to 0.1'
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Web Development
+                description:
+                  type: string
+                  example: Creation of a responsive website
+                quantity:
+                  type: integer
+                  example: 2
+                  minimum: 1
+                discount_percentage:
+                  type: integer
+                  example: 0
+                  minimum: 0
+                  maximum: 100
+                unit_price_excluding_tax:
+                  type: integer
+                  example: 1000
+                  minimum: 0
+                unit_cost_excluding_tax:
+                  type: integer
+                  example: 500
+                  minimum: 0
+                vat:
+                  type: integer
+                  example: 20
+                  minimum: 0
+                  maximum: 100
+                kind:
+                  type: string
+                  example: service
+                  enum:
+                  - none
+                  - article
+                  - service
+                  - unit
+                  - pack
+                  - package
+                  - subscription
+                  - discount
+                  - subtotal
+                  - deposit
+                  - hour
+                  - day
+                  - month
+                  - cm
+                  - cm2
+                  - cm3
+                  - m
+                  - m2
+                  - m3
+                  - ml
+                  - l
+                  - mg
+                  - g
+                  - kg
+                  - t
+                  - mm
+                  - km
+                  - km2
+                  - hectare
+        required: true
+        description: Line item attributes
+    delete:
+      summary: Deletes a line item
+      security:
+      - bearer_auth: []
+      description: Deletes a line item of a draft invoice
+      tags:
+      - invoice
+      responses:
+        '204':
+          description: Line item deleted
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/invoices:
+    get:
+      summary: Retrieves the invoices
+      security:
+      - bearer_auth: []
+      description: Returns the invoices
+      tags:
+      - invoice
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        example: 1
+        schema:
+          type: number
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page (max 100)
+        example: 10
+        schema:
+          type: number
+      - name: contact_id
+        in: query
+        required: false
+        description: Filter by contact ID
+        schema:
+          type: string
+      - name: contact_email
+        in: query
+        required: false
+        description: Filter by contact email
+        schema:
+          type: string
+      - name: project_id
+        in: query
+        required: false
+        description: Filter by project ID
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        description: Filter by status
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Invoices retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+            X-Page:
+              schema:
+                type: integer
+              description: Current page number
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Number of items per page
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages
+            X-Next-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Next page number
+            X-Prev-Page:
+              schema:
+                type: integer
+                nullable: true
+              description: Previous page number
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                  - id: 9f46eece-f2cb-46b8-b1d7-5e9512c5c64d
+                    title: Invoice 65
+                    description: null
+                    comment: null
+                    language: fr
+                    purchase_order_reference: null
+                    payment_terms: 'Please remit payment to: XXX.
+
+                      Late payments may be subject to an additional charge of [X]% per month on the outstanding balance.'
+                    payment_deadline_days: 30
+                    payment_methods:
+                    - bank_transfer
+                    payment_method_used: null
+                    use_stripe_as_payment_method: false
+                    stripe_auto_charge: false
+                    payment_url: null
+                    currency: EUR
+                    accounting_id: null
+                    status: issued
+                    created_at: '2026-07-17T13:09:37Z'
+                    issued_at: '2026-07-10T13:09:37Z'
+                    custom_issued_at: null
+                    paid_at: null
+                    sent_at: null
+                    net_total: 0
+                    tax_total: 0
+                    paid_amount: 0
+                    public_url: null
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    project_id: null
+                    recipient_id: null
+                    parent_invoice_id: null
+                  - id: 96a37e0c-a9b9-4e05-b310-676ab9493441
+                    title: Invoice 64
+                    description: null
+                    comment: null
+                    language: fr
+                    purchase_order_reference: null
+                    payment_terms: 'Please remit payment to: XXX.
+
+                      Late payments may be subject to an additional charge of [X]% per month on the outstanding balance.'
+                    payment_deadline_days: 30
+                    payment_methods:
+                    - bank_transfer
+                    payment_method_used: null
+                    use_stripe_as_payment_method: false
+                    stripe_auto_charge: false
+                    payment_url: null
+                    currency: EUR
+                    accounting_id: null
+                    status: issued
+                    created_at: '2026-07-17T13:09:37Z'
+                    issued_at: '2026-07-10T13:09:37Z'
+                    custom_issued_at: null
+                    paid_at: null
+                    sent_at: null
+                    net_total: 0
+                    tax_total: 0
+                    paid_amount: 0
+                    public_url: null
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    project_id: null
+                    recipient_id: null
+                    parent_invoice_id: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    post:
+      summary: Creates an invoice
+      security:
+      - bearer_auth: []
+      description: Creates a draft invoice (without line items)
+      tags:
+      - invoice
+      parameters: []
+      responses:
+        '201':
+          description: Invoice created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 0dbf9dff-f22f-42a3-b87c-0c7fcc9ff8ad
+                    title: Consulting services
+                    description: Invoice for consulting services
+                    comment: Internal comment
+                    language: fr
+                    purchase_order_reference: PO-12345
+                    payment_terms: Net 30
+                    payment_deadline_days: 30
+                    payment_methods:
+                    - bank_transfer
+                    - bank_card
+                    payment_method_used: null
+                    use_stripe_as_payment_method: true
+                    stripe_auto_charge: true
+                    payment_url: null
+                    currency: EUR
+                    accounting_id: '12345'
+                    status: draft
+                    created_at: '2026-07-17T13:09:38Z'
+                    issued_at: null
+                    custom_issued_at: '2026-01-15T10:00:00Z'
+                    paid_at: null
+                    sent_at: null
+                    net_total: 0
+                    tax_total: 0
+                    paid_amount: 0
+                    public_url: http://localhost:3000/invoices/0dbf9dff-f22f-42a3-b87c-0c7fcc9ff8ad/access/21d972b1-3911-40e5-b7b7-87d02f18289c
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    project_id: 1f1d28b5-fc6c-40ca-9ceb-afb3572530e3
+                    recipient_id: 81f17c5d-f170-41f9-839f-2851acfaba95
+                    parent_invoice_id: 8a47f20f-ff23-4756-b743-ed3ddeb6efbb
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '422':
+          description: 'unprocessable content: the resource can''t be created'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 422
+                    title: Unprocessable Content
+                    message: Title must be filled in
+              schema:
+                $ref: '#/components/schemas/error_unprocessable_content'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Consulting services
+                user_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                project_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                contact_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                parent_invoice_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                language:
+                  type: string
+                  example: fr
+                purchase_order_reference:
+                  type: string
+                  example: PO-12345
+                description:
+                  type: string
+                  example: Invoice description
+                payment_terms:
+                  type: string
+                  example: Payment terms
+                payment_deadline_days:
+                  type: integer
+                  example: 30
+                  enum:
+                  - 0
+                  - 14
+                  - 30
+                  - 45
+                  - 60
+                payment_methods:
+                  type: array
+                  items:
+                    enum:
+                    - bank_transfer
+                    - bank_card
+                    - direct_debit
+                    - check
+                    - cash
+                    - ach
+                    - paypal
+                    - other
+                use_stripe_as_payment_method:
+                  type: boolean
+                  example: true
+                stripe_auto_charge:
+                  type: boolean
+                  example: false
+                comment:
+                  type: string
+                  example: Internal comment
+                custom_issued_at:
+                  type: string
+                  format: date-time
+                accounting_id:
+                  type: string
+                  example: '12345'
+              required:
+              - title
+              - user_id
+        required: true
+        description: Invoice attributes
+  /api/v2/invoices/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Invoice ID
+      schema:
+        type: string
+    get:
+      summary: Retrieves an invoice
+      security:
+      - bearer_auth: []
+      description: Returns the invoice
+      tags:
+      - invoice
+      responses:
+        '200':
+          description: Invoice retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 63ff3db2-b6de-41c8-b8c8-3a68c7d0bd81
+                    title: Invoice 97
+                    description: null
+                    comment: null
+                    language: fr
+                    purchase_order_reference: null
+                    payment_terms: 'Please remit payment to: XXX.
+
+                      Late payments may be subject to an additional charge of [X]% per month on the outstanding balance.'
+                    payment_deadline_days: 30
+                    payment_methods:
+                    - bank_transfer
+                    payment_method_used: null
+                    use_stripe_as_payment_method: false
+                    stripe_auto_charge: false
+                    payment_url: null
+                    currency: EUR
+                    accounting_id: null
+                    status: draft
+                    created_at: '2026-07-17T13:09:39Z'
+                    issued_at: null
+                    custom_issued_at: null
+                    paid_at: null
+                    sent_at: null
+                    net_total: 0
+                    tax_total: 0
+                    paid_amount: 0
+                    public_url: null
+                    owner_id: e68a6422-fdb4-4c64-922a-8ac109b3ed33
+                    project_id: null
+                    recipient_id: null
+                    parent_invoice_id: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates an invoice
+      security:
+      - bearer_auth: []
+      description: Updates an invoice. Only a draft can be edited, except accounting_id (editable on any invoice)
+      tags:
+      - invoice
+      parameters: []
+      responses:
+        '200':
+          description: Invoice updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 47acad45-4304-4fce-ab12-7aca80e5a516
+                    title: Updated title
+                    description: Updated description
+                    comment: Updated comment
+                    language: fr
+                    purchase_order_reference: PO-999
+                    payment_terms: Net 60
+                    payment_deadline_days: 60
+                    payment_methods:
+                    - check
+                    payment_method_used: null
+                    use_stripe_as_payment_method: true
+                    stripe_auto_charge: true
+                    payment_url: null
+                    currency: EUR
+                    accounting_id: '12345'
+                    status: draft
+                    created_at: '2026-07-17T13:09:39Z'
+                    issued_at: null
+                    custom_issued_at: '2026-02-01T09:00:00Z'
+                    paid_at: null
+                    sent_at: null
+                    net_total: 0
+                    tax_total: 0
+                    paid_amount: 0
+                    public_url: http://localhost:3000/invoices/47acad45-4304-4fce-ab12-7aca80e5a516/access/d94b7710-80c3-4534-8289-bb28b1c1c5ca
+                    owner_id: 780e98ee-8ca2-49fa-bd4d-6d2a644ee40a
+                    project_id: d015b672-965b-484f-b33b-2620ac5e6b21
+                    recipient_id: 7775c4c8-0806-4711-9f23-426ac31ed8e3
+                    parent_invoice_id: b5a0be67-fe85-44a2-952f-0e1737e76c24
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '404':
+          description: 'not found: the resource is not found'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 404
+                    title: Not Found
+                    message: Resource not found
+              schema:
+                $ref: '#/components/schemas/error_not_found'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Consulting services
+                user_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                project_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                contact_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                parent_invoice_id:
+                  type: string
+                  example: a0a0e818-749a-41d6-b898-43fa3ea55dd8
+                language:
+                  type: string
+                  example: fr
+                purchase_order_reference:
+                  type: string
+                  example: PO-12345
+                description:
+                  type: string
+                  example: Invoice description
+                payment_terms:
+                  type: string
+                  example: Payment terms
+                payment_deadline_days:
+                  type: integer
+                  example: 30
+                  enum:
+                  - 0
+                  - 14
+                  - 30
+                  - 45
+                  - 60
+                payment_methods:
+                  type: array
+                  items:
+                    enum:
+                    - bank_transfer
+                    - bank_card
+                    - direct_debit
+                    - check
+                    - cash
+                    - ach
+                    - paypal
+                    - other
+                use_stripe_as_payment_method:
+                  type: boolean
+                  example: true
+                stripe_auto_charge:
+                  type: boolean
+                  example: false
+                comment:
+                  type: string
+                  example: Internal comment
+                custom_issued_at:
+                  type: string
+                  format: date-time
+                accounting_id:
+                  type: string
+                  example: '12345'
+        required: true
+        description: Invoice attributes
+components:
+  schemas:
+    error_not_found:
+      description: A response describing a not found error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        title:
+          type: string
+          example: Not Found
+        message:
+          type: string
+          example: Resource not found
+      required:
+      - status
+      - title
+      - message
+    error_bad_request:
+      description: A response describing a bad request error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 400
+        title:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Invalid parameters
+      required:
+      - status
+      - title
+      - message
+    error_too_many_requests:
+      description: A response describing a rate limit error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 429
+        title:
+          type: string
+          example: Too Many Requests
+        message:
+          type: string
+          example: Rate limit reached. Please wait for a couple of minutes.
+      required:
+      - status
+      - title
+      - message
+    error_unauthorized:
+      description: A response describing an authentication error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+        title:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: API token not found
+      required:
+      - status
+      - title
+      - message
+    error_unprocessable_content:
+      description: A response describing a validation error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 422
+        title:
+          type: string
+          example: Unprocessable Content
+        message:
+          type: string
+          example: 'Validation failed: Title can''t be blank'
+      required:
+      - status
+      - title
+      - message
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

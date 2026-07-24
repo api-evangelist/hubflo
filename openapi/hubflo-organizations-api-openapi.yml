@@ -1,0 +1,581 @@
+openapi: 3.0.1
+info:
+  title: Hubflo chat_room organizations API
+  version: v2
+  description: "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n"
+servers:
+- url: https://app.hubflo.com
+  description: The production API server
+- url: https://staging.hubflo.com
+  description: The staging API server
+- url: http://localhost:3000
+  description: The local API server
+tags:
+- name: organizations
+paths:
+  /api/v2/organizations/cover:
+    post:
+      summary: Uploads the organization cover
+      security:
+      - bearer_auth: []
+      description: Replaces the organization cover. The image is sent as multipart/form-data.
+      tags:
+      - organizations
+      parameters: []
+      responses:
+        '201':
+          description: Cover uploaded
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 119b3247-c1ef-42fa-acc7-c63b3ebf0374
+                    name: Organization
+                    website: null
+                    business_description: null
+                    accent_color: '#8AA3D9'
+                    sidebar_color: '#FCFCFC'
+                    sidebar_text_color: '#060520'
+                    menu_tasks_visibility: true
+                    menu_messaging_visibility: true
+                    menu_forms_visibility: true
+                    menu_billing_visibility: true
+                    menu_smartdocs_visibility: true
+                    menu_workflows_visibility: false
+                    currency: EUR
+                    project_module_enabled: true
+                    project_wording: account
+                    enable_2fa_on_users: false
+                    enable_2fa_on_contact_authentications: false
+                    country_subscription: FR
+                    created_at: '2026-07-17T13:08:42Z'
+                    portal_subdomain: client
+                    portal_host: client.example.com
+                    logo_url: null
+                    cover_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI3OWxwMTcyankxMXBjbmN2YnNieGFramtwMmgzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNjAweDYwMC5wbmdcIjsgZmlsZW5hbWUqPVVURi04Jyc2MDB4NjAwLnBuZyIsImNvbnRlbnRfdHlwZSI6ImltYWdlL3BuZyIsInNlcnZpY2VfbmFtZSI6InRlc3QifSwiZXhwIjoiMjAyNi0wNy0xN1QxMzoxNDo0Mi4wODJaIiwicHVyIjoiYmxvYl9rZXkifX0=--6e72d84cf75f5e2c8f0275ecbfb48a3c3e9b8ca0/600x600.png
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: string
+              format: binary
+        required: true
+        description: Cover to upload
+    delete:
+      summary: Deletes the organization cover
+      security:
+      - bearer_auth: []
+      description: Removes the organization cover
+      tags:
+      - organizations
+      responses:
+        '204':
+          description: Cover deleted
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/organizations/logo:
+    post:
+      summary: Uploads the organization logo
+      security:
+      - bearer_auth: []
+      description: Replaces the organization logo. The image is sent as multipart/form-data.
+      tags:
+      - organizations
+      parameters: []
+      responses:
+        '201':
+          description: Logo uploaded
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 119b3247-c1ef-42fa-acc7-c63b3ebf0374
+                    name: Organization
+                    website: null
+                    business_description: null
+                    accent_color: '#8AA3D9'
+                    sidebar_color: '#FCFCFC'
+                    sidebar_text_color: '#060520'
+                    menu_tasks_visibility: true
+                    menu_messaging_visibility: true
+                    menu_forms_visibility: true
+                    menu_billing_visibility: true
+                    menu_smartdocs_visibility: true
+                    menu_workflows_visibility: false
+                    currency: EUR
+                    project_module_enabled: true
+                    project_wording: account
+                    enable_2fa_on_users: false
+                    enable_2fa_on_contact_authentications: false
+                    country_subscription: FR
+                    created_at: '2026-07-17T13:08:42Z'
+                    portal_subdomain: client
+                    portal_host: client.example.com
+                    logo_url: http://www.example.com/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJsbGdsbmFuNGU1Nmw2bTFubnc1NHM0Y2pkazM2IiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNjAweDYwMC5wbmdcIjsgZmlsZW5hbWUqPVVURi04Jyc2MDB4NjAwLnBuZyIsImNvbnRlbnRfdHlwZSI6ImltYWdlL3BuZyIsInNlcnZpY2VfbmFtZSI6InRlc3QifSwiZXhwIjoiMjAyNi0wNy0xN1QxMzoxNDo0Mi45MDVaIiwicHVyIjoiYmxvYl9rZXkifX0=--89909d41189f42383dc34383743549846ba84b16/600x600.png
+                    cover_url: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: string
+              format: binary
+        required: true
+        description: Logo to upload
+    delete:
+      summary: Deletes the organization logo
+      security:
+      - bearer_auth: []
+      description: Removes the organization logo
+      tags:
+      - organizations
+      responses:
+        '204':
+          description: Logo deleted
+          headers:
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value: ''
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+  /api/v2/organizations:
+    get:
+      summary: Retrieves the organizations
+      security:
+      - bearer_auth: []
+      description: Returns the organizations
+      tags:
+      - organizations
+      responses:
+        '200':
+          description: Organization retrieved
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 119b3247-c1ef-42fa-acc7-c63b3ebf0374
+                    name: Organization
+                    website: null
+                    business_description: null
+                    accent_color: '#8AA3D9'
+                    sidebar_color: '#FCFCFC'
+                    sidebar_text_color: '#060520'
+                    menu_tasks_visibility: true
+                    menu_messaging_visibility: true
+                    menu_forms_visibility: true
+                    menu_billing_visibility: true
+                    menu_smartdocs_visibility: true
+                    menu_workflows_visibility: false
+                    currency: EUR
+                    project_module_enabled: true
+                    project_wording: account
+                    enable_2fa_on_users: false
+                    enable_2fa_on_contact_authentications: false
+                    country_subscription: FR
+                    created_at: '2026-07-17T13:08:42Z'
+                    portal_subdomain: client
+                    portal_host: client.example.com
+                    logo_url: null
+                    cover_url: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+    patch:
+      summary: Updates the current organization
+      security:
+      - bearer_auth: []
+      description: Returns the updated organization
+      tags:
+      - organizations
+      parameters: []
+      responses:
+        '200':
+          description: Organization updated
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/json; charset=utf-8
+            X-Organization-ID:
+              schema:
+                type: string
+              description: The organization ID
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Max allowed requests in the current period
+            X-Remaining-Requests:
+              schema:
+                type: integer
+              description: Remaining requests in the current period
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 119b3247-c1ef-42fa-acc7-c63b3ebf0374
+                    name: Updated name
+                    website: https://updated.example.com
+                    business_description: Updated business description
+                    accent_color: '#FF6B00'
+                    sidebar_color: '#1A1A1A'
+                    sidebar_text_color: '#FFFFFF'
+                    menu_tasks_visibility: false
+                    menu_messaging_visibility: false
+                    menu_forms_visibility: false
+                    menu_billing_visibility: false
+                    menu_smartdocs_visibility: false
+                    menu_workflows_visibility: false
+                    currency: EUR
+                    project_module_enabled: false
+                    project_wording: mission
+                    enable_2fa_on_users: true
+                    enable_2fa_on_contact_authentications: true
+                    country_subscription: FR
+                    created_at: '2026-07-17T13:08:42Z'
+                    portal_subdomain: client
+                    portal_host: client.example.com
+                    logo_url: null
+                    cover_url: null
+        '401':
+          description: 'unauthorized: the Authorization header is missing or invalid'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 401
+                    title: Unauthorized
+                    message: Invalid API token
+              schema:
+                $ref: '#/components/schemas/error_unauthorized'
+        '429':
+          description: 'too many requests: the user has reached the rate limit'
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    status: 429
+                    title: Too Many Requests
+                    message: Rate limit reached. Please wait for a couple of minutes.
+              schema:
+                $ref: '#/components/schemas/error_too_many_requests'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Hubflo
+                website:
+                  type: string
+                  example: https://hubflo.com
+                business_description:
+                  type: string
+                  example: All-in-one client portal
+                accent_color:
+                  type: string
+                  example: '#FF6B00'
+                sidebar_color:
+                  type: string
+                  example: '#1A1A1A'
+                sidebar_text_color:
+                  type: string
+                  example: '#FFFFFF'
+                menu_tasks_visibility:
+                  type: boolean
+                  example: true
+                menu_messaging_visibility:
+                  type: boolean
+                  example: true
+                menu_forms_visibility:
+                  type: boolean
+                  example: true
+                menu_billing_visibility:
+                  type: boolean
+                  example: true
+                menu_smartdocs_visibility:
+                  type: boolean
+                  example: false
+                menu_workflows_visibility:
+                  type: boolean
+                  example: true
+                project_module_enabled:
+                  type: boolean
+                  example: true
+                project_wording:
+                  type: string
+                  enum:
+                  - account
+                  - project
+                  - intervention
+                  - mission
+                  - mandate
+                  - construction
+                  - property
+                  - opportunity
+                  - event
+                  - booking
+                  - file
+                  - training
+                  - campaign
+                  - application
+                  - student
+                  - order
+                  - matter
+                  - claim
+                  - ticket
+                  - journey
+                  example: mission
+                enable_2fa_on_users:
+                  type: boolean
+                  example: true
+                enable_2fa_on_contact_authentications:
+                  type: boolean
+                  example: true
+        required: true
+        description: Organization attributes
+components:
+  schemas:
+    error_unauthorized:
+      description: A response describing an authentication error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+        title:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: API token not found
+      required:
+      - status
+      - title
+      - message
+    error_too_many_requests:
+      description: A response describing a rate limit error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 429
+        title:
+          type: string
+          example: Too Many Requests
+        message:
+          type: string
+          example: Rate limit reached. Please wait for a couple of minutes.
+      required:
+      - status
+      - title
+      - message
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

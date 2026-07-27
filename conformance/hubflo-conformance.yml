@@ -1,0 +1,36 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hubflo-openapi-original.yml
+note: >-
+  Standards conformance derived from the OpenAPI definition and the published API
+  reference. No third-party compliance certifications (SOC 2 / ISO 27001 / etc.) were
+  found published, so no Compliance pointer is emitted.
+standards:
+  - id: http-bearer-auth
+    conforms: true
+    evidence: securityScheme bearer_auth type http scheme bearer
+  - id: oauth2
+    conforms: false
+    evidence: no oauth2 security scheme declared
+  - id: openid-connect
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: error envelope is a custom {status,title,message} JSON object, not application/problem+json
+  - id: pagination
+    conforms: true
+    evidence: page/per_page query parameters on all list endpoints (default 20, max 100)
+  - id: rate-limiting
+    conforms: true
+    evidence: 1000 req/min with X-Rate-Limit and X-Remaining-Requests response headers
+  - id: webhooks
+    conforms: true
+    evidence: native webhook subscription/activation/delivery endpoints with 29 event types
+  - id: openapi-3
+    conforms: true
+    evidence: OpenAPI 3.0.1 definition published via ReadMe
+  - id: idempotency
+    conforms: false
+    evidence: no idempotency-key header/parameter documented
+  - id: json-api
+    conforms: false

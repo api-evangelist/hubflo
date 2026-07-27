@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Hubflo API
+  version: 1.0.0
+extends: openapi/hubflo-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-rating: 3
+      x-apievangelist-notes: >-
+        Harvested verbatim from the Hubflo ReadMe SSR OpenAPI (3.0.1, 117 paths / 192
+        operations). The source spec defines no operationIds and no tags; downstream
+        API Evangelist artifacts (agentic-access, skills, data-model) key off method+path.
+        Recommended enhancements: add operationIds, tag operations by resource, and
+        document the 29-event webhook catalog inline.
+  - target: $.info
+    update:
+      x-artifacts:
+        conventions: conventions/hubflo-conventions.yml
+        errors: errors/hubflo-problem-types.yml
+        rate_limits: rate-limits/hubflo-rate-limits.yml
+        authentication: authentication/hubflo-authentication.yml
+        webhooks: asyncapi/hubflo-webhooks.yml
+        data_model: data-model/hubflo-data-model.yml
+        agentic_access: agentic-access/hubflo-agentic-access.yml
+  - target: $.components.securitySchemes.bearer_auth
+    update:
+      description: >-
+        Send the organization API key as 'Authorization: Bearer <token>'. Generate the
+        key in Hubflo under Settings > Integrations.

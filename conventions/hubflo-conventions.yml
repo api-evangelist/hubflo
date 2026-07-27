@@ -1,0 +1,86 @@
+generated: '2026-07-19'
+method: searched
+source: https://hubflo.readme.io/reference/the-hubflo-api
+docs: https://hubflo.readme.io/reference/routes
+summary: >-
+  Cross-cutting request/response semantics for the Hubflo API v2, captured from the
+  published API reference (routes, requests, responses, pagination, rate limiting,
+  errors, resources) and derived from the OpenAPI definition.
+base_url: https://app.hubflo.com/api/v2
+route_form: https://<domain>/api/<version>/<endpoint>
+authentication:
+  style: bearer
+  header: Authorization
+  format: 'Bearer <token>'
+  docs: https://hubflo.readme.io/reference/token-authentication
+  notes: One API key per company/organization, generated in Settings > Integrations.
+content_type:
+  request: application/json
+  response: application/json
+  note: >-
+    Every request must send Content-Type: application/json except file uploads.
+    The API only returns JSON.
+idempotency:
+  supported: false
+  note: >-
+    Hubflo does not document an idempotency-key header or parameter as of this capture;
+    no Idempotency pointer is emitted.
+pagination:
+  style: page-number
+  params:
+    - name: page
+      in: query
+      description: The page to access (optional).
+    - name: per_page
+      in: query
+      description: Items per page (optional). Default 20, maximum 100.
+  note: All list endpoints are paginated and may return an empty list.
+  docs: https://hubflo.readme.io/reference/pagination
+versioning:
+  scheme: uri-path
+  current: v2
+  note: Current API version is 2.0, referenced as v2 in the route path.
+  docs: https://hubflo.readme.io/reference/routes
+request_tracing:
+  response_headers:
+    - name: X-Organization-ID
+      description: Your organization ID.
+    - name: X-Rate-Limit
+      description: The maximum allowed requests in a given period.
+    - name: X-Remaining-Requests
+      description: The remaining requests count in the current period.
+  docs: https://hubflo.readme.io/reference/responses
+error_envelope:
+  format: custom-json
+  media_type: application/json
+  fields:
+    - status   # numeric HTTP status code
+    - title    # status name / error title
+    - message  # human-readable message
+  rfc9457: false
+  example:
+    status: 401
+    title: Unauthorized
+    message: API token not found
+  cross_ref: errors/hubflo-problem-types.yml
+  docs: https://hubflo.readme.io/reference/errors
+rate_limit_signaling:
+  limit: 1000 requests per minute
+  block: One-minute block on exceeding the limit (HTTP 429).
+  headers:
+    - X-Rate-Limit
+    - X-Remaining-Requests
+  cross_ref: rate-limits/hubflo-rate-limits.yml
+  docs: https://hubflo.readme.io/reference/rate-limiting
+resource_ids:
+  format: uuid
+  example: 16242d6f-a808-41b7-8c4d-fe29b9b3245f
+  docs: https://hubflo.readme.io/reference/resources
+data_formats:
+  date: 'YYYY-MM-DD'
+  time: 'H:m[:s]'
+  date_time: ISO 8601 UTC (YYYY-MM-DDThh:mm:ssZ)
+custom_fields:
+  note: >-
+    Custom field values are set by adding the custom field 'serialization_name' key
+    to request params with the desired value.

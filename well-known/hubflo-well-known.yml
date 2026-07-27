@@ -1,0 +1,25 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of /.well-known/ on Hubflo hosts
+note: >-
+  No .well-known discovery documents are published. app.hubflo.com returns HTTP 500 for
+  all probed paths; hubflo.com returns a 404 marketing page. Absence is recorded as valid data.
+hosts:
+  - host: https://app.hubflo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 500
+      - path: /.well-known/openid-configuration
+        status: 500
+      - path: /.well-known/oauth-authorization-server
+        status: 500
+      - path: /.well-known/api-catalog
+        status: 500
+      - path: /.well-known/ai-plugin.json
+        status: 500
+  - host: https://hubflo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404

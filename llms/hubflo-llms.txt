@@ -1,0 +1,208 @@
+# Hubflo Documentation
+
+> The Hubflo API allows you to write and read data from the Hubflo application. It conforms to [REST](https://en.wikipedia.org/wiki/REST). It has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes and verbs.
+
+## API Reference
+- [The Hubflo API](https://hubflo.readme.io/reference/the-hubflo-api.md)
+- [Authentication](https://hubflo.readme.io/reference/token-authentication.md)
+- [Getting started](https://hubflo.readme.io/reference/getting-started-1.md)
+- [Routes](https://hubflo.readme.io/reference/routes.md)
+- [Requests](https://hubflo.readme.io/reference/requests.md)
+- [Responses](https://hubflo.readme.io/reference/responses.md)
+- [Rate limiting](https://hubflo.readme.io/reference/rate-limiting.md)
+- [Pagination](https://hubflo.readme.io/reference/pagination.md)
+- [Response codes](https://hubflo.readme.io/reference/response-codes.md)
+- [Errors](https://hubflo.readme.io/reference/errors.md)
+- [Resources](https://hubflo.readme.io/reference/resources.md)
+- [Retrieves the files for a message](https://hubflo.readme.io/reference/get_api-v2-messages-message-id-files.md): Returns the files attached to a message
+- [Retrieves messages from a given chat room](https://hubflo.readme.io/reference/get_api-v2-chat-rooms-chat-room-id-messages.md): Returns messages
+- [Creates a message](https://hubflo.readme.io/reference/post_api-v2-chat-rooms-chat-room-id-messages.md): Post a message within a chat room as an internal user.         The user posting the message must be a participant in the chat room.         Private messages are not available for announcements chat rooms.         You can also attach files to the message.
+- [Retrieves the participants of the given chat room](https://hubflo.readme.io/reference/get_api-v2-chat-rooms-chat-room-id-participants.md): Returns the participants
+- [Adds a participant to the given chat room](https://hubflo.readme.io/reference/post_api-v2-chat-rooms-chat-room-id-participants.md): Adds a participant to the chat room
+- [Retrieves the chat rooms](https://hubflo.readme.io/reference/get_api-v2-chat-rooms.md): Returns the chat rooms
+- [Retrieves a chat room](https://hubflo.readme.io/reference/get_api-v2-chat-rooms-id.md): Returns the chat room
+- [Creates a chat room](https://hubflo.readme.io/reference/post_api-v2-chat-rooms.md): Creates a chat room. Optionally links it to a workspace and adds participants.
+- [Retrieves the companies](https://hubflo.readme.io/reference/get_api-v2-companies.md): Returns the companies. Only the first 100 tags of each company are returned.
+- [Creates a company](https://hubflo.readme.io/reference/post_api-v2-companies.md): Creates a company. Only 100 tags maximum can be specified.         To fill in a custom field, add the custom field 'serialization_name' to the request         params, with the desired value.
+- [Retrieves a company](https://hubflo.readme.io/reference/get_api-v2-companies-id.md): Returns the company. Only the first 100 tags of the company are returned.
+- [Updates a company](https://hubflo.readme.io/reference/patch_api-v2-companies-id.md): Updates a company. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field 'serialization_name' to the request params, with the desired value.
+- [Retrieves the workspaces of the given contact. Only the first 100 tags of each workspace are returned](https://hubflo.readme.io/reference/get_api-v2-contacts-contact-id-workspaces.md): Returns the workspaces
+- [Retrieves a workspace of the given contact. Only the first 100 tags of the workspace are returned](https://hubflo.readme.io/reference/get_api-v2-contacts-contact-id-workspaces-id.md): Returns the workspace
+- [Retrieves the contacts](https://hubflo.readme.io/reference/get_api-v2-contacts.md): Returns the contacts. Only the first 100 tags of each contact are returned
+- [Creates a contact](https://hubflo.readme.io/reference/post_api-v2-contacts.md): Creates a contact. Only 100 tags maximum can be specified.         To fill in a custom field, add the custom field 'serialization_name' to the request         params, with the desired value.
+- [Retrieves a contact](https://hubflo.readme.io/reference/get_api-v2-contacts-id.md): Returns the contact. Only the first 100 tags of the contact are returned
+- [Updates a contact](https://hubflo.readme.io/reference/patch_api-v2-contacts-id.md): Updates a contact. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field 'serialization_name' to the request params, with the desired value.
+- [Retrieves items](https://hubflo.readme.io/reference/get_api-v2-items.md): Returns content items
+- [Retrieves the notes](https://hubflo.readme.io/reference/get_api-v2-notes.md): Returns the notes
+- [Creates a note](https://hubflo.readme.io/reference/post_api-v2-notes.md): Creates a note, which can be linked to projects and / or contacts. The note will be added to the library.
+- [Retrieves a note](https://hubflo.readme.io/reference/get_api-v2-notes-id.md): Returns a notes
+- [Updates a note](https://hubflo.readme.io/reference/patch_api-v2-notes-id.md): Updates a note
+- [Retrieves the custom field values](https://hubflo.readme.io/reference/get_api-v2-custom-fields-custom-field-id-values.md): Returns the custom field values for the given custom field
+- [Retrieves the custom fields](https://hubflo.readme.io/reference/get_api-v2-custom-fields.md): Returns the custom fields
+- [Retrieves a custom field](https://hubflo.readme.io/reference/get_api-v2-custom-fields-id.md): Returns a custom field
+- [Creates a custom field](https://hubflo.readme.io/reference/post_api-v2-custom-fields.md): Returns the created custom field
+- [Updates a custom field](https://hubflo.readme.io/reference/patch_api-v2-custom-fields-id.md): Returns the updated custom field
+- [Deletes a custom field](https://hubflo.readme.io/reference/delete_api-v2-custom-fields-id.md): Deletes a custom field
+- [Retrieves the answers](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-answers.md): Returns the answers
+- [Retrieves an answer](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-answers-id.md): Returns an answer
+- [Retrieves the assignments](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-assignments.md): Returns the assignments
+- [Creates an assignment](https://hubflo.readme.io/reference/post_api-v2-forms-form-id-assignments.md): Creates an assignment
+- [Retrieves an assignment](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-assignments-id.md): Returns an assignment
+- [Retrieves the forms](https://hubflo.readme.io/reference/get_api-v2-forms.md): Creates a forms
+- [Retrieves the items](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-items-item-id-conditions.md): Retrieves the conditions for a specific item in a form
+- [Retrieves the condition group](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-items-item-id-condition-group.md): Retrieves the condition group for a specific item in a form
+- [Creates a form](https://hubflo.readme.io/reference/post_api-v2-forms.md): Returns the created form
+- [Creates a condition](https://hubflo.readme.io/reference/post_api-v2-forms-form-id-items-item-id-conditions.md): Creates a new condition for a specific item in a form
+- [Creates a condition group](https://hubflo.readme.io/reference/post_api-v2-forms-form-id-items-item-id-condition-group.md): Creates a condition group for a specific item in a form
+- [Retrieves a form](https://hubflo.readme.io/reference/get_api-v2-forms-id.md): Returns the form
+- [Updates a condition](https://hubflo.readme.io/reference/patch_api-v2-forms-form-id-items-item-id-conditions-id.md): Updates a condition for a specific item in a form
+- [Updates a condition group](https://hubflo.readme.io/reference/patch_api-v2-forms-form-id-items-item-id-condition-group.md): Updates a condition group for a specific item in a form
+- [Updates a form](https://hubflo.readme.io/reference/patch_api-v2-forms-id.md): Updates a form
+- [Deletes a condition](https://hubflo.readme.io/reference/delete_api-v2-forms-form-id-items-item-id-conditions-id.md): Deletes a condition for a specific item in a form
+- [Retrieves the items](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-items.md): Returns the items
+- [Retrieves an item](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-items-id.md): Returns the item
+- [Creates a question in a form](https://hubflo.readme.io/reference/post_api-v2-forms-form-id-questions.md): Creates a new question in the specified form
+- [Retrieves the submissions](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-submissions.md): Returns the submissions
+- [Retrieves a submission](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-submissions-id.md): Returns a submission
+- [Creates a title in a form](https://hubflo.readme.io/reference/post_api-v2-forms-form-id-titles.md): Creates a new title in the specified form
+- [Retrieves the sections](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-sections.md): Returns the sections
+- [Creates a section](https://hubflo.readme.io/reference/post_api-v2-forms-form-id-sections.md): Creates a section
+- [Retrieves a section](https://hubflo.readme.io/reference/get_api-v2-forms-form-id-sections-id.md): Returns a section
+- [Updates a section](https://hubflo.readme.io/reference/patch_api-v2-forms-form-id-sections-id.md): Updates a section
+- [Creates a payment notice](https://hubflo.readme.io/reference/post_api-v2-invoices-invoice-id-payment-notice.md): Create a payment notice for a given invoice, and mark it as paid. In case of partial payment, it will add up.
+- [Issues an invoice](https://hubflo.readme.io/reference/post_api-v2-invoices-invoice-id-issuances.md): Changes a draft invoice status to issued
+- [Sends an invoice to its recipient](https://hubflo.readme.io/reference/post_api-v2-invoices-invoice-id-deliveries.md): Sends an issued invoice to its recipient by email
+- [Creates a payment URL](https://hubflo.readme.io/reference/post_api-v2-invoices-invoice-id-payment-url.md): Create the payment url for a given invoice, or update it when it already exists
+- [Retrieves the line_items](https://hubflo.readme.io/reference/get_api-v2-invoices-invoice-id-line-items.md): Returns the line_items
+- [Retrieves the invoices](https://hubflo.readme.io/reference/get_api-v2-invoices.md): Returns the invoices
+- [Creates a line item for an invoice](https://hubflo.readme.io/reference/post_api-v2-invoices-invoice-id-line-items.md): Adds a new line item to an existing draft invoice
+- [Retrieves an invoice](https://hubflo.readme.io/reference/get_api-v2-invoices-id.md): Returns the invoice
+- [Creates an invoice](https://hubflo.readme.io/reference/post_api-v2-invoices.md): Creates a draft invoice (without line items)
+- [Retrieves a line item](https://hubflo.readme.io/reference/get_api-v2-invoices-invoice-id-line-items-id.md): Returns the line item
+- [Updates an invoice](https://hubflo.readme.io/reference/patch_api-v2-invoices-id.md): Updates an invoice. Only a draft can be edited, except accounting_id (editable on any invoice)
+- [Updates a line item](https://hubflo.readme.io/reference/patch_api-v2-invoices-invoice-id-line-items-id.md): Updates a line item of a draft invoice
+- [Deletes a line item](https://hubflo.readme.io/reference/delete_api-v2-invoices-invoice-id-line-items-id.md): Deletes a line item of a draft invoice
+- [Uploads the invoicing profile logo](https://hubflo.readme.io/reference/post_api-v2-invoicing-profiles-logo.md): Replaces the invoicing profile logo. The image is sent as multipart/form-data.
+- [Deletes the invoicing profile logo](https://hubflo.readme.io/reference/delete_api-v2-invoicing-profiles-logo.md): Removes the invoicing profile logo
+- [Updates the current invoicing profile](https://hubflo.readme.io/reference/patch_api-v2-invoicing-profiles.md): Returns the updated invoicing profile
+- [Retrieves the members](https://hubflo.readme.io/reference/get_api-v2-members.md): Returns the members of the current organization
+- [Retrieves the organizations](https://hubflo.readme.io/reference/get_api-v2-organizations.md): Returns the organizations
+- [Uploads the organization cover](https://hubflo.readme.io/reference/post_api-v2-organizations-cover.md): Replaces the organization cover. The image is sent as multipart/form-data.
+- [Updates the current organization](https://hubflo.readme.io/reference/patch_api-v2-organizations.md): Returns the updated organization
+- [Deletes the organization cover](https://hubflo.readme.io/reference/delete_api-v2-organizations-cover.md): Removes the organization cover
+- [Uploads the organization logo](https://hubflo.readme.io/reference/post_api-v2-organizations-logo.md): Replaces the organization logo. The image is sent as multipart/form-data.
+- [Deletes the organization logo](https://hubflo.readme.io/reference/delete_api-v2-organizations-logo.md): Removes the organization logo
+- [Creates a ping](https://hubflo.readme.io/reference/post_api-v2-pings.md): Returns a pong if the user is authenticated
+- [Updates the current portal](https://hubflo.readme.io/reference/patch_api-v2-portals.md): Returns the updated portal
+- [Retrieves the project section templates](https://hubflo.readme.io/reference/get_api-v2-project-sections-templates.md): Returns the project section templates
+- [Creates a task in a project section template](https://hubflo.readme.io/reference/post_api-v2-project-sections-templates-template-id-tasks.md): **DEPRECATED — DO NOT USE.** Use `POST /api/v2/task_templates` instead, passing the project section id as `parent_id`. Creates a task in a project section template. When you specify a `parent_task_id` you will create a subtask. Some attributes are not available for subtasks: `clickup_id`, `monday_id`, `contact_id` and `visible_by_contact`
+- [Retrieves a project section template](https://hubflo.readme.io/reference/get_api-v2-project-sections-templates-id.md): Returns the project section template
+- [Creates a project section template](https://hubflo.readme.io/reference/post_api-v2-project-sections-templates.md): Returns the created project section template
+- [Updates a project section template](https://hubflo.readme.io/reference/patch_api-v2-project-sections-templates-id.md): Returns the updated project section template
+- [Retrieves the project stages](https://hubflo.readme.io/reference/get_api-v2-project-types-project-type-id-project-stages.md): Returns the project stages
+- [Retrieves the project types](https://hubflo.readme.io/reference/get_api-v2-project-types.md): Returns the project types
+- [Creates a project stage](https://hubflo.readme.io/reference/post_api-v2-project-types-project-type-id-project-stages.md): Returns the created project stage
+- [Creates a project type](https://hubflo.readme.io/reference/post_api-v2-project-types.md): Returns the created project type
+- [Retrieves the contacts of a project](https://hubflo.readme.io/reference/get_api-v2-projects-project-id-contacts.md): Returns the contacts of a project. Only the first 100 tags of each contact are returned
+- [Retrieves the sections of a project](https://hubflo.readme.io/reference/get_api-v2-projects-project-id-sections.md): Returns the sections of a project
+- [Creates a section](https://hubflo.readme.io/reference/post_api-v2-projects-project-id-sections.md): Creates a section from a template
+- [Retrieves the projects](https://hubflo.readme.io/reference/get_api-v2-projects.md): Retrieves the projects. Only the first 100 tags of each project are returned
+- [Retrieves the users of a project](https://hubflo.readme.io/reference/get_api-v2-projects-project-id-users.md): Returns the users of a project.
+- [Creates a project](https://hubflo.readme.io/reference/post_api-v2-projects.md): Creates a project. Only 100 tags maximum can be specified. To fill in a custom field, add the custom field 'serialization_name' to the request         params, with the desired value.
+- [Retrieves a project](https://hubflo.readme.io/reference/get_api-v2-projects-id.md): Returns the project. . Only the first 100 tags of the project are returned
+- [Updates a project](https://hubflo.readme.io/reference/patch_api-v2-projects-id.md): Updates a project. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field 'serialization_name' to the request params, with the desired value.
+- [Retrieves the contacts](https://hubflo.readme.io/reference/get_api-v2-proposals-proposal-id-contacts.md): Returns the list of contacts for a proposal. Only the first 100 tags of each contact are returned.
+- [Issues a proposal](https://hubflo.readme.io/reference/post_api-v2-proposals-proposal-id-issuances.md): Changes a draft proposal status to issued
+- [Retrieves the metadata of a proposal](https://hubflo.readme.io/reference/get_api-v2-proposals-id-metadata.md): Retrieves the metadata of a proposal. Contact ID or email must be provided to retrieve recipient-specific metadata such as view count.
+- [Creates a quote item for a proposal](https://hubflo.readme.io/reference/post_api-v2-proposals-proposal-id-line-items.md): Adds a new quote item to an existing draftproposal
+- [Retrieves the line_items](https://hubflo.readme.io/reference/get_api-v2-proposals-proposal-id-line-items.md): Returns the line_items
+- [Retrieves the proposals](https://hubflo.readme.io/reference/get_api-v2-proposals.md): Returns the proposals
+- [Creates a proposal](https://hubflo.readme.io/reference/post_api-v2-proposals.md): Creates a draft proposal (without line items)
+- [Retrieves a proposal](https://hubflo.readme.io/reference/get_api-v2-proposals-id.md): Returns the proposal
+- [Retrieves a list of submissions for a smartdoc](https://hubflo.readme.io/reference/get_api-v2-seal-templates-seal-template-id-submissions.md): Returns the list of submissions for a smartdoc.
+- [Retrieves a list of parties for a smartdoc](https://hubflo.readme.io/reference/get_api-v2-seal-templates-seal-template-id-parties.md): Returns the list of parties for a smartdoc.
+- [Creates a submission for a smartdoc](https://hubflo.readme.io/reference/post_api-v2-seal-templates-seal-template-id-submissions.md): Creates a submission for a smartdoc. If the smartdoc doesn't contain any fields, or if wrong party IDs are given, it cannot be submitted and the endpoint will return a 422 - unprocessable content error. The parameter contact_id is deprecated. Use party_signer_ids instead. The parameter party_signer_ids is an object mapping party ID to contact ID: keys are party IDs and values are contact IDs. Give as many key-value pairs as there are parties in the smartdoc.
+- [Retrieves a list of submitters for a smartdoc's submission](https://hubflo.readme.io/reference/get_api-v2-seal-templates-seal-template-id-submissions-submission-id-submitters.md): Returns the list of submitters for a smartdoc's submission.
+- [Retrieves the smartdocs](https://hubflo.readme.io/reference/get_api-v2-seal-templates.md): Returns the smartdocs
+- [Retrieves a smartdoc](https://hubflo.readme.io/reference/get_api-v2-seal-templates-id.md): Returns the smartdoc
+- [Retrieves the tags](https://hubflo.readme.io/reference/get_api-v2-tags.md): Returns the tags of the current organization
+- [Creates a tag](https://hubflo.readme.io/reference/post_api-v2-tags.md): Returns the created tag
+- [Updates a tag](https://hubflo.readme.io/reference/patch_api-v2-tags-id.md): Returns the updated tag
+- [Deletes a tag](https://hubflo.readme.io/reference/delete_api-v2-tags-id.md): Deletes a tag
+- [Retrieves the task templates](https://hubflo.readme.io/reference/get_api-v2-task-templates.md): Returns the task templates of the organization. Filter with `parent_id` to scope by ProjectSection: omit it to get all templates, set it to a blank value to get only top-level ones, or set it to a ProjectSection uuid to get its attached templates.
+- [Retrieves the subtask templates](https://hubflo.readme.io/reference/get_api-v2-task-templates-task-template-id-subtask-templates.md): Returns the subtask templates of the task template
+- [Creates a task template](https://hubflo.readme.io/reference/post_api-v2-task-templates.md): Returns the created task template
+- [Creates a subtask template](https://hubflo.readme.io/reference/post_api-v2-task-templates-task-template-id-subtask-templates.md): Returns the created subtask template
+- [Retrieves a task template](https://hubflo.readme.io/reference/get_api-v2-task-templates-id.md): Returns the task template
+- [Retrieves a subtask template](https://hubflo.readme.io/reference/get_api-v2-task-templates-task-template-id-subtask-templates-id.md): Returns the subtask template
+- [Updates a task template](https://hubflo.readme.io/reference/patch_api-v2-task-templates-id.md): Returns the updated task template
+- [Updates a subtask template](https://hubflo.readme.io/reference/patch_api-v2-task-templates-task-template-id-subtask-templates-id.md): Returns the updated subtask template
+- [Deletes a task template](https://hubflo.readme.io/reference/delete_api-v2-task-templates-id.md): Deletes the task template
+- [Deletes a subtask template](https://hubflo.readme.io/reference/delete_api-v2-task-templates-task-template-id-subtask-templates-id.md): Deletes the subtask template
+- [Retrieves the assigned users of a task template](https://hubflo.readme.io/reference/get_api-v2-task-templates-task-template-id-users.md): Returns the assigned users of a task template
+- [Creates a comment](https://hubflo.readme.io/reference/post_api-v2-tasks-task-id-comments.md): Add a comment to a task.         Specify the author of the comment with the author_id parameter.
+- [Retrieves task comments](https://hubflo.readme.io/reference/get_api-v2-tasks-task-id-comments.md): Returns all comments associated with a task, sorted by creation date in descending order
+- [Retrieves a comment](https://hubflo.readme.io/reference/get_api-v2-tasks-task-id-comments-id.md): Returns a specific comment of a task
+- [Retrieves the assigned contacts](https://hubflo.readme.io/reference/get_api-v2-tasks-task-id-contacts.md): Returns the assigned contacts of a task. Only the first 100 tags of each contact are returned.
+- [Retrieves the files for a task](https://hubflo.readme.io/reference/get_api-v2-tasks-task-id-files.md): Returns the files for a task
+- [Creates a file for a task](https://hubflo.readme.io/reference/post_api-v2-tasks-task-id-files.md): Creates a file for a task. It can be created giving the uploaded file, or imported from the library,         using the file_id attribute.
+- [Retrieves a file for a task](https://hubflo.readme.io/reference/get_api-v2-tasks-task-id-files-id.md): Returns a file for a task
+- [Updates a file for a task](https://hubflo.readme.io/reference/patch_api-v2-tasks-task-id-files-id.md): Updates a file for a task. You can only change the title of the file.
+- [Retrieves the assigned users of a task](https://hubflo.readme.io/reference/get_api-v2-tasks-task-id-users.md): Returns the assigned users of a task
+- [Retrieves the tasks](https://hubflo.readme.io/reference/get_api-v2-tasks.md): Returns the tasks. Only the first 100 tags of the task are returned
+- [Creates a task](https://hubflo.readme.io/reference/post_api-v2-tasks.md): Creates a task.         To fill in a custom field, add the custom field 'serialization_name' to the request         params, with the desired value. Only 100 tags maximum can be specified.         When you specify a `parent_task_id` you will create a subtask. Some attributes are not available for subtasks:         `clickup_id`, `monday_id`, `project_id` and `contact_id`.         To attach a recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) along         with the matching `recurrence_*` fields. `start_time` is required when a recurrence is set.         For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`)         with the corresponding `recurrence_week_days` or `recurrence_day_into_month`.
+- [Retrieves a task](https://hubflo.readme.io/reference/get_api-v2-tasks-id.md): Returns the task. Only the first 100 tags of the task are returned
+- [Updates a task](https://hubflo.readme.io/reference/patch_api-v2-tasks-id.md): Updates a task. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field 'serialization_name' to the request params, with the desired value. If the task has a `parent_task_id` the following attributes are not available: `clickup_id`, `monday_id`, and `contact_id`. To change the recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) with the matching `recurrence_*` fields. Send `recurrence_type: null` to remove an existing rule; omit the key to leave it unchanged. For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`).
+- [Retrieves the time trackings](https://hubflo.readme.io/reference/get_api-v2-time-trackings.md): Returns the time trackings
+- [Creates a time tracking](https://hubflo.readme.io/reference/post_api-v2-time-trackings.md): Returns the created time tracking
+- [Retrieves a time tracking](https://hubflo.readme.io/reference/get_api-v2-time-trackings-id.md): Returns a time tracking
+- [Updates a time tracking](https://hubflo.readme.io/reference/patch_api-v2-time-trackings-id.md): Updates a time tracking
+- [Retrieves the webhook deliveries](https://hubflo.readme.io/reference/get_api-v2-webhooks-webhook-target-id-webhook-deliveries.md): Returns the deliveries sent to a webhook, most recent first, so their status and errors can be audited. Deliveries are retained for one month.
+- [Activates a webhook](https://hubflo.readme.io/reference/post_api-v2-webhooks-webhook-target-id-activation.md): Activates a webhook so it resumes receiving events
+- [Creates a webhook](https://hubflo.readme.io/reference/post_api-v2-webhooks.md): Creates a webhook that notifies the given `url` whenever one of the subscribed events occurs.  Each delivery is signed so you can verify it originated from Hubflo. The request carries an `X-Hubflo-Signature` header containing the hex-encoded HMAC-SHA256 of the raw request body, computed with the webhook's signing secret (returned as `secret` when the webhook is created). To verify a delivery, recompute the HMAC over the received body with your signing secret and compare it to the header value.  Each delivery's payload also includes a unique `webhook_delivery_id` (along with a `webhook_delivery_created_at` timestamp). Use it to deduplicate deliveries, since the same event may be delivered more than once.
+- [Deactivates a webhook](https://hubflo.readme.io/reference/delete_api-v2-webhooks-webhook-target-id-activation.md): Deactivates a webhook so it stops receiving events
+- [Deletes a webhook](https://hubflo.readme.io/reference/delete_api-v2-webhooks-id.md): Deletes a webhook
+- [Archives a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-archive.md): Archives a workspace and its associated chat room
+- [Unarchives a workspace](https://hubflo.readme.io/reference/delete_api-v2-workspaces-workspace-id-archive.md): Unarchives a workspace and its associated chat room
+- [Retrieves the contacts for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-contacts.md): Returns the contacts for a workspace. Only the first 100 tags of each contact are returned.
+- [Retrieves a contact for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-contacts-id.md): Returns a contact for a workspace. Only the first 100 tags of each contact are returned.
+- [Retrieves the embeds for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-embeds.md): Returns the embeds for a workspace
+- [Removes a contact from a workspace](https://hubflo.readme.io/reference/delete_api-v2-workspaces-workspace-id-contacts-id.md): Removes a contact from a workspace.
+- [Creates an embed for a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-embeds.md): Creates an embed for a workspace. It can be created giving the embed attributes, or imported from the library,         using the embed_id attribute. When the embed has a parent folder, the parent_id attribute must be provided and         the parent folder has to be in the same workspace.
+- [Sets a workspace template as the default](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-default.md): Marks the workspace template as the organization default
+- [Retrieves an embed for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-embeds-id.md): Returns a embed for a workspace
+- [Retrieves the files for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-files.md): Returns the files for a workspace
+- [Creates a file for a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-files.md): Creates a file for a workspace. It can be created giving the uploaded file, or imported from the library,         using the file_id attribute. When the file has a parent folder, the parent_id attribute must be provided and         the parent folder has to be in the same workspace.
+- [Updates an embed for a workspace](https://hubflo.readme.io/reference/patch_api-v2-workspaces-workspace-id-embeds-id.md): Updates an embed
+- [Retrieves a file for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-files-id.md): Returns a file for a workspace
+- [Updates a file for a workspace](https://hubflo.readme.io/reference/patch_api-v2-workspaces-workspace-id-files-id.md): Updates a file for a workspace. You can only change the title of the file and the parent.
+- [Retrieves the folders for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-folders.md): Returns the folders for a workspace
+- [Creates a folder for a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-folders.md): Creates a folder for a workspace. When the folder has a parent folder, the parent_id attribute must be         provided and the parent folder has to be in the same workspace.
+- [Retrieves a folder for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-folders-id.md): Returns a folder for a workspace
+- [Updates a folder for a workspace](https://hubflo.readme.io/reference/patch_api-v2-workspaces-workspace-id-folders-id.md): Updates a folder for a workspace. If the parent_id attribute is provided, the parent folder has to be in the         same workspace.
+- [Retrieves the invites for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-invites.md): Returns the invites for a workspace. If the invited contact already has access to the portal, the contact will be automatically added to the workspace without generating a new invitation UUID or URL
+- [Creates an invite for a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-invites.md): Creates an invite for a workspace
+- [Deletes an invite for a workspace](https://hubflo.readme.io/reference/delete_api-v2-workspaces-workspace-id-invites-id.md): Deletes an invite for a workspace
+- [Retrieves the links for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-links.md): Returns the links for a workspace
+- [Creates a link for a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-links.md): Creates a link for a workspace. It can be created giving the link attributes, or imported from the library,         using the link_id attribute. When the link has a parent folder, the parent_id attribute must be provided and         the parent folder has to be in the same workspace.
+- [Retrieves a link for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-links-id.md): Returns a link for a workspace
+- [Retrieves the notes for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-notes.md): Returns the notes for a workspace
+- [Creates a note for a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-notes.md): Creates a note for a workspace. It can be created giving the note attributes, or imported from the library,         using the note_id attribute. When the note has a parent folder, the parent_id attribute must be provided and         the parent folder has to be in the same workspace.
+- [Retrieves a note for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-notes-id.md): Returns a note for a workspace
+- [Retrieves the tasks for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-tasks.md): Returns the tasks for a workspace. Only the first 100 tags of the task are returned
+- [Creates a task in a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-tasks.md): Creates a task. Only 100 tags maximum can be specified.         To fill in a custom field, add the custom field 'serialization_name' to the request         params, with the desired value.         To attach a recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) along         with the matching `recurrence_*` fields. `start_time` is required when a recurrence is set.         For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`)         with the corresponding `recurrence_week_days` or `recurrence_day_into_month`.
+- [Retrieves a task for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-tasks-id.md): Returns a task for a workspace. Only the first 100 tags of the task are returned
+- [Creates an item shortcut for a task of a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-tasks-task-id-items-item-id-shortcut.md): Creates a shortcut to the given item for the given task in the given workspace
+- [Retrieves the projects for a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-projects.md): Returns the projects for a workspace. Only the first 100 tags of each project are returned
+- [Updates a task of a workspace](https://hubflo.readme.io/reference/patch_api-v2-workspaces-workspace-id-tasks-id.md): Updates a task. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field 'serialization_name' to the request params, with the desired value. To change the recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) with the matching `recurrence_*` fields. Send `recurrence_type: null` to remove an existing rule; omit the key to leave it unchanged. For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`).
+- [Deletes an item shortcut for a task of a workspace](https://hubflo.readme.io/reference/delete_api-v2-workspaces-workspace-id-tasks-task-id-items-item-id-shortcut.md): Deletes a shortcut to the given item for the given task in the given workspace
+- [Retrieves the workspace templates](https://hubflo.readme.io/reference/get_api-v2-workspaces-templates.md): Returns the workspace templates
+- [Retrieves the items attached to the given task in the given workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-tasks-task-id-items.md): Returns the items
+- [Retrieves the workspaces](https://hubflo.readme.io/reference/get_api-v2-workspaces.md): Returns the workspaces. Only the first 100 tags of each workspace are returned
+- [Creates a workspace](https://hubflo.readme.io/reference/post_api-v2-workspaces.md): Creates a workspace, from an existing one or not. Only 100 tags maximum can be specified.         When a chat room is created, chat_room_id is ignored.         In this case, you have to pass at least one ID of a user, who will be part of the chat room.
+- [Retrieves a workspace](https://hubflo.readme.io/reference/get_api-v2-workspaces-id.md): Returns a workspace. Only the first 100 tags of the workspace are returned
+- [Updates a workspace](https://hubflo.readme.io/reference/patch_api-v2-workspaces-id.md): Updates a workspace. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags.
+- [Deletes a workspace](https://hubflo.readme.io/reference/delete_api-v2-workspaces-id.md): Deletes a workspace
+- [Retrieves the accesses to the given folder](https://hubflo.readme.io/reference/get_api-v2-workspaces-workspace-id-folders-folder-id-accesses.md): Returns the accesses
+- [Adds an access to the given folder](https://hubflo.readme.io/reference/post_api-v2-workspaces-workspace-id-folders-folder-id-accesses.md): Grants access to an actor
+- [Removes an access from the given folder](https://hubflo.readme.io/reference/delete_api-v2-workspaces-workspace-id-folders-folder-id-accesses.md): Revokes access for an actor

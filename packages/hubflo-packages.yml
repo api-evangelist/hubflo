@@ -1,0 +1,35 @@
+generated: '2026-07-19'
+method: searched
+source: https://registry.npmjs.org
+note: >-
+  First-party client libraries are published to npm under the hubflo-corp maintainer,
+  generated with Stainless from the Hubflo OpenAPI. No PyPI, RubyGems, Maven, NuGet,
+  crates.io, Go module, or Packagist first-party package was found.
+packages:
+  - language: typescript
+    registry: npm
+    name: hubflo-mcp
+    version: 0.0.1
+    url: https://www.npmjs.com/package/hubflo-mcp
+    repository: https://github.com/stainless-sdks/hubflo-mcp-typescript
+    install: npm install hubflo-mcp
+    kind: sdk
+    official: true
+    description: The official TypeScript library for the Hubflo API (Stainless-generated).
+  - language: typescript
+    registry: npm
+    name: hubflo-mcp-mcp
+    version: 0.0.2
+    url: https://www.npmjs.com/package/hubflo-mcp-mcp
+    repository: https://github.com/stainless-sdks/hubflo-mcp-typescript/tree/main/packages/mcp-server
+    install: npm install hubflo-mcp-mcp
+    kind: mcp-server
+    official: true
+    description: The official MCP server package for the Hubflo API (Stainless-generated).
+third_party:
+  - language: javascript
+    registry: npm
+    name: "@pipedream/hubflo"
+    url: https://www.npmjs.com/package/@pipedream/hubflo
+    official: false
+    description: Pipedream Hubflo components (third-party integration platform).

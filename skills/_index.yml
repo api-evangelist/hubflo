@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/hubflo-openapi-original.yml
+note: >-
+  Agent Skills generated from the Hubflo OpenAPI (method+path grounded; the source spec
+  defines no operationIds). Each mirrors a marquee Hubflo flow.
+skills:
+  - file: hubflo-create-company-and-contact.md
+    name: Create a company and add a contact in Hubflo
+    api: openapi/hubflo-openapi-original.yml
+    operations:
+      - "POST /api/v2/companies"
+      - "POST /api/v2/contacts"
+  - file: hubflo-subscribe-to-webhooks.md
+    name: Subscribe to Hubflo webhook events
+    api: openapi/hubflo-openapi-original.yml
+    operations:
+      - "POST /api/v2/webhooks"
+      - "POST /api/v2/webhooks/{webhook_target_id}/activation"
+      - "GET /api/v2/webhooks/{webhook_target_id}/webhook_deliveries"
+  - file: hubflo-create-and-issue-invoice.md
+    name: Create and issue a Hubflo invoice
+    api: openapi/hubflo-openapi-original.yml
+    operations:
+      - "POST /api/v2/invoices"
+      - "POST /api/v2/invoices/{invoice_id}/line-items"
+      - "POST /api/v2/invoices/{invoice_id}/issuances"

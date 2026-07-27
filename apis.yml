@@ -1,25 +1,618 @@
 aid: hubflo
 name: Hubflo
-description: Hubflo is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Hubflo is a client portal platform for service businesses — consultants, agencies,
+  accountants, and professional-service firms — bringing client onboarding, messaging,
+  document management, e-signatures, forms, proposals, invoicing, tasks, and project
+  collaboration into one branded workspace. Hubflo exposes a REST API (v2) at
+  app.hubflo.com/api/v2 with bearer-token authentication, JSON request/response bodies,
+  UUID resource identifiers, page-based pagination, a 1000 request/minute rate limit, and
+  a native webhook system spanning 29 event types across companies, contacts, workspaces,
+  invoices, forms, tasks, and e-signature submissions. Hubflo also publishes official
+  TypeScript and MCP-server packages and a hosted remote MCP server. Backed by Seedcamp.
 url: https://raw.githubusercontent.com/api-evangelist/hubflo/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://xvxiiiwlonqntbzglrdp.supabase.co/storage/v1/object/public/Assets/hubflo-og-home.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - seedcamp
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: portfolio-lead-enriched
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
+- Client Portal
+- Professional Services
+- CRM
+- Invoicing
+- Project Management
+- Document Management
+- E-Signature
+- Onboarding
+- Webhooks
 - Company
-apis: []
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: hubflo:hubflo-chat-room-api
+  name: Hubflo chat_room API
+  description: The chat_room API from Hubflo — 4 operation(s) for chat_room.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - chat_room
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-chat-room-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-comment-api
+  name: Hubflo comment API
+  description: The comment API from Hubflo — 2 operation(s) for comment.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - comment
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-comment-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-company-api
+  name: Hubflo company API
+  description: The company API from Hubflo — 2 operation(s) for company.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - company
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-company-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-contact-api
+  name: Hubflo contact API
+  description: The contact API from Hubflo — 4 operation(s) for contact.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - contact
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-contact-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-custom-field-api
+  name: Hubflo custom_field API
+  description: The custom_field API from Hubflo — 2 operation(s) for custom_field.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - custom_field
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-custom-field-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-custom-field-value-api
+  name: Hubflo custom_field_value API
+  description: The custom_field_value API from Hubflo — 1 operation(s) for custom_field_value.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - custom_field_value
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-custom-field-value-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-folder-api
+  name: Hubflo folder API
+  description: The folder API from Hubflo — 1 operation(s) for folder.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - folder
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-folder-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-form-api
+  name: Hubflo form API
+  description: The form API from Hubflo — 17 operation(s) for form.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - form
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-form-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-invoice-api
+  name: Hubflo invoice API
+  description: The invoice API from Hubflo — 8 operation(s) for invoice.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - invoice
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-invoice-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-invoicing-profile-api
+  name: Hubflo invoicing_profile API
+  description: The invoicing_profile API from Hubflo — 2 operation(s) for invoicing_profile.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - invoicing_profile
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-invoicing-profile-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-item-api
+  name: Hubflo item API
+  description: The item API from Hubflo — 1 operation(s) for item.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - item
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-item-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-member-api
+  name: Hubflo member API
+  description: The member API from Hubflo — 1 operation(s) for member.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - member
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-member-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-message-api
+  name: Hubflo message API
+  description: The message API from Hubflo — 1 operation(s) for message.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - message
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-message-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-note-api
+  name: Hubflo note API
+  description: The note API from Hubflo — 2 operation(s) for note.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - note
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-note-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-organizations-api
+  name: Hubflo organizations API
+  description: The organizations API from Hubflo — 3 operation(s) for organizations.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-ping-api
+  name: Hubflo ping API
+  description: The ping API from Hubflo — 1 operation(s) for ping.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - ping
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-ping-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-portals-api
+  name: Hubflo portals API
+  description: The portals API from Hubflo — 1 operation(s) for portals.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - portals
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-portals-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-project-api
+  name: Hubflo project API
+  description: The project API from Hubflo — 5 operation(s) for project.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - project
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-project-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-project-section-api
+  name: Hubflo project_section API
+  description: The project_section API from Hubflo — 3 operation(s) for project_section.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - project_section
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-project-section-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-project-type-api
+  name: Hubflo project_type API
+  description: The project_type API from Hubflo — 2 operation(s) for project_type.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - project_type
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-project-type-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-proposal-api
+  name: Hubflo proposal API
+  description: The proposal API from Hubflo — 6 operation(s) for proposal.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - proposal
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-proposal-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-smartdoc-api
+  name: Hubflo smartdoc API
+  description: The smartdoc API from Hubflo — 5 operation(s) for smartdoc.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - smartdoc
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-smartdoc-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-tag-api
+  name: Hubflo tag API
+  description: The tag API from Hubflo — 2 operation(s) for tag.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - tag
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-tag-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-task-api
+  name: Hubflo task API
+  description: The task API from Hubflo — 6 operation(s) for task.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - task
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-task-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-task-template-api
+  name: Hubflo task_template API
+  description: The task_template API from Hubflo — 5 operation(s) for task_template.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - task_template
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-task-template-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-time-tracking-api
+  name: Hubflo time_tracking API
+  description: The time_tracking API from Hubflo — 2 operation(s) for time_tracking.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - time_tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-time-tracking-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-webhook-api
+  name: Hubflo webhook API
+  description: The webhook API from Hubflo — 4 operation(s) for webhook.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - webhook
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-webhook-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
+- aid: hubflo:hubflo-workspace-api
+  name: Hubflo workspace API
+  description: The workspace API from Hubflo — 24 operation(s) for workspace.
+  humanURL: https://hubflo.readme.io/reference/the-hubflo-api
+  baseURL: https://app.hubflo.com/api/v2
+  tags:
+  - workspace
+  properties:
+  - type: OpenAPI
+    url: openapi/hubflo-workspace-api-openapi.yml
+  - type: Documentation
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: APIReference
+    url: https://hubflo.readme.io/reference/the-hubflo-api
+  - type: GettingStarted
+    url: https://hubflo.readme.io/reference/getting-started-1
+  - type: Authentication
+    url: authentication/hubflo-authentication.yml
 common:
 - type: Website
-  url: http://hubflo.com
+  url: https://www.hubflo.com
+- type: DeveloperPortal
+  url: https://hubflo.readme.io
+- type: Documentation
+  url: https://hubflo.readme.io/reference/the-hubflo-api
+- type: APIReference
+  url: https://hubflo.readme.io/reference/the-hubflo-api
+- type: GettingStarted
+  url: https://hubflo.readme.io/reference/getting-started-1
+- type: Support
+  url: https://support.hubflo.com/en/
+- type: Blog
+  url: https://www.hubflo.com/blog
+- type: Pricing
+  url: https://www.hubflo.com/pricing
+- type: SignUp
+  url: https://app.hubflo.com/users/sign_in
+- type: TermsOfService
+  url: https://www.hubflo.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.hubflo.com/privacy-policy
+- type: Integrations
+  url: https://www.hubflo.com/integrations
+- type: Authentication
+  url: authentication/hubflo-authentication.yml
+- type: Conventions
+  url: conventions/hubflo-conventions.yml
+- type: ErrorCatalog
+  url: errors/hubflo-problem-types.yml
+- type: RateLimits
+  url: rate-limits/hubflo-rate-limits.yml
+- type: Lifecycle
+  url: lifecycle/hubflo-lifecycle.yml
+- type: WellKnown
+  url: well-known/hubflo-well-known.yml
+- type: MCPServer
+  url: mcp/hubflo-mcp.yml
+- type: Packages
+  url: packages/hubflo-packages.yml
+- type: SDKs
+  url: packages/hubflo-packages.yml
+- type: Conformance
+  url: conformance/hubflo-conformance.yml
+- type: DataModel
+  url: data-model/hubflo-data-model.yml
+- type: Webhooks
+  url: asyncapi/hubflo-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/hubflo-llms.txt
+- type: DomainSecurity
+  url: security/hubflo-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/hubflo-agentic-access.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

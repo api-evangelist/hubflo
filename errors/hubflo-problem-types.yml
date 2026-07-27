@@ -1,0 +1,72 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hubflo-openapi-original.yml
+docs: https://hubflo.readme.io/reference/response-codes
+format: custom-json
+envelope:
+  media_type: application/json
+  fields:
+    - name: status
+      description: Numeric HTTP status code.
+    - name: title
+      description: Status name, a.k.a. the error title.
+    - name: message
+      description: Human-readable message.
+rfc9457: false
+response_codes:
+  - code: 200
+    name: Success
+    description: Success.
+  - code: 201
+    name: Created
+    description: Resource created.
+  - code: 204
+    name: No Content
+    description: Success but the response contains no data (e.g. deletion).
+  - code: 400
+    name: Bad Request
+    description: The request is invalid.
+  - code: 401
+    name: Unauthorized
+    description: Authentication failed.
+  - code: 403
+    name: Forbidden
+    description: Insufficient rights to perform the requested action.
+  - code: 404
+    name: Not Found
+    description: The resource is not found.
+  - code: 422
+    name: Unprocessable Content
+    description: The transmitted data is malformed.
+  - code: 429
+    name: Too Many Requests
+    description: Too many requests have been made.
+  - code: 500
+    name: Internal Server Error
+    description: An internal server error occurred (the technical team is automatically notified).
+problems:
+  - status: 400
+    schema: error_bad_request
+    title: Bad Request
+    message_example: Invalid parameters
+    remediation: Check request parameters and body against the endpoint schema.
+  - status: 401
+    schema: error_unauthorized
+    title: Unauthorized
+    message_example: API token not found
+    remediation: "Send a valid 'Authorization: Bearer <token>' header."
+  - status: 404
+    schema: error_not_found
+    title: Not Found
+    message_example: Resource not found
+    remediation: Verify the resource UUID exists and is accessible to your organization.
+  - status: 422
+    schema: error_unprocessable_content
+    title: Unprocessable Content
+    message_example: "Validation failed: Title can't be blank"
+    remediation: Correct the malformed/invalid fields reported in the message.
+  - status: 429
+    schema: error_too_many_requests
+    title: Too Many Requests
+    message_example: Rate limit reached. Please wait for a couple of minutes.
+    remediation: Back off; the limit is 1000 requests/minute with a one-minute block on breach.

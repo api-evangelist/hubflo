@@ -1,0 +1,180 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hubflo-openapi-original.yml
+note: >-
+  Entity-relationship graph derived from OpenAPI path nesting and id-reference query
+  parameters (company_id, contact_id, project_id, workspace_id, folder_id, etc.).
+  All resources are identified by UUID.
+id_format: uuid
+entities:
+  - company
+  - contact
+  - workspace
+  - project
+  - project_type
+  - project_section
+  - task
+  - task_template
+  - invoice
+  - invoicing_profile
+  - proposal
+  - form
+  - note
+  - chat_room
+  - message
+  - custom_field
+  - tag
+  - member
+  - organization
+  - folder
+  - file
+  - webhook
+  - time_tracking
+  - seal_template
+  - item
+  - portal
+relationships:
+  - from: chat_room
+    to: message
+    type: has_many
+    via: chat_room_id
+  - from: chat_room
+    to: participant
+    type: has_many
+    via: chat_room_id
+  - from: message
+    to: file
+    type: has_many
+    via: message_id
+  - from: contact
+    to: workspace
+    type: has_many
+    via: contact_id
+  - from: custom_field
+    to: custom_field_value
+    type: has_many
+    via: custom_field_id
+  - from: form
+    to: answer
+    type: has_many
+    via: form_id
+  - from: form
+    to: assignment
+    type: has_many
+    via: form_id
+  - from: form
+    to: item
+    type: has_many
+    via: form_id
+  - from: form
+    to: question
+    type: has_many
+    via: form_id
+  - from: form
+    to: section
+    type: has_many
+    via: form_id
+  - from: form
+    to: submission
+    type: has_many
+    via: form_id
+  - from: invoice
+    to: line_item
+    type: has_many
+    via: invoice_id
+  - from: invoice
+    to: delivery
+    type: has_many
+    via: invoice_id
+  - from: invoice
+    to: issuance
+    type: has_many
+    via: invoice_id
+  - from: project
+    to: contact
+    type: has_many
+    via: project_id
+  - from: project
+    to: section
+    type: has_many
+    via: project_id
+  - from: project
+    to: user
+    type: has_many
+    via: project_id
+  - from: project_type
+    to: project_stage
+    type: has_many
+    via: project_type_id
+  - from: proposal
+    to: line_item
+    type: has_many
+    via: proposal_id
+  - from: proposal
+    to: contact
+    type: has_many
+    via: proposal_id
+  - from: seal_template
+    to: submission
+    type: has_many
+    via: seal_template_id
+  - from: seal_template
+    to: party
+    type: has_many
+    via: seal_template_id
+  - from: task
+    to: comment
+    type: has_many
+    via: task_id
+  - from: task
+    to: file
+    type: has_many
+    via: task_id
+  - from: task
+    to: contact
+    type: has_many
+    via: task_id
+  - from: task_template
+    to: subtask_template
+    type: has_many
+    via: task_template_id
+  - from: workspace
+    to: task
+    type: has_many
+    via: workspace_id
+  - from: workspace
+    to: project
+    type: has_many
+    via: workspace_id
+  - from: workspace
+    to: folder
+    type: has_many
+    via: workspace_id
+  - from: workspace
+    to: file
+    type: has_many
+    via: workspace_id
+  - from: workspace
+    to: note
+    type: has_many
+    via: workspace_id
+  - from: workspace
+    to: invite
+    type: has_many
+    via: workspace_id
+  - from: workspace
+    to: embed
+    type: has_many
+    via: workspace_id
+  - from: workspace
+    to: link
+    type: has_many
+    via: workspace_id
+  - from: folder
+    to: access
+    type: has_many
+    via: folder_id
+  - from: webhook
+    to: webhook_delivery
+    type: has_many
+    via: webhook_target_id

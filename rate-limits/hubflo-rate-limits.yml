@@ -1,0 +1,21 @@
+generated: '2026-07-19'
+method: searched
+source: https://hubflo.readme.io/reference/rate-limiting
+docs: https://hubflo.readme.io/reference/rate-limiting
+rate_limits:
+  - scope: global
+    limit_count: 1000
+    window: minute
+    description: >-
+      A maximum of 1000 calls per minute. Exceeding the limit returns
+      429 Too Many Requests and blocks the caller for one minute.
+    on_exceed:
+      status: 429
+      block: 60s
+signaling:
+  headers:
+    - name: X-Rate-Limit
+      description: The maximum allowed requests in a given period.
+    - name: X-Remaining-Requests
+      description: The remaining requests count in the current period.
+  docs: https://hubflo.readme.io/reference/responses

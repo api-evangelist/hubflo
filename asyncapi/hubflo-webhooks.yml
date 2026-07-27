@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: searched
+type: Webhooks
+source: openapi/hubflo-openapi-original.yml
+docs: https://hubflo.readme.io/reference/the-hubflo-api
+note: >-
+  Hubflo publishes a native webhook surface (not an AsyncAPI document). Webhooks are
+  managed via the REST API: create a webhook target with a delivery URL and a set of
+  subscribed event_names, activate/deactivate it, and inspect delivery attempts.
+management:
+  create: POST /api/v2/webhooks
+  delete: DELETE /api/v2/webhooks/{id}
+  activate: POST /api/v2/webhooks/{webhook_target_id}/activation
+  deactivate: DELETE /api/v2/webhooks/{webhook_target_id}/activation
+  deliveries: GET /api/v2/webhooks/{webhook_target_id}/webhook_deliveries
+subscription:
+  target_field: url
+  events_field: event_names
+events:
+  - authenticated_contact_added_to_workspace
+  - comment_created
+  - company_created
+  - company_updated
+  - contact_created
+  - contact_invited
+  - contact_signed_up
+  - contact_updated
+  - file_added_to_task
+  - file_uploaded
+  - file_uploaded_by_contact
+  - folder_created
+  - form_assignment_created
+  - form_submission_completed
+  - invoice_created
+  - invoice_issued
+  - invoice_overdue
+  - invoice_paid
+  - message_sent
+  - message_sent_by_contact
+  - project_stage_created
+  - project_stage_updated
+  - seal_submission_completed
+  - seal_submission_created
+  - task_completed
+  - task_completed_by_contact
+  - task_created
+  - task_created_by_contact
+  - task_overdue

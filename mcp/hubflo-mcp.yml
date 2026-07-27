@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: searched
+status: published
+source: https://hubflo.readme.io/mcp
+note: >-
+  Hubflo exposes two official MCP surfaces: a hosted remote MCP server at the ReadMe
+  documentation host (streamable HTTP, JSON-RPC; responds with an auth-required error to
+  unauthenticated initialize) and a publishable local MCP server package on npm
+  (hubflo-mcp-mcp, Stainless-generated). Both are gated by the Hubflo API bearer token.
+servers:
+  - name: hubflo-remote
+    transport: http
+    url: https://hubflo.readme.io/mcp
+    hosting: ReadMe-hosted (remote)
+    auth: Hubflo API bearer token
+    verified: JSON-RPC endpoint returns {"error":{"code":-32001,"message":"Authorization required"}}
+    tools_note: >-
+      ReadMe MCP exposes documentation/OpenAPI tools (list-endpoints, get-endpoint,
+      search-endpoints, execute-request, get-server-variables, list-specs, search, fetch).
+  - name: hubflo-mcp-mcp
+    transport: stdio
+    package: hubflo-mcp-mcp
+    registry: npm
+    url: https://www.npmjs.com/package/hubflo-mcp-mcp
+    hosting: local (self-run)
+    auth: Hubflo API bearer token
+    tools_note: Wraps the Hubflo API operations from the OpenAPI definition.

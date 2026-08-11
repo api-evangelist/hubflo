@@ -555,6 +555,8 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 common:
+- type: Overlay
+  url: overlays/hubflo-overlay.yaml
 - type: Website
   url: https://www.hubflo.com
 - type: DeveloperPortal

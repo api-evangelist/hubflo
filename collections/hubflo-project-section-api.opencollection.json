@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room project_section API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "project_section",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates a task in a project section template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/project-sections/templates/:template_id/tasks",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "Project section template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "**DEPRECATED — DO NOT USE.** Use `POST /api/v2/task_templates` instead, passing the project section id as `parent_id`. Creates a task in a project section template. When you specify a `parent_task_id` you will create a subtask. Some attributes are not available for subtasks: `clickup_id`, `monday_id`, `contact_id` and `visible_by_contact`"
+        },
+        {
+          "info": {
+            "name": "Retrieves the project section templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/project-sections/templates",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the project section templates"
+        },
+        {
+          "info": {
+            "name": "Creates a project section template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/project-sections/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the created project section template"
+        },
+        {
+          "info": {
+            "name": "Retrieves a project section template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/project-sections/templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Project section template ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the project section template"
+        },
+        {
+          "info": {
+            "name": "Updates a project section template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/project-sections/templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Project section template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the updated project section template"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

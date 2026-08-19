@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room company API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "company",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves the companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/companies",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project ID"
+              },
+              {
+                "name": "parent_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by parent ID"
+              },
+              {
+                "name": "owner_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by owner ID"
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by contact ID"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the companies. Only the first 100 tags of each company are returned."
+        },
+        {
+          "info": {
+            "name": "Creates a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/companies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a company. Only 100 tags maximum can be specified.\n        To fill in a custom field, add the custom field 'serialization_name' to the request\n        params, with the desired value."
+        },
+        {
+          "info": {
+            "name": "Retrieves a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/companies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the company. Only the first 100 tags of the company are returned."
+        },
+        {
+          "info": {
+            "name": "Updates a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/companies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a company. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field 'serialization_name' to the request params, with the desired value."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

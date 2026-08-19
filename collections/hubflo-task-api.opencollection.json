@@ -1,0 +1,388 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room task API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "task",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves the assigned contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/tasks/:task_id/contacts",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the assigned contacts of a task. Only the first 100 tags of each contact are returned."
+        },
+        {
+          "info": {
+            "name": "Retrieves the files for a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/tasks/:task_id/files",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the files for a task"
+        },
+        {
+          "info": {
+            "name": "Creates a file for a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/tasks/:task_id/files",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              },
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "query",
+                "description": "File ID"
+              },
+              {
+                "name": "library",
+                "value": "",
+                "type": "query",
+                "description": "Add to library"
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "Title (ignored when file_id is provided)"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a file for a task. It can be created giving the uploaded file, or imported from the library,\n        using the file_id attribute."
+        },
+        {
+          "info": {
+            "name": "Retrieves a file for a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/tasks/:task_id/files/:id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "File ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a file for a task"
+        },
+        {
+          "info": {
+            "name": "Updates a file for a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/tasks/:task_id/files/:id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "File ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a file for a task. You can only change the title of the file."
+        },
+        {
+          "info": {
+            "name": "Retrieves the assigned users of a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/tasks/:task_id/users",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the assigned users of a task"
+        },
+        {
+          "info": {
+            "name": "Retrieves the tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/tasks",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "overdue",
+                "value": "",
+                "type": "query",
+                "description": "Filter by overdue tasks"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project ID"
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by contact ID"
+              },
+              {
+                "name": "assignee_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by assignee ID"
+              },
+              {
+                "name": "creator_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creator type (user or contact)"
+              },
+              {
+                "name": "completed",
+                "value": "",
+                "type": "query",
+                "description": "Filter by completion status"
+              },
+              {
+                "name": "parent_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by parent task ID. If not provided, the endpoint will return\nfirst level tasks (no subtasks).\n"
+              },
+              {
+                "name": "clickup_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by clickup_id"
+              },
+              {
+                "name": "monday_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by monday_id"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the tasks. Only the first 100 tags of the task are returned"
+        },
+        {
+          "info": {
+            "name": "Creates a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/tasks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a task.\n        To fill in a custom field, add the custom field 'serialization_name' to the request\n        params, with the desired value. Only 100 tags maximum can be specified.\n        When you specify a `parent_task_id` you will create a subtask. Some attributes are not available for subtasks:\n        `clickup_id`, `monday_id`, `project_id` and `contact_id`.\n        To attach a recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) along\n        w"
+        },
+        {
+          "info": {
+            "name": "Retrieves a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/tasks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the task. Only the first 100 tags of the task are returned"
+        },
+        {
+          "info": {
+            "name": "Updates a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/tasks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a task. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field 'serialization_name' to the request params, with the desired value. If the task has a `parent_task_id` the following attributes are not available: `clickup_id`, `monday_id`, and `contact_id`. To change the recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) with "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room custom_field_value API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "custom_field_value",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves the custom field values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/custom-fields/:custom_field_id/values",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "custom_field_id",
+                "value": "",
+                "type": "path",
+                "description": "Custom field ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the custom field values for the given custom field"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

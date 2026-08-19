@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room smartdoc API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "smartdoc",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves a list of parties for a smartdoc",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/seal_templates/:seal_template_id/parties",
+            "params": [
+              {
+                "name": "seal_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Seal template ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the list of parties for a smartdoc."
+        },
+        {
+          "info": {
+            "name": "Retrieves a list of submitters for a smartdoc's submission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/seal_templates/:seal_template_id/submissions/:submission_id/submitters",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "seal_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Seal template ID"
+              },
+              {
+                "name": "submission_id",
+                "value": "",
+                "type": "path",
+                "description": "Submission ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the list of submitters for a smartdoc's submission."
+        },
+        {
+          "info": {
+            "name": "Retrieves a list of submissions for a smartdoc",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/seal_templates/:seal_template_id/submissions",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "seal_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Seal template ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the list of submissions for a smartdoc."
+        },
+        {
+          "info": {
+            "name": "Creates a submission for a smartdoc",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/seal_templates/:seal_template_id/submissions",
+            "params": [
+              {
+                "name": "seal_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Seal template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a submission for a smartdoc. If the smartdoc doesn't contain any fields, or if wrong party IDs are given, it cannot be submitted and the endpoint will return a 422 - unprocessable content error. The parameter contact_id is deprecated. Use party_signer_ids instead. The parameter party_signer_ids is an object mapping party ID to contact ID: keys are party IDs and values are contact IDs. Give as many key-value pairs as there are parties in the smartdoc. "
+        },
+        {
+          "info": {
+            "name": "Retrieves the smartdocs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/seal_templates",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the smartdocs"
+        },
+        {
+          "info": {
+            "name": "Retrieves a smartdoc",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/seal_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Seal template ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the smartdoc"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,263 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "chat_room",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves messages from a given chat room",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/chat_rooms/:chat_room_id/messages",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "chat_room_id",
+                "value": "",
+                "type": "path",
+                "description": "Chat room ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns messages"
+        },
+        {
+          "info": {
+            "name": "Creates a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/chat_rooms/:chat_room_id/messages",
+            "params": [
+              {
+                "name": "chat_room_id",
+                "value": "",
+                "type": "path",
+                "description": "Chat room ID"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID"
+              },
+              {
+                "name": "body",
+                "value": "",
+                "type": "query",
+                "description": "Message body"
+              },
+              {
+                "name": "private",
+                "value": "",
+                "type": "query",
+                "description": "Private message"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Post a message within a chat room as an internal user.\n        The user posting the message must be a participant in the chat room.\n        Private messages are not available for announcements chat rooms.\n        You can also attach files to the message."
+        },
+        {
+          "info": {
+            "name": "Retrieves the participants of the given chat room",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/chat_rooms/:chat_room_id/participants",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "chat_room_id",
+                "value": "",
+                "type": "path",
+                "description": "Chat room ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the participants"
+        },
+        {
+          "info": {
+            "name": "Adds a participant to the given chat room",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/chat_rooms/:chat_room_id/participants",
+            "params": [
+              {
+                "name": "chat_room_id",
+                "value": "",
+                "type": "path",
+                "description": "Chat room ID"
+              },
+              {
+                "name": "participant_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of participant (User or Contact)"
+              },
+              {
+                "name": "participant_id",
+                "value": "",
+                "type": "query",
+                "description": "ID of the participant to add"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Adds a participant to the chat room"
+        },
+        {
+          "info": {
+            "name": "Retrieves the chat rooms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/chat_rooms",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Contact ID"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by User ID"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by room type"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the chat rooms"
+        },
+        {
+          "info": {
+            "name": "Creates a chat room",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/chat_rooms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a chat room. Optionally links it to a workspace and adds participants."
+        },
+        {
+          "info": {
+            "name": "Retrieves a chat room",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/chat_rooms/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Chat Room ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the chat room"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

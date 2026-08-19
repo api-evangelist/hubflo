@@ -1,0 +1,856 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room form API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "form",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves the answers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/answers",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by contact ID"
+              },
+              {
+                "name": "assignment_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by assignment ID"
+              },
+              {
+                "name": "submission_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by submission ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the answers"
+        },
+        {
+          "info": {
+            "name": "Retrieves an answer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/answers/:id",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Answer ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns an answer"
+        },
+        {
+          "info": {
+            "name": "Retrieves the assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/assignments",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status (pending, completed)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the assignments"
+        },
+        {
+          "info": {
+            "name": "Creates an assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/assignments",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an assignment"
+        },
+        {
+          "info": {
+            "name": "Retrieves an assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/assignments/:id",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Assignment ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns an assignment"
+        },
+        {
+          "info": {
+            "name": "Retrieves the condition group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/items/:item_id/condition_group",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "Item ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the condition group for a specific item in a form"
+        },
+        {
+          "info": {
+            "name": "Creates a condition group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/items/:item_id/condition_group",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "Item ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a condition group for a specific item in a form"
+        },
+        {
+          "info": {
+            "name": "Updates a condition group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/items/:item_id/condition_group",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "Item ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a condition group for a specific item in a form"
+        },
+        {
+          "info": {
+            "name": "Retrieves the items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/items/:item_id/conditions",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "Item ID"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the conditions for a specific item in a form"
+        },
+        {
+          "info": {
+            "name": "Creates a condition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/items/:item_id/conditions",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "Item ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new condition for a specific item in a form"
+        },
+        {
+          "info": {
+            "name": "Updates a condition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/items/:item_id/conditions/:id",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "Item ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Condition ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a condition for a specific item in a form"
+        },
+        {
+          "info": {
+            "name": "Deletes a condition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/items/:item_id/conditions/:id",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "Item ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Condition ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a condition for a specific item in a form"
+        },
+        {
+          "info": {
+            "name": "Retrieves the forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a forms"
+        },
+        {
+          "info": {
+            "name": "Creates a form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/forms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the created form"
+        },
+        {
+          "info": {
+            "name": "Retrieves a form",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the form"
+        },
+        {
+          "info": {
+            "name": "Updates a form",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/forms/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a form"
+        },
+        {
+          "info": {
+            "name": "Retrieves the items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/items",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the items"
+        },
+        {
+          "info": {
+            "name": "Retrieves an item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/items/:id",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Item ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the item"
+        },
+        {
+          "info": {
+            "name": "Creates a question in a form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/questions",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new question in the specified form"
+        },
+        {
+          "info": {
+            "name": "Retrieves the sections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/sections",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the sections"
+        },
+        {
+          "info": {
+            "name": "Creates a section",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/sections",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a section"
+        },
+        {
+          "info": {
+            "name": "Retrieves a section",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/sections/:id",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Section ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a section"
+        },
+        {
+          "info": {
+            "name": "Updates a section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/sections/:id",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Section ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a section"
+        },
+        {
+          "info": {
+            "name": "Retrieves the submissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/submissions",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by contact ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status (pending, completed)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the submissions"
+        },
+        {
+          "info": {
+            "name": "Retrieves a submission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/submissions/:id",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Submission ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a submission"
+        },
+        {
+          "info": {
+            "name": "Creates a title in a form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/forms/:form_id/titles",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Form ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new title in the specified form"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

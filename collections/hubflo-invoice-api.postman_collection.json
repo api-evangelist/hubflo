@@ -1,0 +1,4388 @@
+{
+  "item": [
+    {
+      "id": "32a2d609-9218-4950-ab3a-ea4646bfee04",
+      "name": "invoice",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e8d05010-ed59-4c97-bccb-b324e49245b1",
+          "name": "Sends an invoice to its recipient",
+          "request": {
+            "name": "Sends an invoice to its recipient",
+            "description": {
+              "content": "Sends an issued invoice to its recipient by email",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":invoice_id",
+                "deliveries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) Invoice ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f2a23bde-a20e-4b0c-951f-42b47bd85ec0",
+              "name": "Invoice sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "deliveries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"97f51ab6-dac1-4266-9f0b-77e201feb82c\",\n  \"title\": \"Invoice 1\",\n  \"description\": null,\n  \"comment\": null,\n  \"language\": \"fr\",\n  \"purchase_order_reference\": null,\n  \"payment_terms\": \"Please remit payment to: XXX.\\nLate payments may be subject to an additional charge of [X]% per month on the outstanding balance.\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"bank_transfer\"\n  ],\n  \"payment_method_used\": null,\n  \"use_stripe_as_payment_method\": false,\n  \"stripe_auto_charge\": false,\n  \"payment_url\": null,\n  \"currency\": \"EUR\",\n  \"accounting_id\": null,\n  \"status\": \"issued\",\n  \"created_at\": \"2026-07-17T13:09:31Z\",\n  \"issued_at\": \"2026-07-10T13:09:31Z\",\n  \"custom_issued_at\": null,\n  \"paid_at\": null,\n  \"sent_at\": \"2026-07-17T13:09:31Z\",\n  \"net_total\": 0,\n  \"tax_total\": 0,\n  \"paid_amount\": 0,\n  \"public_url\": \"http://localhost:3000/invoices/97f51ab6-dac1-4266-9f0b-77e201feb82c/access/f9f0df0c-a751-491e-9789-e1b3fb604242\",\n  \"owner_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n  \"project_id\": null,\n  \"recipient_id\": \"f564eb98-3aa3-4fc7-845c-e5251047b0bb\",\n  \"parent_invoice_id\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ec0530a-62dc-4cdd-b084-f70a5d4a1532",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "deliveries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab432588-362c-4b90-8652-b4ccb6b7c205",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "deliveries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d654a42-455e-4d20-a9cf-eb858bc06df2",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "deliveries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54e33fd0-7359-4999-96ee-02187cb77c52",
+          "name": "Issues an invoice",
+          "request": {
+            "name": "Issues an invoice",
+            "description": {
+              "content": "Changes a draft invoice status to issued",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":invoice_id",
+                "issuances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) Invoice ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3150f721-f9a8-40ac-a24a-f489fb7f14cc",
+              "name": "Invoice issued",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "issuances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"12009bcd-db1d-49d7-8c2d-3f91bdf3e75f\",\n  \"title\": \"Invoice 7\",\n  \"description\": null,\n  \"comment\": null,\n  \"language\": \"fr\",\n  \"purchase_order_reference\": null,\n  \"payment_terms\": \"Please remit payment to: XXX.\\nLate payments may be subject to an additional charge of [X]% per month on the outstanding balance.\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"bank_transfer\"\n  ],\n  \"payment_method_used\": null,\n  \"use_stripe_as_payment_method\": false,\n  \"stripe_auto_charge\": false,\n  \"payment_url\": null,\n  \"currency\": \"EUR\",\n  \"accounting_id\": null,\n  \"status\": \"issued\",\n  \"created_at\": \"2026-07-17T13:09:31Z\",\n  \"issued_at\": \"2026-07-17T13:09:32Z\",\n  \"custom_issued_at\": null,\n  \"paid_at\": null,\n  \"sent_at\": null,\n  \"net_total\": 2200,\n  \"tax_total\": 200,\n  \"paid_amount\": 0,\n  \"public_url\": \"http://localhost:3000/invoices/12009bcd-db1d-49d7-8c2d-3f91bdf3e75f/access/071a196a-77ca-4a3b-bbcf-d93fd1c3f782\",\n  \"owner_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n  \"project_id\": null,\n  \"recipient_id\": \"d68db019-eb07-423b-8c17-da81fe2f0554\",\n  \"parent_invoice_id\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25414d5e-7016-4924-b96e-0cd09662ae83",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "issuances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c22db767-397f-454b-a14c-d11552767256",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "issuances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "01a4c46a-33c4-40c6-b29b-53fa82036c62",
+          "name": "Creates a payment notice",
+          "request": {
+            "name": "Creates a payment notice",
+            "description": {
+              "content": "Create a payment notice for a given invoice, and mark it as paid. In case of partial payment, it will add up.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":invoice_id",
+                "payment-notice"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) Invoice ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paid_at\": \"<dateTime>\",\n  \"payment_method_used\": \"<string>\",\n  \"paid_amount\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "418a4ebb-d936-4398-a824-0d628cfac30c",
+              "name": "Payment notice created (invoice marked as paid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "payment-notice"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paid_at\": \"2024-01-01T00:00:00Z\",\n  \"payment_method_used\": \"bank_transfer\",\n  \"paid_amount\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3fc352f9-4128-4a4d-9094-4cacd67f7d11\",\n  \"title\": \"Invoice 14\",\n  \"description\": null,\n  \"comment\": null,\n  \"language\": \"fr\",\n  \"purchase_order_reference\": null,\n  \"payment_terms\": \"Please remit payment to: XXX.\\nLate payments may be subject to an additional charge of [X]% per month on the outstanding balance.\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"bank_transfer\"\n  ],\n  \"payment_method_used\": \"cash\",\n  \"use_stripe_as_payment_method\": false,\n  \"stripe_auto_charge\": false,\n  \"payment_url\": null,\n  \"currency\": \"EUR\",\n  \"accounting_id\": null,\n  \"status\": \"paid\",\n  \"created_at\": \"2026-07-17T13:09:32Z\",\n  \"issued_at\": \"2026-07-10T13:09:32Z\",\n  \"custom_issued_at\": null,\n  \"paid_at\": \"2024-01-01T00:00:00Z\",\n  \"sent_at\": null,\n  \"net_total\": 2200,\n  \"tax_total\": 200,\n  \"paid_amount\": 200,\n  \"public_url\": \"http://localhost:3000/invoices/3fc352f9-4128-4a4d-9094-4cacd67f7d11/access/beadbf63-7cfe-4e78-8060-9756fd76d1d1\",\n  \"owner_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n  \"project_id\": null,\n  \"recipient_id\": \"cdffacd6-f2b6-4bea-93a1-ca3a4d172296\",\n  \"parent_invoice_id\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d523f2f-9374-4d02-a144-45c53311485b",
+              "name": "bad request: the request is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "payment-notice"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paid_at\": \"2024-01-01T00:00:00Z\",\n  \"payment_method_used\": \"bank_transfer\",\n  \"paid_amount\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\",\n  \"message\": \"Paid at must be filled in, Payment method used must be filled in\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddbca559-cae4-4a01-a8fa-d51abb6e725f",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "payment-notice"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paid_at\": \"2024-01-01T00:00:00Z\",\n  \"payment_method_used\": \"bank_transfer\",\n  \"paid_amount\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1b70888-dbe2-43ad-818d-a3b76333d8a2",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "payment-notice"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paid_at\": \"2024-01-01T00:00:00Z\",\n  \"payment_method_used\": \"bank_transfer\",\n  \"paid_amount\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "184acec4-f245-4b0f-a3b9-f1735f25f503",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "payment-notice"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paid_at\": \"2024-01-01T00:00:00Z\",\n  \"payment_method_used\": \"bank_transfer\",\n  \"paid_amount\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d340b678-39e1-489a-ba4d-207a079a1bc5",
+          "name": "Creates a payment URL",
+          "request": {
+            "name": "Creates a payment URL",
+            "description": {
+              "content": "Create the payment url for a given invoice, or update it when it already exists",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":invoice_id",
+                "payment-url"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) Invoice ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bcbd1479-cd8c-4dc6-90a6-4d51110176cc",
+              "name": "Payment URL created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "payment-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"value\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"fa1f56cd-5b39-47fd-be07-147dc993b071\",\n  \"title\": \"Invoice 22\",\n  \"description\": null,\n  \"comment\": null,\n  \"language\": \"fr\",\n  \"purchase_order_reference\": null,\n  \"payment_terms\": \"Please remit payment to: XXX.\\nLate payments may be subject to an additional charge of [X]% per month on the outstanding balance.\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"bank_transfer\"\n  ],\n  \"payment_method_used\": null,\n  \"use_stripe_as_payment_method\": false,\n  \"stripe_auto_charge\": false,\n  \"payment_url\": \"https://example.com\",\n  \"currency\": \"EUR\",\n  \"accounting_id\": null,\n  \"status\": \"issued\",\n  \"created_at\": \"2026-07-17T13:09:33Z\",\n  \"issued_at\": \"2026-07-10T13:09:33Z\",\n  \"custom_issued_at\": null,\n  \"paid_at\": null,\n  \"sent_at\": null,\n  \"net_total\": 2200,\n  \"tax_total\": 200,\n  \"paid_amount\": 0,\n  \"public_url\": \"http://localhost:3000/invoices/fa1f56cd-5b39-47fd-be07-147dc993b071/access/c30d516f-7a44-4e67-a1ba-5b5e3c2328e7\",\n  \"owner_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n  \"project_id\": null,\n  \"recipient_id\": \"56ffa890-9487-4f8e-a7df-cf2cd78e58bd\",\n  \"parent_invoice_id\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e31501e-8712-4973-aa77-c7b3b0dfbf30",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "payment-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"value\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d0623de-b5b3-4ede-a086-97386f470c4f",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "payment-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"value\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b52d2ee3-d31e-4a22-a5bc-351470ee52ec",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "payment-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"value\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1085ae40-2d2b-48c5-8040-bbc25430bb48",
+          "name": "Retrieves the line_items",
+          "request": {
+            "name": "Retrieves the line_items",
+            "description": {
+              "content": "Returns the line_items",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":invoice_id",
+                "line-items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<number>",
+                  "description": "Page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<number>",
+                  "description": "Number of items per page (max 100)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) Invoice ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "525d12c1-ace3-4a6d-9620-1c52a58921c1",
+              "name": "Line items retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Current page number",
+                  "key": "X-Page",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of items per page",
+                  "key": "X-Per-Page",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of pages",
+                  "key": "X-Total-Pages",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Next page number",
+                  "key": "X-Next-Page",
+                  "value": "4479"
+                },
+                {
+                  "disabled": false,
+                  "description": "Previous page number",
+                  "key": "X-Prev-Page",
+                  "value": "4479"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of items",
+                  "key": "X-Total-Count",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"89a1c329-4a36-4f44-a575-d635e4da7ccc\",\n    \"title\": \"Quote item 20\",\n    \"description\": null,\n    \"currency\": \"EUR\",\n    \"kind\": \"none\",\n    \"quantity\": 1,\n    \"discount_percentage\": 0,\n    \"unit_price_excluding_tax\": 2000,\n    \"unit_cost_excluding_tax\": 0,\n    \"total_excluding_tax\": 2000,\n    \"total_including_tax\": 2200,\n    \"vat\": 10,\n    \"created_at\": \"2026-07-17T13:09:34Z\"\n  },\n  {\n    \"id\": \"425e9d2c-375b-469a-8edc-983b68b2408f\",\n    \"title\": \"Quote item 21\",\n    \"description\": null,\n    \"currency\": \"EUR\",\n    \"kind\": \"none\",\n    \"quantity\": 1,\n    \"discount_percentage\": 0,\n    \"unit_price_excluding_tax\": 2000,\n    \"unit_cost_excluding_tax\": 0,\n    \"total_excluding_tax\": 2000,\n    \"total_including_tax\": 2200,\n    \"vat\": 10,\n    \"created_at\": \"2026-07-17T13:09:34Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44d5010d-2909-4ce3-afc5-bd55f791990b",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73dd8265-f334-492b-85f8-1192e6e422ef",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b81d340d-40a2-44ed-abef-27b6d1d63166",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79bc04b5-69d5-486a-8cfb-69c6c2f63dc3",
+          "name": "Creates a line item for an invoice",
+          "request": {
+            "name": "Creates a line item for an invoice",
+            "description": {
+              "content": "Adds a new line item to an existing draft invoice",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":invoice_id",
+                "line-items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) Invoice ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"quantity\": \"<integer>\",\n  \"vat\": \"<integer>\",\n  \"description\": \"<string>\",\n  \"discount_percentage\": \"<integer>\",\n  \"unit_price_excluding_tax\": \"<integer>\",\n  \"unit_cost_excluding_tax\": \"<integer>\",\n  \"kind\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "78de0e8b-886b-4a0d-a26b-3c8464e7eec9",
+              "name": "Line item created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Web Development\",\n  \"quantity\": 2,\n  \"vat\": 20,\n  \"description\": \"Creation of a responsive website\",\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"kind\": \"service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"8f0560e4-3cdb-4350-a755-016e03db0ba4\",\n  \"title\": \"Web Development\",\n  \"description\": \"Creation of a responsive website\",\n  \"currency\": \"EUR\",\n  \"kind\": \"service\",\n  \"quantity\": 1,\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"total_excluding_tax\": 1000,\n  \"total_including_tax\": 1200,\n  \"vat\": 20,\n  \"created_at\": \"2026-07-17T13:09:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "464e953f-57e7-473f-970a-803679330638",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Web Development\",\n  \"quantity\": 2,\n  \"vat\": 20,\n  \"description\": \"Creation of a responsive website\",\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"kind\": \"service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fd59495-e5fb-457f-b34d-b8d34c646f25",
+              "name": "unprocessable content: the resource can't be created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Web Development\",\n  \"quantity\": 2,\n  \"vat\": 20,\n  \"description\": \"Creation of a responsive website\",\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"kind\": \"service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 422,\n  \"title\": \"Unprocessable Content\",\n  \"message\": \"Validation failed: Quantity must be greater than or equal to 0.1, VAT is not a number\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef2098cc-c425-4680-8350-7deea24d70f1",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Web Development\",\n  \"quantity\": 2,\n  \"vat\": 20,\n  \"description\": \"Creation of a responsive website\",\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"kind\": \"service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e76c8cf-2190-4e9f-af3d-d202b78bab03",
+          "name": "Retrieves a line item",
+          "request": {
+            "name": "Retrieves a line item",
+            "description": {
+              "content": "Returns the line item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":invoice_id",
+                "line-items",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) Invoice ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Line item ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "32f261e1-43a2-4364-b260-942742ef2111",
+              "name": "Line item retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e07ba017-6f96-44ee-9fa7-c3ee1ce6abf5\",\n  \"title\": \"Quote item 38\",\n  \"description\": null,\n  \"currency\": \"EUR\",\n  \"kind\": \"none\",\n  \"quantity\": 1,\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 2000,\n  \"unit_cost_excluding_tax\": 0,\n  \"total_excluding_tax\": 2000,\n  \"total_including_tax\": 2200,\n  \"vat\": 10,\n  \"created_at\": \"2026-07-17T13:09:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1f9cb3a-908d-41f0-b15e-2cbcf2b2f9f2",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2c64b4d-56d0-4afc-87f1-94d149d41d26",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48791947-bd22-43a9-aa54-88594869922b",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98ebe2e8-17d7-40a1-8f39-801823d4f040",
+          "name": "Updates a line item",
+          "request": {
+            "name": "Updates a line item",
+            "description": {
+              "content": "Updates a line item of a draft invoice",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":invoice_id",
+                "line-items",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) Invoice ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Line item ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"quantity\": \"<integer>\",\n  \"discount_percentage\": \"<integer>\",\n  \"unit_price_excluding_tax\": \"<integer>\",\n  \"unit_cost_excluding_tax\": \"<integer>\",\n  \"vat\": \"<integer>\",\n  \"kind\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6a0d772b-f743-4cce-962a-97854c45c621",
+              "name": "Line item updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Web Development\",\n  \"description\": \"Creation of a responsive website\",\n  \"quantity\": 2,\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"vat\": 20,\n  \"kind\": \"service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"832c8d45-7bfe-47ab-928c-a11aab15166d\",\n  \"title\": \"Updated development\",\n  \"description\": null,\n  \"currency\": \"EUR\",\n  \"kind\": \"none\",\n  \"quantity\": 3,\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 200,\n  \"unit_cost_excluding_tax\": 0,\n  \"total_excluding_tax\": 600,\n  \"total_including_tax\": 660,\n  \"vat\": 10,\n  \"created_at\": \"2026-07-17T13:09:36Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f8f2725-9e78-4a51-8920-72f0756caf03",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Web Development\",\n  \"description\": \"Creation of a responsive website\",\n  \"quantity\": 2,\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"vat\": 20,\n  \"kind\": \"service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b40607fb-ae4a-4b15-91c9-0cb4b1571ec0",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Web Development\",\n  \"description\": \"Creation of a responsive website\",\n  \"quantity\": 2,\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"vat\": 20,\n  \"kind\": \"service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e22cbaed-89eb-420a-953c-76b4c10579ac",
+              "name": "unprocessable content: the resource can't be created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Web Development\",\n  \"description\": \"Creation of a responsive website\",\n  \"quantity\": 2,\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"vat\": 20,\n  \"kind\": \"service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 422,\n  \"title\": \"Unprocessable Content\",\n  \"message\": \"Validation failed: Quantity must be greater than or equal to 0.1\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d704ad4-2ba7-4c4b-99dc-9630ff49da88",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Web Development\",\n  \"description\": \"Creation of a responsive website\",\n  \"quantity\": 2,\n  \"discount_percentage\": 0,\n  \"unit_price_excluding_tax\": 1000,\n  \"unit_cost_excluding_tax\": 500,\n  \"vat\": 20,\n  \"kind\": \"service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f4674ea-1953-4d9e-8afe-cd153748faac",
+          "name": "Deletes a line item",
+          "request": {
+            "name": "Deletes a line item",
+            "description": {
+              "content": "Deletes a line item of a draft invoice",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":invoice_id",
+                "line-items",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoice_id",
+                  "description": "(Required) Invoice ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Line item ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "26051be8-3898-4d5e-a83a-e889eefc312f",
+              "name": "Line item deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2251c5ef-e7f4-4e61-a90d-b33ab19123f0",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8419c15-3935-47e4-b376-2b12701213fc",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ad142fa-9f39-41d0-950d-ece6e15b13b8",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":invoice_id",
+                    "line-items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoice_id",
+                      "description": "(Required) Invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Line item ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ca75559-39d9-4c66-92cb-6ff0954ed2c6",
+          "name": "Retrieves the invoices",
+          "request": {
+            "name": "Retrieves the invoices",
+            "description": {
+              "content": "Returns the invoices",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<number>",
+                  "description": "Page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<number>",
+                  "description": "Number of items per page (max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "contact_id",
+                  "value": "<string>",
+                  "description": "Filter by contact ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "contact_email",
+                  "value": "<string>",
+                  "description": "Filter by contact email"
+                },
+                {
+                  "disabled": false,
+                  "key": "project_id",
+                  "value": "<string>",
+                  "description": "Filter by project ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by status"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c0fe97ff-a55c-46bd-8d32-cbd5124a4937",
+              "name": "Invoices retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "contact_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Current page number",
+                  "key": "X-Page",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of items per page",
+                  "key": "X-Per-Page",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of pages",
+                  "key": "X-Total-Pages",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Next page number",
+                  "key": "X-Next-Page",
+                  "value": "4479"
+                },
+                {
+                  "disabled": false,
+                  "description": "Previous page number",
+                  "key": "X-Prev-Page",
+                  "value": "4479"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of items",
+                  "key": "X-Total-Count",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"9f46eece-f2cb-46b8-b1d7-5e9512c5c64d\",\n    \"title\": \"Invoice 65\",\n    \"description\": null,\n    \"comment\": null,\n    \"language\": \"fr\",\n    \"purchase_order_reference\": null,\n    \"payment_terms\": \"Please remit payment to: XXX.\\nLate payments may be subject to an additional charge of [X]% per month on the outstanding balance.\",\n    \"payment_deadline_days\": 30,\n    \"payment_methods\": [\n      \"bank_transfer\"\n    ],\n    \"payment_method_used\": null,\n    \"use_stripe_as_payment_method\": false,\n    \"stripe_auto_charge\": false,\n    \"payment_url\": null,\n    \"currency\": \"EUR\",\n    \"accounting_id\": null,\n    \"status\": \"issued\",\n    \"created_at\": \"2026-07-17T13:09:37Z\",\n    \"issued_at\": \"2026-07-10T13:09:37Z\",\n    \"custom_issued_at\": null,\n    \"paid_at\": null,\n    \"sent_at\": null,\n    \"net_total\": 0,\n    \"tax_total\": 0,\n    \"paid_amount\": 0,\n    \"public_url\": null,\n    \"owner_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n    \"project_id\": null,\n    \"recipient_id\": null,\n    \"parent_invoice_id\": null\n  },\n  {\n    \"id\": \"96a37e0c-a9b9-4e05-b310-676ab9493441\",\n    \"title\": \"Invoice 64\",\n    \"description\": null,\n    \"comment\": null,\n    \"language\": \"fr\",\n    \"purchase_order_reference\": null,\n    \"payment_terms\": \"Please remit payment to: XXX.\\nLate payments may be subject to an additional charge of [X]% per month on the outstanding balance.\",\n    \"payment_deadline_days\": 30,\n    \"payment_methods\": [\n      \"bank_transfer\"\n    ],\n    \"payment_method_used\": null,\n    \"use_stripe_as_payment_method\": false,\n    \"stripe_auto_charge\": false,\n    \"payment_url\": null,\n    \"currency\": \"EUR\",\n    \"accounting_id\": null,\n    \"status\": \"issued\",\n    \"created_at\": \"2026-07-17T13:09:37Z\",\n    \"issued_at\": \"2026-07-10T13:09:37Z\",\n    \"custom_issued_at\": null,\n    \"paid_at\": null,\n    \"sent_at\": null,\n    \"net_total\": 0,\n    \"tax_total\": 0,\n    \"paid_amount\": 0,\n    \"public_url\": null,\n    \"owner_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n    \"project_id\": null,\n    \"recipient_id\": null,\n    \"parent_invoice_id\": null\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5b793d2-4858-494c-be9e-22f36e318547",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "contact_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c84f6ac-8218-47e6-9c8c-2668e56f26e2",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "contact_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76974eab-5c3d-4a22-a915-4b71939f36ad",
+          "name": "Creates an invoice",
+          "request": {
+            "name": "Creates an invoice",
+            "description": {
+              "content": "Creates a draft invoice (without line items)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"project_id\": \"<string>\",\n  \"contact_id\": \"<string>\",\n  \"parent_invoice_id\": \"<string>\",\n  \"language\": \"<string>\",\n  \"purchase_order_reference\": \"<string>\",\n  \"description\": \"<string>\",\n  \"payment_terms\": \"<string>\",\n  \"payment_deadline_days\": \"<integer>\",\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": \"<boolean>\",\n  \"stripe_auto_charge\": \"<boolean>\",\n  \"comment\": \"<string>\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0295f507-e839-4a43-811e-93b608dda1f3",
+              "name": "Invoice created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Consulting services\",\n  \"user_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"project_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"contact_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"parent_invoice_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-12345\",\n  \"description\": \"Invoice description\",\n  \"payment_terms\": \"Payment terms\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": false,\n  \"comment\": \"Internal comment\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0dbf9dff-f22f-42a3-b87c-0c7fcc9ff8ad\",\n  \"title\": \"Consulting services\",\n  \"description\": \"Invoice for consulting services\",\n  \"comment\": \"Internal comment\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-12345\",\n  \"payment_terms\": \"Net 30\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"bank_transfer\",\n    \"bank_card\"\n  ],\n  \"payment_method_used\": null,\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": true,\n  \"payment_url\": null,\n  \"currency\": \"EUR\",\n  \"accounting_id\": \"12345\",\n  \"status\": \"draft\",\n  \"created_at\": \"2026-07-17T13:09:38Z\",\n  \"issued_at\": null,\n  \"custom_issued_at\": \"2026-01-15T10:00:00Z\",\n  \"paid_at\": null,\n  \"sent_at\": null,\n  \"net_total\": 0,\n  \"tax_total\": 0,\n  \"paid_amount\": 0,\n  \"public_url\": \"http://localhost:3000/invoices/0dbf9dff-f22f-42a3-b87c-0c7fcc9ff8ad/access/21d972b1-3911-40e5-b7b7-87d02f18289c\",\n  \"owner_id\": \"780e98ee-8ca2-49fa-bd4d-6d2a644ee40a\",\n  \"project_id\": \"1f1d28b5-fc6c-40ca-9ceb-afb3572530e3\",\n  \"recipient_id\": \"81f17c5d-f170-41f9-839f-2851acfaba95\",\n  \"parent_invoice_id\": \"8a47f20f-ff23-4756-b743-ed3ddeb6efbb\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36deca41-b1a2-40bb-8ee2-160ecb630e85",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Consulting services\",\n  \"user_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"project_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"contact_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"parent_invoice_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-12345\",\n  \"description\": \"Invoice description\",\n  \"payment_terms\": \"Payment terms\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": false,\n  \"comment\": \"Internal comment\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0676f395-31e6-48b9-8ca4-6c1d74d83022",
+              "name": "unprocessable content: the resource can't be created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Consulting services\",\n  \"user_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"project_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"contact_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"parent_invoice_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-12345\",\n  \"description\": \"Invoice description\",\n  \"payment_terms\": \"Payment terms\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": false,\n  \"comment\": \"Internal comment\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 422,\n  \"title\": \"Unprocessable Content\",\n  \"message\": \"Title must be filled in\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21754447-5d3e-446c-b554-a6f99d9c8ed2",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Consulting services\",\n  \"user_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"project_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"contact_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"parent_invoice_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-12345\",\n  \"description\": \"Invoice description\",\n  \"payment_terms\": \"Payment terms\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": false,\n  \"comment\": \"Internal comment\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "313bc78c-8929-43d0-bd6f-9acdb334e847",
+          "name": "Retrieves an invoice",
+          "request": {
+            "name": "Retrieves an invoice",
+            "description": {
+              "content": "Returns the invoice",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Invoice ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fc3a65e6-4cf7-47ac-bdec-ce836ab43b55",
+              "name": "Invoice retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"63ff3db2-b6de-41c8-b8c8-3a68c7d0bd81\",\n  \"title\": \"Invoice 97\",\n  \"description\": null,\n  \"comment\": null,\n  \"language\": \"fr\",\n  \"purchase_order_reference\": null,\n  \"payment_terms\": \"Please remit payment to: XXX.\\nLate payments may be subject to an additional charge of [X]% per month on the outstanding balance.\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"bank_transfer\"\n  ],\n  \"payment_method_used\": null,\n  \"use_stripe_as_payment_method\": false,\n  \"stripe_auto_charge\": false,\n  \"payment_url\": null,\n  \"currency\": \"EUR\",\n  \"accounting_id\": null,\n  \"status\": \"draft\",\n  \"created_at\": \"2026-07-17T13:09:39Z\",\n  \"issued_at\": null,\n  \"custom_issued_at\": null,\n  \"paid_at\": null,\n  \"sent_at\": null,\n  \"net_total\": 0,\n  \"tax_total\": 0,\n  \"paid_amount\": 0,\n  \"public_url\": null,\n  \"owner_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n  \"project_id\": null,\n  \"recipient_id\": null,\n  \"parent_invoice_id\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb2764cb-9a36-47e7-983b-7c1413a206bd",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8dba007e-5e75-4408-8708-2138c4a5acb9",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4edff6f0-8440-4d96-8cd7-6240aa20d250",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bea4a72e-a8df-4684-8823-594f932a85d9",
+          "name": "Updates an invoice",
+          "request": {
+            "name": "Updates an invoice",
+            "description": {
+              "content": "Updates an invoice. Only a draft can be edited, except accounting_id (editable on any invoice)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "invoices",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Invoice ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"project_id\": \"<string>\",\n  \"contact_id\": \"<string>\",\n  \"parent_invoice_id\": \"<string>\",\n  \"language\": \"<string>\",\n  \"purchase_order_reference\": \"<string>\",\n  \"description\": \"<string>\",\n  \"payment_terms\": \"<string>\",\n  \"payment_deadline_days\": \"<integer>\",\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": \"<boolean>\",\n  \"stripe_auto_charge\": \"<boolean>\",\n  \"comment\": \"<string>\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "907fbd42-8108-4857-b288-33dd47746bd6",
+              "name": "Invoice updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Consulting services\",\n  \"user_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"project_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"contact_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"parent_invoice_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-12345\",\n  \"description\": \"Invoice description\",\n  \"payment_terms\": \"Payment terms\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": false,\n  \"comment\": \"Internal comment\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3875"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3875"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"47acad45-4304-4fce-ab12-7aca80e5a516\",\n  \"title\": \"Updated title\",\n  \"description\": \"Updated description\",\n  \"comment\": \"Updated comment\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-999\",\n  \"payment_terms\": \"Net 60\",\n  \"payment_deadline_days\": 60,\n  \"payment_methods\": [\n    \"check\"\n  ],\n  \"payment_method_used\": null,\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": true,\n  \"payment_url\": null,\n  \"currency\": \"EUR\",\n  \"accounting_id\": \"12345\",\n  \"status\": \"draft\",\n  \"created_at\": \"2026-07-17T13:09:39Z\",\n  \"issued_at\": null,\n  \"custom_issued_at\": \"2026-02-01T09:00:00Z\",\n  \"paid_at\": null,\n  \"sent_at\": null,\n  \"net_total\": 0,\n  \"tax_total\": 0,\n  \"paid_amount\": 0,\n  \"public_url\": \"http://localhost:3000/invoices/47acad45-4304-4fce-ab12-7aca80e5a516/access/d94b7710-80c3-4534-8289-bb28b1c1c5ca\",\n  \"owner_id\": \"780e98ee-8ca2-49fa-bd4d-6d2a644ee40a\",\n  \"project_id\": \"d015b672-965b-484f-b33b-2620ac5e6b21\",\n  \"recipient_id\": \"7775c4c8-0806-4711-9f23-426ac31ed8e3\",\n  \"parent_invoice_id\": \"b5a0be67-fe85-44a2-952f-0e1737e76c24\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39d0d737-6730-43d8-b8f8-2729df797f9f",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Consulting services\",\n  \"user_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"project_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"contact_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"parent_invoice_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-12345\",\n  \"description\": \"Invoice description\",\n  \"payment_terms\": \"Payment terms\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": false,\n  \"comment\": \"Internal comment\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35ac066f-cf23-4aba-ab36-f8b74c96ed29",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Consulting services\",\n  \"user_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"project_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"contact_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"parent_invoice_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-12345\",\n  \"description\": \"Invoice description\",\n  \"payment_terms\": \"Payment terms\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": false,\n  \"comment\": \"Internal comment\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b0e857a-a045-4fff-b4e7-c880b862ced4",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Invoice ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Consulting services\",\n  \"user_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"project_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"contact_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"parent_invoice_id\": \"a0a0e818-749a-41d6-b898-43fa3ea55dd8\",\n  \"language\": \"fr\",\n  \"purchase_order_reference\": \"PO-12345\",\n  \"description\": \"Invoice description\",\n  \"payment_terms\": \"Payment terms\",\n  \"payment_deadline_days\": 30,\n  \"payment_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"use_stripe_as_payment_method\": true,\n  \"stripe_auto_charge\": false,\n  \"comment\": \"Internal comment\",\n  \"custom_issued_at\": \"<dateTime>\",\n  \"accounting_id\": \"12345\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.hubflo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f0e6ab16-74ee-40bf-a30a-91a2a239e1d1",
+    "name": "Hubflo chat_room invoice API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

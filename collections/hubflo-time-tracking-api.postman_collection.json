@@ -1,0 +1,1224 @@
+{
+  "item": [
+    {
+      "id": "0806018a-a01c-4392-9a16-ae0b77d2197d",
+      "name": "time_tracking",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "097dc682-e7c9-435f-9775-9239c7551805",
+          "name": "Retrieves the time trackings",
+          "request": {
+            "name": "Retrieves the time trackings",
+            "description": {
+              "content": "Returns the time trackings",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "time_trackings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<number>",
+                  "description": "Page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<number>",
+                  "description": "Number of items per page (max 100)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "71425041-4151-4050-a3b4-015f55c5afec",
+              "name": "Time trackings retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3748"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3748"
+                },
+                {
+                  "disabled": false,
+                  "description": "Current page number",
+                  "key": "X-Page",
+                  "value": "3748"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of items per page",
+                  "key": "X-Per-Page",
+                  "value": "3748"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of pages",
+                  "key": "X-Total-Pages",
+                  "value": "3748"
+                },
+                {
+                  "disabled": false,
+                  "description": "Next page number",
+                  "key": "X-Next-Page",
+                  "value": "8693"
+                },
+                {
+                  "disabled": false,
+                  "description": "Previous page number",
+                  "key": "X-Prev-Page",
+                  "value": "8693"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of items",
+                  "key": "X-Total-Count",
+                  "value": "3748"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"b98c7625-8d60-4eb5-8ccd-8a8de6144d8b\",\n    \"billable\": false,\n    \"description\": null,\n    \"creator_id\": \"780e98ee-8ca2-49fa-bd4d-6d2a644ee40a\",\n    \"user_id\": \"780e98ee-8ca2-49fa-bd4d-6d2a644ee40a\",\n    \"duration_in_minutes\": 240,\n    \"hourly_rate\": 100,\n    \"hourly_cost\": 50,\n    \"date\": \"2025-01-01\",\n    \"task_id\": null,\n    \"project_id\": null,\n    \"created_at\": \"2026-07-17T13:10:10Z\"\n  },\n  {\n    \"id\": \"6bd66c82-97f8-4f41-98de-e7230bac6312\",\n    \"billable\": false,\n    \"description\": null,\n    \"creator_id\": \"780e98ee-8ca2-49fa-bd4d-6d2a644ee40a\",\n    \"user_id\": \"780e98ee-8ca2-49fa-bd4d-6d2a644ee40a\",\n    \"duration_in_minutes\": 240,\n    \"hourly_rate\": 100,\n    \"hourly_cost\": 50,\n    \"date\": \"2025-01-01\",\n    \"task_id\": null,\n    \"project_id\": null,\n    \"created_at\": \"2026-07-17T13:10:10Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6068d5d-af90-48f8-b512-31014c0cd876",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7ab761c-17b2-4d0d-8dc6-b779ab04befb",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58ce72e4-e1dc-435e-ba96-827c5df0cab2",
+          "name": "Creates a time tracking",
+          "request": {
+            "name": "Creates a time tracking",
+            "description": {
+              "content": "Returns the created time tracking",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "time_trackings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"duration_in_minutes\": \"<integer>\",\n  \"user_id\": \"<string>\",\n  \"description\": \"<string>\",\n  \"date\": \"<string>\",\n  \"billable\": \"<boolean>\",\n  \"hourly_rate\": \"<number>\",\n  \"hourly_cost\": \"<number>\",\n  \"project_id\": \"<string>\",\n  \"task_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a2c34002-1e38-4d00-850c-4f089aa0bd64",
+              "name": "Time tracking created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_in_minutes\": 60,\n  \"user_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"description\": \"Worked on project\",\n  \"date\": \"2025-09-01\",\n  \"billable\": true,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"project_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"task_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3748"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3748"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"78b01619-0c09-4037-9ca0-078a81052499\",\n  \"billable\": true,\n  \"description\": \"Worked on project\",\n  \"creator_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n  \"user_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n  \"duration_in_minutes\": 60,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"date\": \"2025-09-01\",\n  \"task_id\": \"2663ff4c-7c74-4d61-9d79-0f0b786ae591\",\n  \"project_id\": \"4958084c-1c69-496e-8a22-e94c8fc888d2\",\n  \"created_at\": \"2026-07-17T13:10:10Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d0ec13c-9daf-4d53-b9c5-1afdfe1163ac",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_in_minutes\": 60,\n  \"user_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"description\": \"Worked on project\",\n  \"date\": \"2025-09-01\",\n  \"billable\": true,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"project_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"task_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44ac59ba-a959-4320-b4b6-ad039b33663a",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_in_minutes\": 60,\n  \"user_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"description\": \"Worked on project\",\n  \"date\": \"2025-09-01\",\n  \"billable\": true,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"project_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"task_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61e7d821-cfa2-4622-98c5-9f8986383044",
+          "name": "Retrieves a time tracking",
+          "request": {
+            "name": "Retrieves a time tracking",
+            "description": {
+              "content": "Returns a time tracking",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "time_trackings",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Time tracking ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e011c6c1-6c42-423d-8fb8-67baf961ccd7",
+              "name": "Time tracking retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Time tracking ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3748"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3748"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4aa78ae0-4102-4fad-a87d-fa29a5fe48de\",\n  \"billable\": false,\n  \"description\": null,\n  \"creator_id\": \"780e98ee-8ca2-49fa-bd4d-6d2a644ee40a\",\n  \"user_id\": \"780e98ee-8ca2-49fa-bd4d-6d2a644ee40a\",\n  \"duration_in_minutes\": 240,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"date\": \"2025-01-01\",\n  \"task_id\": null,\n  \"project_id\": null,\n  \"created_at\": \"2026-07-17T13:10:10Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a549f34-b574-4445-b692-a5b7dbb83cdd",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Time tracking ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2490f0ae-4db5-4403-a5e2-6285130ca1c8",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Time tracking ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b76c9a24-ba2a-4b2b-ac87-b93ee9c26970",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Time tracking ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ba8c2f4-d38f-442d-8cfc-7475581fb214",
+          "name": "Updates a time tracking",
+          "request": {
+            "name": "Updates a time tracking",
+            "description": {
+              "content": "Updates a time tracking",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "time_trackings",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Time tracking ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"duration_in_minutes\": \"<integer>\",\n  \"user_id\": \"<string>\",\n  \"description\": \"<string>\",\n  \"date\": \"<string>\",\n  \"billable\": \"<boolean>\",\n  \"hourly_rate\": \"<number>\",\n  \"hourly_cost\": \"<number>\",\n  \"project_id\": \"<string>\",\n  \"task_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4ccd206d-06cc-4e29-8c65-fb1bc20a1d18",
+              "name": "Time tracking updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Time tracking ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_in_minutes\": 60,\n  \"user_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"description\": \"Worked on project\",\n  \"date\": \"2025-09-01\",\n  \"billable\": true,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"project_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"task_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The organization ID",
+                  "key": "X-Organization-ID",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max allowed requests in the current period",
+                  "key": "X-Rate-Limit",
+                  "value": "3748"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining requests in the current period",
+                  "key": "X-Remaining-Requests",
+                  "value": "3748"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"df5d0608-4be2-48ba-9c7f-e45ba671d93f\",\n  \"billable\": true,\n  \"description\": \"Worked on project\",\n  \"creator_id\": \"780e98ee-8ca2-49fa-bd4d-6d2a644ee40a\",\n  \"user_id\": \"e68a6422-fdb4-4c64-922a-8ac109b3ed33\",\n  \"duration_in_minutes\": 60,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"date\": \"2025-09-01\",\n  \"task_id\": \"4b3bfa84-d801-4a97-8223-cdec79fd6b98\",\n  \"project_id\": \"e40e5952-308f-4ccf-865b-0aaaae977ea4\",\n  \"created_at\": \"2026-07-17T13:10:11Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f2af0ba-e3b7-4a78-bad9-3feefc1c20fb",
+              "name": "unauthorized: the Authorization header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Time tracking ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_in_minutes\": 60,\n  \"user_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"description\": \"Worked on project\",\n  \"date\": \"2025-09-01\",\n  \"billable\": true,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"project_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"task_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"Invalid API token\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1242c484-4981-4029-8872-6e3ba86b8250",
+              "name": "not found: the resource is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Time tracking ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_in_minutes\": 60,\n  \"user_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"description\": \"Worked on project\",\n  \"date\": \"2025-09-01\",\n  \"billable\": true,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"project_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"task_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4309178-e191-48f8-9a7c-b3bb56d7ad6d",
+              "name": "unprocessable content: the resource can't be created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Time tracking ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_in_minutes\": 60,\n  \"user_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"description\": \"Worked on project\",\n  \"date\": \"2025-09-01\",\n  \"billable\": true,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"project_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"task_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 422,\n  \"title\": \"Unprocessable Content\",\n  \"message\": \"Validation failed: Duration must be greater than 0\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f81a5434-a551-4ab0-ad8a-087357711655",
+              "name": "too many requests: the user has reached the rate limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "time_trackings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Time tracking ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_in_minutes\": 60,\n  \"user_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"description\": \"Worked on project\",\n  \"date\": \"2025-09-01\",\n  \"billable\": true,\n  \"hourly_rate\": 100,\n  \"hourly_cost\": 50,\n  \"project_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\",\n  \"task_id\": \"e0825f68-3a36-4664-afef-8a6f39720b59\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"title\": \"Too Many Requests\",\n  \"message\": \"Rate limit reached. Please wait for a couple of minutes.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.hubflo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "35d97426-a962-419b-a332-4f911364d09b",
+    "name": "Hubflo chat_room time_tracking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

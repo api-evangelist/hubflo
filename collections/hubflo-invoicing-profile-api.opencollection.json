@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room invoicing_profile API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "invoicing_profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Uploads the invoicing profile logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/invoicing-profiles/logo",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replaces the invoicing profile logo. The image is sent as multipart/form-data."
+        },
+        {
+          "info": {
+            "name": "Deletes the invoicing profile logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.hubflo.com/api/v2/invoicing-profiles/logo",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes the invoicing profile logo"
+        },
+        {
+          "info": {
+            "name": "Updates the current invoicing profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/invoicing-profiles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the updated invoicing profile"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

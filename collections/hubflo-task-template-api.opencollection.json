@@ -1,0 +1,333 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room task_template API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "task_template",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves the subtask templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/task_templates/:task_template_id/subtask_templates",
+            "params": [
+              {
+                "name": "task_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Task template ID"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the subtask templates of the task template"
+        },
+        {
+          "info": {
+            "name": "Creates a subtask template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/task_templates/:task_template_id/subtask_templates",
+            "params": [
+              {
+                "name": "task_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Task template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the created subtask template"
+        },
+        {
+          "info": {
+            "name": "Retrieves a subtask template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/task_templates/:task_template_id/subtask_templates/:id",
+            "params": [
+              {
+                "name": "task_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Task template ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Subtask template ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the subtask template"
+        },
+        {
+          "info": {
+            "name": "Updates a subtask template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/task_templates/:task_template_id/subtask_templates/:id",
+            "params": [
+              {
+                "name": "task_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Task template ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Subtask template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the updated subtask template"
+        },
+        {
+          "info": {
+            "name": "Deletes a subtask template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.hubflo.com/api/v2/task_templates/:task_template_id/subtask_templates/:id",
+            "params": [
+              {
+                "name": "task_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Task template ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Subtask template ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the subtask template"
+        },
+        {
+          "info": {
+            "name": "Retrieves the assigned users of a task template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/task_templates/:task_template_id/users",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "task_template_id",
+                "value": "",
+                "type": "path",
+                "description": "Task template ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the assigned users of a task template"
+        },
+        {
+          "info": {
+            "name": "Retrieves the task templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/task_templates",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "parent_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by ProjectSection uuid (blank = top-level only, omitted = all)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the task templates of the organization. Filter with `parent_id` to scope by ProjectSection: omit it to get all templates, set it to a blank value to get only top-level ones, or set it to a ProjectSection uuid to get its attached templates."
+        },
+        {
+          "info": {
+            "name": "Creates a task template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/task_templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the created task template"
+        },
+        {
+          "info": {
+            "name": "Retrieves a task template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/task_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Task template ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the task template"
+        },
+        {
+          "info": {
+            "name": "Updates a task template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.hubflo.com/api/v2/task_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Task template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the updated task template"
+        },
+        {
+          "info": {
+            "name": "Deletes a task template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.hubflo.com/api/v2/task_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Task template ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the task template"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

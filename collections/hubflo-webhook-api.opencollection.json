@@ -1,0 +1,147 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hubflo chat_room webhook API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "webhook",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Activates a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/webhooks/:webhook_target_id/activation",
+            "params": [
+              {
+                "name": "webhook_target_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Activates a webhook so it resumes receiving events"
+        },
+        {
+          "info": {
+            "name": "Deactivates a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.hubflo.com/api/v2/webhooks/:webhook_target_id/activation",
+            "params": [
+              {
+                "name": "webhook_target_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deactivates a webhook so it stops receiving events"
+        },
+        {
+          "info": {
+            "name": "Retrieves the webhook deliveries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.hubflo.com/api/v2/webhooks/:webhook_target_id/webhook_deliveries",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "webhook_target_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook ID"
+              },
+              {
+                "name": "errored",
+                "value": "",
+                "type": "query",
+                "description": "Only return deliveries that errored (transport failure or HTTP status >= 400)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the deliveries sent to a webhook, most recent first, so their status and errors can be audited. Deliveries are retained for one month."
+        },
+        {
+          "info": {
+            "name": "Creates a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.hubflo.com/api/v2/webhooks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a webhook that notifies the given `url` whenever one of the\nsubscribed events occurs.\n\nEach delivery is signed so you can verify it originated from Hubflo. The\nrequest carries an `X-Hubflo-Signature` header containing the hex-encoded\nHMAC-SHA256 of the raw request body, computed with the webhook's signing\nsecret (returned as `secret` when the webhook is created). To verify a\ndelivery, recompute the HMAC over the received body with your signing\nsecret and compare it to the header value.\n\n"
+        },
+        {
+          "info": {
+            "name": "Deletes a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.hubflo.com/api/v2/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a webhook"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

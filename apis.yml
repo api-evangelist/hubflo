@@ -39,6 +39,17 @@ tags:
 - CRM
 - Invoicing
 - Project Management
+- Document-Management
+- E-Signature
+- Onboarding
+- Webhook
+- Company
+tags_raw:
+- Client Portal
+- Professional Services
+- CRM
+- Invoicing
+- Project Management
 - Document Management
 - E-Signature
 - Onboarding
@@ -55,7 +66,8 @@ apis:
   description: The chat_room API from Hubflo — 4 operation(s) for chat_room.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
-  tags:
+  tags: []
+  tags_raw:
   - chat_room
   properties:
   - type: OpenAPI
@@ -74,6 +86,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Comment
+  tags_raw:
   - comment
   properties:
   - type: OpenAPI
@@ -92,6 +106,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Company
+  tags_raw:
   - company
   properties:
   - type: OpenAPI
@@ -110,6 +126,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Contact
+  tags_raw:
   - contact
   properties:
   - type: OpenAPI
@@ -128,6 +146,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Custom Field
+  tags_raw:
   - custom_field
   properties:
   - type: OpenAPI
@@ -145,7 +165,8 @@ apis:
   description: The custom_field_value API from Hubflo — 1 operation(s) for custom_field_value.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
-  tags:
+  tags: []
+  tags_raw:
   - custom_field_value
   properties:
   - type: OpenAPI
@@ -164,6 +185,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Folder
+  tags_raw:
   - folder
   properties:
   - type: OpenAPI
@@ -182,6 +205,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Form
+  tags_raw:
   - form
   properties:
   - type: OpenAPI
@@ -200,6 +225,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Invoice
+  tags_raw:
   - invoice
   properties:
   - type: OpenAPI
@@ -217,7 +244,8 @@ apis:
   description: The invoicing_profile API from Hubflo — 2 operation(s) for invoicing_profile.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
-  tags:
+  tags: []
+  tags_raw:
   - invoicing_profile
   properties:
   - type: OpenAPI
@@ -236,6 +264,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Item
+  tags_raw:
   - item
   properties:
   - type: OpenAPI
@@ -254,6 +284,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Member
+  tags_raw:
   - member
   properties:
   - type: OpenAPI
@@ -272,6 +304,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Message
+  tags_raw:
   - message
   properties:
   - type: OpenAPI
@@ -290,6 +324,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Note
+  tags_raw:
   - note
   properties:
   - type: OpenAPI
@@ -308,6 +344,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Organization
+  tags_raw:
   - organizations
   properties:
   - type: OpenAPI
@@ -326,6 +364,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Ping
+  tags_raw:
   - ping
   properties:
   - type: OpenAPI
@@ -344,6 +384,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Portal
+  tags_raw:
   - portals
   properties:
   - type: OpenAPI
@@ -362,6 +404,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Project
+  tags_raw:
   - project
   properties:
   - type: OpenAPI
@@ -379,7 +423,8 @@ apis:
   description: The project_section API from Hubflo — 3 operation(s) for project_section.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
-  tags:
+  tags: []
+  tags_raw:
   - project_section
   properties:
   - type: OpenAPI
@@ -397,7 +442,8 @@ apis:
   description: The project_type API from Hubflo — 2 operation(s) for project_type.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
-  tags:
+  tags: []
+  tags_raw:
   - project_type
   properties:
   - type: OpenAPI
@@ -416,6 +462,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Proposal
+  tags_raw:
   - proposal
   properties:
   - type: OpenAPI
@@ -434,6 +482,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - SMART Doc
+  tags_raw:
   - smartdoc
   properties:
   - type: OpenAPI
@@ -452,6 +502,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Tag
+  tags_raw:
   - tag
   properties:
   - type: OpenAPI
@@ -470,6 +522,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Task
+  tags_raw:
   - task
   properties:
   - type: OpenAPI
@@ -487,7 +541,8 @@ apis:
   description: The task_template API from Hubflo — 5 operation(s) for task_template.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
-  tags:
+  tags: []
+  tags_raw:
   - task_template
   properties:
   - type: OpenAPI
@@ -506,6 +561,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Time Tracking
+  tags_raw:
   - time_tracking
   properties:
   - type: OpenAPI
@@ -524,6 +581,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Webhook
+  tags_raw:
   - webhook
   properties:
   - type: OpenAPI
@@ -542,6 +601,8 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
+  - Workspace
+  tags_raw:
   - workspace
   properties:
   - type: OpenAPI

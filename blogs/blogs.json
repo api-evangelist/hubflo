@@ -3,19 +3,16 @@
   "feeds": [
     {
       "source": "https://support.hubflo.com/en/feed.xml",
-      "feed_url": "https://support.hubflo.com/en/feed.xml",
-      "title": "",
-      "saved": 0,
-      "method": "feed"
+      "error": "HTTPError"
     },
     {
       "source": "https://support.hubflo.com/en/",
-      "feed_url": "https://support.hubflo.com/en/feed.xml",
+      "feed_url": "https://support.hubflo.com/en/",
       "title": "",
       "saved": 0,
-      "method": "discovered"
+      "method": "none"
     }
   ],
   "post_count": 25,
-  "fetched": "2026-08-15T12:11:08Z"
+  "fetched": "2026-08-22T20:20:02Z"
 }

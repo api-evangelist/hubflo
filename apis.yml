@@ -628,6 +628,9 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 common:
+- type: CapabilityMap
+  url: capabilities/hubflo-capability-edges.yml
+  name: Hubflo Business Capability Map
 - type: Overlay
   url: overlays/hubflo-overlay.yaml
 - type: Website

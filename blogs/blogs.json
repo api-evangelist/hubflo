@@ -2,10 +2,6 @@
   "repo": "hubflo",
   "feeds": [
     {
-      "source": "https://support.hubflo.com/en/feed.xml",
-      "error": "HTTPError"
-    },
-    {
       "source": "https://support.hubflo.com/en/",
       "feed_url": "https://support.hubflo.com/en/",
       "title": "",
@@ -14,5 +10,5 @@
     }
   ],
   "post_count": 25,
-  "fetched": "2026-08-22T20:20:02Z"
+  "fetched": "2026-08-30T22:33:40Z"
 }

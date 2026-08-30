@@ -118,7 +118,7 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
-  - Company
+  - company
   tags_raw:
   - company
   properties:
@@ -157,8 +157,7 @@ apis:
   description: The custom_field API from Hubflo — 2 operation(s) for custom_field.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
-  tags:
-  - Custom Field
+  tags: []
   tags_raw:
   - custom_field
   properties:
@@ -217,7 +216,7 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
-  - Form
+  - form
   tags_raw:
   - form
   properties:
@@ -237,7 +236,7 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
-  - Invoice
+  - invoice
   tags_raw:
   - invoice
   properties:
@@ -296,7 +295,7 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
-  - Member
+  - member
   tags_raw:
   - member
   properties:
@@ -316,7 +315,7 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
-  - Message
+  - message
   tags_raw:
   - message
   properties:
@@ -396,7 +395,7 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
-  - Portal
+  - portals
   tags_raw:
   - portals
   properties:
@@ -474,7 +473,7 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
-  - Proposal
+  - proposal
   tags_raw:
   - proposal
   properties:
@@ -494,7 +493,7 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
-  - SMART Doc
+  - smartdoc
   tags_raw:
   - smartdoc
   properties:
@@ -572,8 +571,7 @@ apis:
   description: The time_tracking API from Hubflo — 2 operation(s) for time_tracking.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
-  tags:
-  - Time Tracking
+  tags: []
   tags_raw:
   - time_tracking
   properties:

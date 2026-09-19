@@ -239,7 +239,7 @@ apis:
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
   tags:
-  - Invoice
+  - Invoices
   tags_raw:
   - invoice
   properties:

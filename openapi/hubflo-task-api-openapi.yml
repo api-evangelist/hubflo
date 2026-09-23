@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Hubflo chat_room task API
+  title: Hubflo Task API
   version: v2
-  description: "The Hubflo API allows you to write and read data from the Hubflo application.\nIt conforms to [REST](https://en.wikipedia.org/wiki/REST).\nIt has predictable resource-oriented URLS, accepts JSON request bodies, returns JSON and uses standard HTTP status codes\nand verbs.\n\n# Authentication\n\nThe Hubflo API requires authentication.\nIt's a bearer authentication, also called token authentication.\n\nTo start your integration journey with the Hubflo API, you must send your **authentication token** in the\n`Authorization` header when making requests to the API.\n\n```\nAuthorization: Bearer <token>\n```\n\n# Getting started\n\nNavigate to [https://app.hubflo.com/organizations/](https://app.hubflo.com/organizations/).\nIn the **Integrations** settings panel, click on the **Generate key** button if you don't already have an API key.\n\nThe generated API key is the required authentication token you must send in the `Authorization` header.\nLet's copy it.\n\nYou can use the `/pings` endpoint to check that you can successfully make an authenticated request.\nDo it directly from this documentation, using the **Authorize** button to paste your authentication token, then push\nthe **Try it out** button.\n\nAlternatively, you can run the following cURL command in a terminal:\n\n```\ncurl -X 'POST' \\\n  'https://app.hubflo.com/api/v2/pings' \\\n  -H 'accept: application/json' \\\n  -H 'Authorization: Bearer <token>' \\\n  -d ''\n```\n\nIf you're successfully authenticated, you receive:\n\n```json\n{\n  \"pong\": \"ok\"\n}\n```\n\nOtherwise you get a `401 - Unauthorized` error. For example:\n\n```json\n{\n  \"status\": 401,\n  \"title\": \"Unauthorized\",\n  \"message\": \"API token not found\"\n}\n```\n\n# Versioning\n\nThe API is versioned. The current version is 2.0 (referenced as v2 in the endpoints).\n\n# Routes\n\nThe API endpoints are accessible through a route of the form: `https://<domain>/api/<version>/<endpoint>`.\n\nWhere:\n\n- `domain` is the domain to use, usually \"app.hubflo.com\"\n- `version` is the API version\n- `endpoint` is the endpoint name\n\nFor example, we will have: `https://app.hubflo.com/api/v2/pings`.\n\n# Request headers\n\nEvery request should include the header `Content-Type: application/json`, except for file uploads.\n\n# Requests and parameters\n\nThe API adheres to REST principles:\n\n- `GET` requests: read without modification\n- `POST` requests: create a new resource\n- `PATCH` requests: update an existing resource\n- `DELETE` requests: delete a resource\n\nThe parameters for `GET` requests should be sent via the query string of the request.\n\nThe parameters for `POST` and `PATCH` requests should be transmitted in the request body in a valid JSON format.\n\nThe parameters should follow the following formats:\n- `date`: \"YYYY-MM-DD\", for example: \"2021-10-21\"\n- `time`: \"H:m[:s]\", for example: \"10:30\"\n- `date-time`: \"YYYY-MM-DDThh:mm:ssZ\", which is the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format, using UTC\n\n# Response headers\n\nAs specified for each endpoint, the response headers contain:\n- `Content-Type`: the response content type\n- `X-Organization-ID`: your organization ID\n- `X-Rate-Limit` the maximum allowed requests in a given period\n- `X-Remaining-Requests`: the remaining requests count in the current period\n\n# Response format\n\nThe API only supports JSON format.\nAll responses sent by the API will contain the header `Content-Type: application/json` and their content is present in\nthe body in a JSON format to be de-serialized.\n\n# Rate limit\n\nThe use of the API is limited.\nYou can make a maximum of 1000 calls per minute.\nIf you exceed this limit, you receive a `429 - Too Many Requests` error and are blocked for one minute.\n\n# Pagination\n\nAll endpoints that return lists are paginated.\nIn general, any endpoint that returns a list can return an empty list.\n\nThe (optional) `page` parameter allows you to access a specific page.\n\nThe (optional) `per_page` parameter allows you to change the number of items on a given page.\nThe default value is 20 and it is limited to a maximum of 100.\n\n# Response codes\n\nThe API may return the following codes:\n\n| Code  | Name                  | Description                                                                      |\n| ----  | --------              | --------                                                                         |\n| `200` | Success               | Success                                                                          |\n| `201` | Created               | Resource created                                                                 |\n| `204` | No Content            | Success but the response does not contain any data (e.g., deletion)              |\n| `400` | Bad Request           | The request is invalid                                                           |\n| `401` | Unauthorized          | Authentication failed                                                            |\n| `403` | Forbidden             | Insufficient rights to perform the requested action                              |\n| `404` | Not Found             | The resource is not found                                                        |\n| `422` | Unprocessable Content  | The transmitted data is malformed                                                |\n| `429` | Too Many Requests     | Too many requests have been made                                                 |\n| `500` | Internal Server Error | An internal server error occurred (the technical team is automatically notified) |\n\n# Errors\n\nWhen an error occurs, the response code informs you about what is happening.\nThe response body contains:\n- the status code,\n- the status name, a.k.a the error title,\n- a human readable message.\n\nSee the error schemas below.\n\n# Resources\n\nAll resources are identified by a unique ID that looks like this: \"16242d6f-a808-41b7-8c4d-fe29b9b3245f\".\n\nJSON data types are used at most: `string`, `number`, `float`, `object`, `array`, `boolean` and `null`.\nDates and datetimes attributes are serialized with UTC [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) format.\n\n\n"
+  description: The Hubflo API allows you to write and read data from the Hubflo application.
 servers:
 - url: https://app.hubflo.com
   description: The production API server
@@ -11,7 +11,7 @@ servers:
 - url: http://localhost:3000
   description: The local API server
 tags:
-- name: task
+- name: Task
 paths:
   /api/v2/tasks/{task_id}/contacts:
     get:
@@ -20,7 +20,7 @@ paths:
       - bearer_auth: []
       description: Returns the assigned contacts of a task. Only the first 100 tags of each contact are returned.
       tags:
-      - task
+      - Task
       parameters:
       - name: page
         in: query
@@ -76,13 +76,15 @@ paths:
               description: Total number of pages
             X-Next-Page:
               schema:
-                type: integer
-                nullable: true
+                type:
+                - integer
+                - 'null'
               description: Next page number
             X-Prev-Page:
               schema:
-                type: integer
-                nullable: true
+                type:
+                - integer
+                - 'null'
               description: Previous page number
             X-Total-Count:
               schema:
@@ -161,6 +163,8 @@ paths:
                     message: Rate limit reached. Please wait for a couple of minutes.
               schema:
                 $ref: '#/components/schemas/error_too_many_requests'
+      operationId: getApiV2TasksByTaskIdContacts
+      x-operation-id-source: derived
   /api/v2/tasks/{task_id}/files:
     parameters:
     - name: task_id
@@ -175,7 +179,7 @@ paths:
       - bearer_auth: []
       description: Returns the files for a task
       tags:
-      - task
+      - Task
       parameters:
       - name: page
         in: query
@@ -225,13 +229,15 @@ paths:
               description: Total number of pages
             X-Next-Page:
               schema:
-                type: integer
-                nullable: true
+                type:
+                - integer
+                - 'null'
               description: Next page number
             X-Prev-Page:
               schema:
-                type: integer
-                nullable: true
+                type:
+                - integer
+                - 'null'
               description: Previous page number
             X-Total-Count:
               schema:
@@ -302,13 +308,17 @@ paths:
                     message: Rate limit reached. Please wait for a couple of minutes.
               schema:
                 $ref: '#/components/schemas/error_too_many_requests'
+      operationId: getApiV2TasksByTaskIdFiles
+      x-operation-id-source: derived
     post:
       summary: Creates a file for a task
       security:
       - bearer_auth: []
-      description: "Creates a file for a task. It can be created giving the uploaded file, or imported from the library,\n        using the file_id attribute."
+      description: 'Creates a file for a task. It can be created giving the uploaded file, or imported from the library,
+
+        using the file_id attribute.'
       tags:
-      - task
+      - Task
       parameters:
       - name: file_id
         in: query
@@ -408,6 +418,8 @@ paths:
               type: string
               format: binary
         description: File to upload
+      operationId: postApiV2TasksByTaskIdFiles
+      x-operation-id-source: derived
   /api/v2/tasks/{task_id}/files/{id}:
     parameters:
     - name: task_id
@@ -428,7 +440,7 @@ paths:
       - bearer_auth: []
       description: Returns a file for a task
       tags:
-      - task
+      - Task
       responses:
         '200':
           description: file retrieved
@@ -502,13 +514,15 @@ paths:
                     message: Rate limit reached. Please wait for a couple of minutes.
               schema:
                 $ref: '#/components/schemas/error_too_many_requests'
+      operationId: getApiV2TasksByTaskIdFilesById
+      x-operation-id-source: derived
     patch:
       summary: Updates a file for a task
       security:
       - bearer_auth: []
       description: Updates a file for a task. You can only change the title of the file.
       tags:
-      - task
+      - Task
       parameters: []
       responses:
         '200':
@@ -593,6 +607,8 @@ paths:
                   type: string
                   example: new name.png
         required: true
+      operationId: patchApiV2TasksByTaskIdFilesById
+      x-operation-id-source: derived
   /api/v2/tasks/{task_id}/users:
     get:
       summary: Retrieves the assigned users of a task
@@ -600,7 +616,7 @@ paths:
       - bearer_auth: []
       description: Returns the assigned users of a task
       tags:
-      - task
+      - Task
       parameters:
       - name: page
         in: query
@@ -656,13 +672,15 @@ paths:
               description: Total number of pages
             X-Next-Page:
               schema:
-                type: integer
-                nullable: true
+                type:
+                - integer
+                - 'null'
               description: Next page number
             X-Prev-Page:
               schema:
-                type: integer
-                nullable: true
+                type:
+                - integer
+                - 'null'
               description: Previous page number
             X-Total-Count:
               schema:
@@ -709,6 +727,8 @@ paths:
                     message: Rate limit reached. Please wait for a couple of minutes.
               schema:
                 $ref: '#/components/schemas/error_too_many_requests'
+      operationId: getApiV2TasksByTaskIdUsers
+      x-operation-id-source: derived
   /api/v2/tasks:
     get:
       summary: Retrieves the tasks
@@ -716,7 +736,7 @@ paths:
       - bearer_auth: []
       description: Returns the tasks. Only the first 100 tags of the task are returned
       tags:
-      - task
+      - Task
       parameters:
       - name: page
         in: query
@@ -830,13 +850,15 @@ paths:
               description: Total number of pages
             X-Next-Page:
               schema:
-                type: integer
-                nullable: true
+                type:
+                - integer
+                - 'null'
               description: Next page number
             X-Prev-Page:
               schema:
-                type: integer
-                nullable: true
+                type:
+                - integer
+                - 'null'
               description: Previous page number
             X-Total-Count:
               schema:
@@ -923,13 +945,31 @@ paths:
                     message: Rate limit reached. Please wait for a couple of minutes.
               schema:
                 $ref: '#/components/schemas/error_too_many_requests'
+      operationId: getApiV2Tasks
+      x-operation-id-source: derived
     post:
       summary: Creates a task
       security:
       - bearer_auth: []
-      description: "Creates a task.\n        To fill in a custom field, add the custom field 'serialization_name' to the request\n        params, with the desired value. Only 100 tags maximum can be specified.\n        When you specify a `parent_task_id` you will create a subtask. Some attributes are not available for subtasks:\n        `clickup_id`, `monday_id`, `project_id` and `contact_id`.\n        To attach a recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) along\n        with the matching `recurrence_*` fields. `start_time` is required when a recurrence is set.\n        For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`)\n        with the corresponding `recurrence_week_days` or `recurrence_day_into_month`."
+      description: 'Creates a task.
+
+        To fill in a custom field, add the custom field ''serialization_name'' to the request
+
+        params, with the desired value. Only 100 tags maximum can be specified.
+
+        When you specify a `parent_task_id` you will create a subtask. Some attributes are not available for subtasks:
+
+        `clickup_id`, `monday_id`, `project_id` and `contact_id`.
+
+        To attach a recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) along
+
+        with the matching `recurrence_*` fields. `start_time` is required when a recurrence is set.
+
+        For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`)
+
+        with the corresponding `recurrence_week_days` or `recurrence_day_into_month`.'
       tags:
-      - task
+      - Task
       parameters: []
       responses:
         '201':
@@ -1060,8 +1100,9 @@ paths:
                   - tag1
                   - tag2
                 recurrence_type:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   enum:
                   - Weekly
                   - Monthly
@@ -1075,36 +1116,43 @@ paths:
 
                     '
                 recurrence_frequency:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   example: 2
                 recurrence_customable_type:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   enum:
                   - Weekly
                   - Monthly
                   - null
                 recurrence_week_days:
-                  type: array
-                  nullable: true
+                  type:
+                  - array
+                  - 'null'
                   items:
                     type: string
                   example:
                   - monday
                   - friday
                 recurrence_day_into_month:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   example: 15
                 recurrence_days_after_completion:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   example: 7
               required:
               - name
         required: true
         description: Task attributes
+      operationId: postApiV2Tasks
+      x-operation-id-source: derived
   /api/v2/tasks/{id}:
     parameters:
     - name: id
@@ -1119,7 +1167,7 @@ paths:
       - bearer_auth: []
       description: Returns the task. Only the first 100 tags of the task are returned
       tags:
-      - task
+      - Task
       responses:
         '200':
           description: Task retrieved
@@ -1207,13 +1255,15 @@ paths:
                     message: Rate limit reached. Please wait for a couple of minutes.
               schema:
                 $ref: '#/components/schemas/error_too_many_requests'
+      operationId: getApiV2TasksById
+      x-operation-id-source: derived
     patch:
       summary: Updates a task
       security:
       - bearer_auth: []
       description: 'Updates a task. Only 100 tags maximum can be specified. If the tags key is present, the tags provided in the request will replace the existing tags. To fill in a custom field, add the custom field ''serialization_name'' to the request params, with the desired value. If the task has a `parent_task_id` the following attributes are not available: `clickup_id`, `monday_id`, and `contact_id`. To change the recurrence, set `recurrence_type` (`Weekly`, `Monthly`, `Yearly`, `Periodically`, `Custom`) with the matching `recurrence_*` fields. Send `recurrence_type: null` to remove an existing rule; omit the key to leave it unchanged. For `Custom`, also provide `recurrence_frequency` and `recurrence_customable_type` (`Weekly` or `Monthly`).'
       tags:
-      - task
+      - Task
       parameters: []
       responses:
         '200':
@@ -1385,8 +1435,9 @@ paths:
                   - tag1
                   - tag2
                 recurrence_type:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   enum:
                   - Weekly
                   - Monthly
@@ -1402,36 +1453,43 @@ paths:
 
                     '
                 recurrence_frequency:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   example: 2
                 recurrence_customable_type:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   enum:
                   - Weekly
                   - Monthly
                   - null
                 recurrence_week_days:
-                  type: array
-                  nullable: true
+                  type:
+                  - array
+                  - 'null'
                   items:
                     type: string
                   example:
                   - monday
                   - friday
                 recurrence_day_into_month:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   example: 15
                 recurrence_days_after_completion:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   example: 7
               required:
               - name
         required: true
         description: Task attributes
+      operationId: patchApiV2TasksById
+      x-operation-id-source: derived
 components:
   schemas:
     error_not_found:
@@ -1447,23 +1505,6 @@ components:
         message:
           type: string
           example: Resource not found
-      required:
-      - status
-      - title
-      - message
-    error_unauthorized:
-      description: A response describing an authentication error
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 401
-        title:
-          type: string
-          example: Unauthorized
-        message:
-          type: string
-          example: API token not found
       required:
       - status
       - title
@@ -1498,6 +1539,23 @@ components:
         message:
           type: string
           example: 'Validation failed: Title can''t be blank'
+      required:
+      - status
+      - title
+      - message
+    error_unauthorized:
+      description: A response describing an authentication error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+        title:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: API token not found
       required:
       - status
       - title

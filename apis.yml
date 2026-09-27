@@ -53,7 +53,7 @@ tags:
 - CRM
 - Invoicing
 - Project Management
-- Document-Management
+- Document Management
 - E-Signature
 - Onboarding
 - Webhook
@@ -69,6 +69,7 @@ tags_raw:
 - Onboarding
 - Webhooks
 - Company
+- Document-Management
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -76,7 +77,7 @@ maintainers:
   email: info@apis.io
 apis:
 - aid: hubflo:hubflo-chat-room-api
-  name: Hubflo chat_room API
+  name: Hubflo Chat Room API
   description: The chat_room API from Hubflo — 4 operation(s) for chat_room.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -95,7 +96,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-comment-api
-  name: Hubflo comment API
+  name: Hubflo Comment API
   description: The comment API from Hubflo — 2 operation(s) for comment.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -115,7 +116,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-company-api
-  name: Hubflo company API
+  name: Hubflo Company API
   description: The company API from Hubflo — 2 operation(s) for company.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -135,7 +136,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-contact-api
-  name: Hubflo contact API
+  name: Hubflo Contact API
   description: The contact API from Hubflo — 4 operation(s) for contact.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -155,7 +156,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-custom-field-api
-  name: Hubflo custom_field API
+  name: Hubflo Custom Field API
   description: The custom_field API from Hubflo — 2 operation(s) for custom_field.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -175,7 +176,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-custom-field-value-api
-  name: Hubflo custom_field_value API
+  name: Hubflo Custom Field Value API
   description: The custom_field_value API from Hubflo — 1 operation(s) for custom_field_value.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -194,7 +195,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-folder-api
-  name: Hubflo folder API
+  name: Hubflo Folder API
   description: The folder API from Hubflo — 1 operation(s) for folder.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -214,7 +215,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-form-api
-  name: Hubflo form API
+  name: Hubflo Form API
   description: The form API from Hubflo — 17 operation(s) for form.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -234,7 +235,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-invoice-api
-  name: Hubflo invoice API
+  name: Hubflo Invoice API
   description: The invoice API from Hubflo — 8 operation(s) for invoice.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -254,7 +255,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-invoicing-profile-api
-  name: Hubflo invoicing_profile API
+  name: Hubflo Invoicing Profile API
   description: The invoicing_profile API from Hubflo — 2 operation(s) for invoicing_profile.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -273,7 +274,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-item-api
-  name: Hubflo item API
+  name: Hubflo Item API
   description: The item API from Hubflo — 1 operation(s) for item.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -293,7 +294,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-member-api
-  name: Hubflo member API
+  name: Hubflo Member API
   description: The member API from Hubflo — 1 operation(s) for member.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -313,7 +314,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-message-api
-  name: Hubflo message API
+  name: Hubflo Message API
   description: The message API from Hubflo — 1 operation(s) for message.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -333,7 +334,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-note-api
-  name: Hubflo note API
+  name: Hubflo Note API
   description: The note API from Hubflo — 2 operation(s) for note.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -353,7 +354,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-organizations-api
-  name: Hubflo organizations API
+  name: Hubflo Organizations API
   description: The organizations API from Hubflo — 3 operation(s) for organizations.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -373,7 +374,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-ping-api
-  name: Hubflo ping API
+  name: Hubflo Ping API
   description: The ping API from Hubflo — 1 operation(s) for ping.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -393,7 +394,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-portals-api
-  name: Hubflo portals API
+  name: Hubflo Portals API
   description: The portals API from Hubflo — 1 operation(s) for portals.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -413,7 +414,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-project-api
-  name: Hubflo project API
+  name: Hubflo Project API
   description: The project API from Hubflo — 5 operation(s) for project.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -433,7 +434,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-project-section-api
-  name: Hubflo project_section API
+  name: Hubflo Project Section API
   description: The project_section API from Hubflo — 3 operation(s) for project_section.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -452,7 +453,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-project-type-api
-  name: Hubflo project_type API
+  name: Hubflo Project Type API
   description: The project_type API from Hubflo — 2 operation(s) for project_type.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -471,7 +472,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-proposal-api
-  name: Hubflo proposal API
+  name: Hubflo Proposal API
   description: The proposal API from Hubflo — 6 operation(s) for proposal.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -491,7 +492,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-smartdoc-api
-  name: Hubflo smartdoc API
+  name: Hubflo Smartdoc API
   description: The smartdoc API from Hubflo — 5 operation(s) for smartdoc.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -511,7 +512,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-tag-api
-  name: Hubflo tag API
+  name: Hubflo Tag API
   description: The tag API from Hubflo — 2 operation(s) for tag.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -531,7 +532,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-task-api
-  name: Hubflo task API
+  name: Hubflo Task API
   description: The task API from Hubflo — 6 operation(s) for task.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -551,7 +552,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-task-template-api
-  name: Hubflo task_template API
+  name: Hubflo Task Template API
   description: The task_template API from Hubflo — 5 operation(s) for task_template.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -570,7 +571,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-time-tracking-api
-  name: Hubflo time_tracking API
+  name: Hubflo Time Tracking API
   description: The time_tracking API from Hubflo — 2 operation(s) for time_tracking.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -590,7 +591,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-webhook-api
-  name: Hubflo webhook API
+  name: Hubflo Webhook API
   description: The webhook API from Hubflo — 4 operation(s) for webhook.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2
@@ -610,7 +611,7 @@ apis:
   - type: Authentication
     url: authentication/hubflo-authentication.yml
 - aid: hubflo:hubflo-workspace-api
-  name: Hubflo workspace API
+  name: Hubflo Workspace API
   description: The workspace API from Hubflo — 24 operation(s) for workspace.
   humanURL: https://hubflo.readme.io/reference/the-hubflo-api
   baseURL: https://app.hubflo.com/api/v2

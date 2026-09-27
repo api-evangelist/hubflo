@@ -715,23 +715,6 @@ components:
       - status
       - title
       - message
-    error_not_found:
-      description: A response describing a not found error
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 404
-        title:
-          type: string
-          example: Not Found
-        message:
-          type: string
-          example: Resource not found
-      required:
-      - status
-      - title
-      - message
     error_too_many_requests:
       description: A response describing a rate limit error
       type: object
@@ -749,19 +732,19 @@ components:
       - status
       - title
       - message
-    error_unprocessable_content:
-      description: A response describing a validation error
+    error_not_found:
+      description: A response describing a not found error
       type: object
       properties:
         status:
           type: integer
-          example: 422
+          example: 404
         title:
           type: string
-          example: Unprocessable Content
+          example: Not Found
         message:
           type: string
-          example: 'Validation failed: Title can''t be blank'
+          example: Resource not found
       required:
       - status
       - title
@@ -779,6 +762,23 @@ components:
         message:
           type: string
           example: API token not found
+      required:
+      - status
+      - title
+      - message
+    error_unprocessable_content:
+      description: A response describing a validation error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 422
+        title:
+          type: string
+          example: Unprocessable Content
+        message:
+          type: string
+          example: 'Validation failed: Title can''t be blank'
       required:
       - status
       - title

@@ -1122,6 +1122,23 @@ components:
       - status
       - title
       - message
+    error_too_many_requests:
+      description: A response describing a rate limit error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 429
+        title:
+          type: string
+          example: Too Many Requests
+        message:
+          type: string
+          example: Rate limit reached. Please wait for a couple of minutes.
+      required:
+      - status
+      - title
+      - message
     error_unprocessable_content:
       description: A response describing a validation error
       type: object
@@ -1152,23 +1169,6 @@ components:
         message:
           type: string
           example: Resource not found
-      required:
-      - status
-      - title
-      - message
-    error_too_many_requests:
-      description: A response describing a rate limit error
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 429
-        title:
-          type: string
-          example: Too Many Requests
-        message:
-          type: string
-          example: Rate limit reached. Please wait for a couple of minutes.
       required:
       - status
       - title

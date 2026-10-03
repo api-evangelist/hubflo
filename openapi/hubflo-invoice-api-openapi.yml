@@ -1800,19 +1800,19 @@ components:
       - status
       - title
       - message
-    error_too_many_requests:
-      description: A response describing a rate limit error
+    error_unprocessable_content:
+      description: A response describing a validation error
       type: object
       properties:
         status:
           type: integer
-          example: 429
+          example: 422
         title:
           type: string
-          example: Too Many Requests
+          example: Unprocessable Content
         message:
           type: string
-          example: Rate limit reached. Please wait for a couple of minutes.
+          example: 'Validation failed: Title can''t be blank'
       required:
       - status
       - title
@@ -1851,19 +1851,19 @@ components:
       - status
       - title
       - message
-    error_unprocessable_content:
-      description: A response describing a validation error
+    error_too_many_requests:
+      description: A response describing a rate limit error
       type: object
       properties:
         status:
           type: integer
-          example: 422
+          example: 429
         title:
           type: string
-          example: Unprocessable Content
+          example: Too Many Requests
         message:
           type: string
-          example: 'Validation failed: Title can''t be blank'
+          example: Rate limit reached. Please wait for a couple of minutes.
       required:
       - status
       - title

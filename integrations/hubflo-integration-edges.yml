@@ -1,0 +1,441 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/hubflo/integrations
+checked:
+- https://composio.dev/toolkits/hubflo
+- https://monid.ai/tools/hubflo
+- https://n8n.io/integrations/hubflo/
+- https://zapier.com/apps/hubflo/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: hubflo
+  url: https://zapier.com/apps/hubflo/integrations
+  external_url: https://hubflo.com/
+  partner_tier: BRONZE
+  triggers:
+  - key: client_invited_portal
+    label: Client Invited to Portal
+  - key: client_signed_up_portal
+    label: Client Signed Up to Portal
+  - key: company_updated
+    label: Company Updated
+  - key: form_completed
+    label: Form Completed (By Client)
+  - key: invoice_overdue
+    label: Invoice Overdue
+  - key: invoice_paid
+    label: Invoice Paid
+  - key: message_sent
+    label: Message Sent
+  - key: new_chatroom
+    label: New Chatroom
+  - key: new_comment
+    label: New Comment on a Task
+  - key: new_company
+    label: New Company
+  - key: new_contact
+    label: New Contact
+  - key: new_file
+    label: New File Uploaded
+  - key: new_file_added_to_task
+    label: New File Added to Task
+  - key: new_file_by_client
+    label: New File Uploaded (By Client)
+  - key: new_folder
+    label: New Folder
+  - key: new_form
+    label: New Form
+  - key: new_invoice
+    label: New Invoice
+  - key: new_issued_invoice
+    label: New Issued Invoice
+  - key: new_issued_proposal
+    label: New Issued Proposal
+  - key: new_project
+    label: New Project
+  - key: new_proposal
+    label: New Proposal
+  - key: new_smartdoc
+    label: New Smartdoc
+  - key: new_task
+    label: New Task
+  - key: new_task_by_contact
+    label: New Task (By Client)
+  - key: new_time_log
+    label: New Time Log
+  - key: new_workspace
+    label: New Workspace
+  - key: project_stage_updated
+    label: Project Stage Updated
+  - key: proposal_accepted
+    label: New Proposal Accepted
+  - key: smartdoc_completed
+    label: Smartdoc Completed
+  - key: smartdoc_sent
+    label: Smartdoc Sent
+  - key: task_completed
+    label: Task Completed
+  - key: task_completed_by_contact
+    label: Task Completed (By Client)
+  actions:
+  - key: add_accounting_id_to_invoice
+    label: Add Accounting ID to Invoice
+  - key: add_comment_to_a_task
+    label: Add Comment to a Task
+  - key: add_embed_to_workspace
+    label: Add Embed to Workspace
+  - key: add_link_to_workspace
+    label: Add Link to Workspace
+  - key: add_participant_to_chatroom
+    label: Add a Participant to the Chatroom
+  - key: add_payment_url_to_invoice
+    label: Add Payment URL to Invoice
+  - key: create_company
+    label: Create Company
+  - key: create_contact
+    label: Create Contact
+  - key: create_contact_invitation
+    label: Invite Contact to Workspace
+  - key: create_file_for_task
+    label: Create a File for a Task
+  - key: create_new_time_entry
+    label: Create New Time Entry
+  - key: create_notes
+    label: Create Note
+  - key: create_project
+    label: Create Project
+  - key: create_project_section
+    label: Add Project Section
+  - key: create_proposal
+    label: Create Proposal
+  - key: create_task
+    label: Create Task
+  - key: create_workspace
+    label: Create Workspace
+  - key: create_workspace_folder
+    label: Create Workspace Folder
+  - key: create_workspace_note
+    label: Create Workspace Note
+  - key: delete_workspace
+    label: Delete Workspace
+  - key: edit_time_entry
+    label: Edit Time Entry
+  - key: find_an_assignment
+    label: Find an Form Assignment
+  - key: find_a_company
+    label: Find a Company
+  - key: find_a_form
+    label: Find a Form
+  - key: get_a_form_answer
+    label: Get a Form Answer
+  - key: mark_invoice_as_paid
+    label: Mark Invoice as Paid
+  - key: remove_contact_from_workspace
+    label: Remove Contact From Workspace
+  - key: retrieves_a_comment
+    label: Retrieve a Comment of Task
+  - key: retrieve_a_task
+    label: Retrieve a Task
+  - key: send_form_to_a_client
+    label: Send Form to a Client
+  - key: send_message_in_a_chatroom
+    label: Send Message in a Chatroom
+  - key: send_smartdoc_to_a_client
+    label: Send Smartdoc to a Client
+  - key: udpate_workspace
+    label: Update Workspace
+  - key: update_company
+    label: Update Company
+  - key: update_contact
+    label: Update Contact
+  - key: update_embed_in_workspace
+    label: Update Embed in Workspace
+  - key: update_project
+    label: Update Project
+  - key: update_task
+    label: Update Task
+  - key: update_workspace_file
+    label: Update Workspace File
+  - key: update_workspace_folder
+    label: Update Workspace Folder
+  searches:
+  - key: find_chatroom
+    label: Find Chatroom
+  - key: find_contact
+    label: Find Contact
+  - key: find_content_items
+    label: Find Content Items
+  - key: find_folder
+    label: Find Workspace Folder
+  - key: find_project
+    label: Find Project
+  - key: find_sections_of_a_project
+    label: Find Sections of a Project
+  - key: find_the_assignments
+    label: Find the Form Assignments
+  - key: find_the_tasks
+    label: Find the Tasks
+  - key: find_workspace
+    label: Find Workspace
+  - key: get_companies
+    label: Get Companies
+  - key: get_contacts
+    label: Get Contacts
+  - key: get_form_answers
+    label: Get Form Answers
+  - key: get_proposal_line_items
+    label: Retrieve Proposal Line Items
+  - key: get_smartdoc
+    label: Get Smartdoc
+  - key: list_line_items_of_invoice
+    label: List Line-Items of Invoice
+  - key: list_task_comments
+    label: List Task Comments
+  - key: retrieves_messages_of_chatroom
+    label: Retrieve Messages of a Chatroom
+  - key: retrieve_members
+    label: Retrieve Members
+  - key: retrieve_participants
+    label: Retrieve Chatroom Participants
+edges:
+- partner_name: Intaker
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/intaker
+  direction: third-party
+  category: Dashboards
+  partner_url: https://intaker.com/home/
+- partner_name: QuickBooks Online
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/quickbooks
+  direction: third-party
+  category: Accounting
+  partner_url: http://intuit.com/
+- partner_name: Quo
+  partner: quo
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/quo
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://quo.com/?utm_source=partnership&utm_medium=partner&utm_campaign=zapier
+- partner_name: Smartsheet
+  partner: smartsheet
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/smartsheet
+  direction: third-party
+  category: Spreadsheets
+  partner_url: https://www.smartsheet.com/
+- partner_name: monday.com
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/monday
+  direction: third-party
+  category: Project Management
+  partner_url: https://monday.com/
+- partner_name: Shopify
+  partner: shopify
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/shopify
+  direction: third-party
+  category: eCommerce
+  partner_url: https://www.shopify.com/
+- partner_name: Wix
+  partner: wix
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/wix
+  direction: third-party
+  category: Website Builders
+  partner_url: https://www.wix.com/
+- partner_name: WhatsApp Notifications
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/whatsapp-notifications
+  direction: third-party
+  category: Communication
+  partner_url: null
+- partner_name: Constant Contact
+  partner: constant-contact
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/constant-contact
+  direction: third-party
+  category: Email Newsletters
+  partner_url: http://www.constantcontact.com/signup.jsp?pn=zapier
+- partner_name: Microsoft SharePoint
+  partner: sharepoint
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/sharepoint
+  direction: third-party
+  category: Microsoft
+  partner_url: https://www.microsoft.com/en-ca/microsoft-365/sharepoint/collaboration
+- partner_name: Microsoft Office 365
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/office-365
+  direction: third-party
+  category: Email
+  partner_url: https://www.office.com/
+- partner_name: Unbounce
+  partner: unbounce
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/unbounce
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://unbounce.com/
+- partner_name: Motion
+  partner: motion
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/motion
+  direction: third-party
+  category: Project Management
+  partner_url: https://usemotion.com/
+- partner_name: Teamwork
+  partner: teamwork
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/teamwork
+  direction: third-party
+  category: Project Management
+  partner_url: https://www.teamwork.com/
+- partner_name: OnePageCRM
+  partner: null
+  partner_match: null
+  partner_candidate: novus-via
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/onepage-crm
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://www.onepagecrm.com/
+- partner_name: Moxo
+  partner: null
+  partner_match: null
+  partner_candidate: moxtra
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/hubflo/integrations/moxo
+  direction: third-party
+  category: AI Agents
+  partner_url: https://www.moxo.com/product
+templates:
+- title: Create Hubflo contacts when new opportunity stages are updated in GoHighLevel (GHL via LeadConnector)
+  url: https://zapier.com/apps/hubflo/integrations/leadconnector/255618199/create-hubflo-contacts-when-new-opportunity-stages-are-updated-in-gohighlevel-ghl-via-leadconnector
+  apps:
+  - leadconnector
+  - hubflo
+- title: Add new links to Hubflo workspace every month with Schedule by Zapier
+  url: https://zapier.com/apps/hubflo/integrations/schedule/255607601/add-new-links-to-hubflo-workspace-every-month-with-schedule-by-zapier
+  apps:
+  - schedule
+  - hubflo
+- title: Create new contacts in Hubflo from new contacts in Wealthbox CRM
+  url: https://zapier.com/apps/hubflo/integrations/wealthbox/255613320/create-new-contacts-in-hubflo-from-new-contacts-in-wealthbox-crm
+  apps:
+  - wealthbox
+  - hubflo
+- title: Create Google Drive folders for new Hubflo contacts
+  url: https://zapier.com/apps/google-drive/integrations/hubflo/255618161/create-google-drive-folders-for-new-hubflo-contacts
+  apps:
+  - hubflo
+  - google-drive
+- title: Send Slack channel messages for new Hubflo contacts
+  url: https://zapier.com/apps/hubflo/integrations/slack/255618162/send-slack-channel-messages-for-new-hubflo-contacts
+  apps:
+  - hubflo
+  - slack
+- title: Send outbound emails for new Hubflo contacts
+  url: https://zapier.com/apps/email/integrations/hubflo/255618185/send-outbound-emails-for-new-hubflo-contacts
+  apps:
+  - hubflo
+  - email
+- title: Create contacts in Hubflo when new forms are submitted via Jotform
+  url: https://zapier.com/apps/hubflo/integrations/jotform/255618186/create-contacts-in-hubflo-when-new-forms-are-submitted-via-jotform
+  apps:
+  - jotform
+  - hubflo
+- title: Create Hubflo contacts when new events are scheduled through Calendly
+  url: https://zapier.com/apps/calendly/integrations/hubflo/255618187/create-hubflo-contacts-when-new-events-are-scheduled-through-calendly
+  apps:
+  - calendly
+  - hubflo
+- title: Create folders in Dropbox when new contacts are created in Hubflo
+  url: https://zapier.com/apps/dropbox/integrations/hubflo/255618189/create-folders-in-dropbox-when-new-contacts-are-created-in-hubflo
+  apps:
+  - hubflo
+  - dropbox
+- title: Create contacts in Hubflo from new submissions in Gravity Forms
+  url: https://zapier.com/apps/gravity-forms/integrations/hubflo/255618190/create-contacts-in-hubflo-from-new-submissions-in-gravity-forms
+  apps:
+  - gravity-forms
+  - hubflo
+- title: Add Mailchimp subscribers to tags when new contacts are created in Hubflo
+  url: https://zapier.com/apps/hubflo/integrations/mailchimp/255618195/add-mailchimp-subscribers-to-tags-when-new-contacts-are-created-in-hubflo
+  apps:
+  - hubflo
+  - mailchimp
+- title: Create Slack channels when new projects are created in Hubflo
+  url: https://zapier.com/apps/hubflo/integrations/slack/255618198/create-slack-channels-when-new-projects-are-created-in-hubflo
+  apps:
+  - hubflo
+  - slack
+template_total: 22

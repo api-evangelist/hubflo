@@ -51,7 +51,6 @@
   arazzo: null
 - slug: hubflo-monday-com
   label: monday.com
-  partner: monday-com
   partner_name: monday.com
   category: Project Management
   type: marketplace
@@ -59,7 +58,7 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/hubflo/integrations/monday
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: hubflo-shopify
   label: Shopify
@@ -122,7 +121,6 @@
   arazzo: null
 - slug: hubflo-microsoft-office-365
   label: Microsoft Office 365
-  partner: microsoft-office-365
   partner_name: Microsoft Office 365
   category: Email
   type: marketplace
@@ -130,7 +128,7 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/hubflo/integrations/office-365
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: hubflo-unbounce
   label: Unbounce
@@ -189,4 +187,29 @@
   evidence: https://zapier.com/apps/hubflo/integrations/moxo
   source: edge
   status: pending-partner-spec
+  arazzo: null
+- slug: hubflo-zapier
+  label: Zapier
+  partner: zapier
+  partner_name: Zapier
+  type: marketplace
+  marketplace: zapier-directory
+  channel: ipaas-listing
+  evidence: https://zapier.com/apps/hubflo/integrations
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Zapier app directory (zapier.com/api/v4/apps)
+    spec_file: null
+    role: ipaas-connector:zapier
+    registered_name: Hubflo
+    matched_domain: hubflo.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: hubflo
+    beta: false
+    builder: unknown (not in the directory record)
+  status: pending-generation
   arazzo: null

@@ -596,23 +596,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    error_unauthorized:
-      description: A response describing an authentication error
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 401
-        title:
-          type: string
-          example: Unauthorized
-        message:
-          type: string
-          example: API token not found
-      required:
-      - status
-      - title
-      - message
     error_unprocessable_content:
       description: A response describing a validation error
       type: object
@@ -660,6 +643,23 @@ components:
         message:
           type: string
           example: Rate limit reached. Please wait for a couple of minutes.
+      required:
+      - status
+      - title
+      - message
+    error_unauthorized:
+      description: A response describing an authentication error
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+        title:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: API token not found
       required:
       - status
       - title
